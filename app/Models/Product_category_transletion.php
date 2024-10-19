@@ -12,7 +12,7 @@ class Product_category_transletion extends Model
     use HasFactory;
     protected $guarded = [];
 
-    protected $table="product_category_products";
+    protected $table="product_category_transletions";
 
     public function products()
     {

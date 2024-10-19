@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\AttributeController;
+use App\Http\Controllers\admin\AttributeSetController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,13 +52,24 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //Brand
     Route::resource('brand', BrandController::class);
-    // Route::get('/brand/changeStatus', [BrandController::class, 'brandChangeStatus'])->name('brand.change.status');
+    Route::post('/brand/changeStatus', [BrandController::class, 'brandChangeStatus'])->name('brand.change.status');
 
     //Category
     Route::resource('category', CategoryController::class);
 
+    //Sub Category
+    Route::resource('sub-category', SubCategoryController::class);
 
+    //Attribute Set
+    Route::resource('attribute-set', AttributeSetController::class);
 
+    //Attribute
+    Route::resource('attribute', AttributeController::class);
+
+    //Product
+    Route::resource('product', ProductController::class);
+
+    Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
 }); //End Group Admin Middleware
 
 

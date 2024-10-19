@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product_category;
-use App\Models\Product_category_transletion;
 
-class Product_category_product extends Model
+class Product_with_videos extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $table = 'product_categories';
 
+    protected $table="product_with_videos";
 }

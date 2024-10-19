@@ -6,64 +6,58 @@
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
                 <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
-                    Add Category
+                    Add Attribute
                 </button>
             </ol>
         </nav>
 
-        <!-- Add Category Modal -->
+        <!-- Add Attribute Modal -->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Add Category</h5>
+                        <h5 class="modal-title" id="addModalLabel">Add Attribute</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="addCategoryForm" method="POST" action="" class="forms-sample"
-                        onsubmit="event.preventDefault(); StoreCategory();">
-                        @csrf
+                        <form id="addAttributeForm" method="POST" action="" class="forms-sample"
+                            onsubmit="event.preventDefault(); StoreAttribute();">
+                            @csrf
+
                             <div class="form-group mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" id="name">
-                                <span id="name_error" class="text-danger"></span> <!-- Error message placeholder -->
+                                <label for="category" class="form-label">Attribute Set</label>
+                                <select name="attribute_set_id" class="form-control" id="attribute_set_id">
+                                    <option value="">Select a Category</option>
+                                    <!-- Options will be dynamically populated here -->
+                                    @foreach ($attribute_sets as $attribute_set)
+                                        <option value="{{ $attribute_set->id }}">{{ $attribute_set->title }}</option>
+                                    @endforeach
+                                </select>
+                                <span id="attribute_set_id_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
                             <div class="form-group mb-3">
-                                <label for="banglaInputText" class="form-label">Name in Bangla</label>
-                                <input type="text" name="name_bangla" class="form-control" id="banglaInputText">
-                                <span id="name_bangla_error" class="text-danger"></span> <!-- Error message placeholder -->
+                                <label for="name" class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" id="title">
+                                <span id="title_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
+
                             <div class="form-group mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" id="description" rows="4"></textarea>
-                                <span id="description_error" class="text-danger"></span> <!-- Error message placeholder -->
+                                <label for="color" class="form-label">Color</label>
+                                <input type="color" name="color" class="form-control" id="color"> <!-- Default hex color value -->
+                                <span id="color_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="image" class="form-label">Image</label>
-                                <input class="form-control" name="image" type="file" id="image">
-                            </div>
-                            <!-- Image preview -->
-                            <div class="form-group mb-3">
-                                <img id="showImage" src="#" alt="Image Preview"
-                                    style="max-width: 200px; display: none;">
-                            </div>
+                            
 
                             <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
-                                <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
-                                    <input type="checkbox" name="is_featured" class="form-check-input" id="is_featured">
-                                    <label class="form-check-label" for="is_featured">
-                                        Featured Category
-                                    </label>
-                                </div>
                                 <div class="form-check mb-2">
-                                    <input type="checkbox" name="enableSubcat" class="form-check-input" id="enableSubcat">
+                                    <input type="checkbox" name="status" class="form-check-input" id="status">
                                     <label class="form-check-label" for="enableSubcat">
-                                        Enable Sub Category
+                                        Enable Status
                                     </label>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Add Category</button>
+                            <button type="submit" class="btn btn-primary">Add Attribute Set</button>
                         </form>
 
                     </div>
@@ -72,36 +66,33 @@
         </div>
 
 
-        {{-- ALL category Modal--}}
+        {{-- ALL Attribute Set --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Category</h6>
+                        <h6 class="card-title">All Attribute Set</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Category Name</th>
-                                        <th>Bangla Name</th>
-                                        <th>Description</th>
-                                        <th>Logo</th>
+                                        <th>Title</th>
+                                        <th>color</th>
+                                        <th>oder</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="brandTableBody">
-                                    @if ($categories && count($categories) > 0)
-                                        @foreach ($categories as $key => $item)
+                                    @if ($attributes && count($attributes) > 0)
+                                        @foreach ($attributes as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->translations->  name }}</td>
-                                                <td>{{ $item->description }}</td>
-                                                <td><img src="{{ !empty($item->image) ? url($item->image) : url('upload/no_image.jpg') }}"
-                                                        style="width:70px; height:40px;"> </td>
+                                                <td>{{ $item->title ?? 'N/A' }}</td>
+                                                <td>{{ $item->color }}</td>
+                                                <td>{{ $item->order }}</td>
                                                 <td>
                                                     @if ($item->status == 'active')
                                                         <span class="badge rounded-pill bg-success">Active</span>
@@ -110,19 +101,15 @@
                                                     @endif
                                                 </td>
                                                 <td>
-
                                                     <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
-                                                        id="{{ $item->id }}" onclick="categoryEdit(this.id)">
+                                                        id="{{ $item->id }}" onclick="AttributeEdit(this.id)">
                                                         Edit
                                                     </button>
 
-                                                    <a href="javascript:void(0);"
-                                                        class="btn btn-inverse-danger delete-btn"
+                                                    <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
                                                     </a>
-
-
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -132,7 +119,6 @@
                                         </tr>
                                     @endif
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -143,70 +129,56 @@
     </div>
 
 
-    <!-- Edit Category Modal -->
+    <!-- Edit Attribute Set Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Attribute Set</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editCategoryForm" method="POST" enctype="multipart/form-data" class="forms-sample"
-                        onsubmit="event.preventDefault(); UpdateCategory();">
+                    <form id="editAttributeForm" method="POST" enctype="multipart/form-data" class="forms-sample"
+                        onsubmit="event.preventDefault(); UpdateAttribute();">
                         @csrf
                         <!-- Simulate PATCH method -->
                         <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="cat_id" id="cat_id">
+                        <input type="hidden" name="id" id="id">
+
+
+                        <div class="form-group mb-3">
+                            <label for="category" class="form-label">Attribute Set</label>
+                            <select name="edit_attribute_set_id" class="form-control" id="edit_attribute_set_id">
+                                <option value="">Select a Category</option>
+                                <!-- Options will be dynamically populated here -->
+                                @foreach ($attribute_sets as $attribute_set)
+                                    <option value="{{ $attribute_set->id }}">{{ $attribute_set->title }}</option>
+                                @endforeach
+                            </select>
+                            <span id="edit_attribute_set_id_error" class="text-danger"></span> <!-- Error message placeholder -->
+                        </div>
 
                         <div class="form-group mb-3">
                             <label for="edit_name" class="form-label">Name</label>
-                            <input type="text" name="edit_name" class="form-control" id="edit_name">
-                            <span id="edit_name_error" class="text-danger"></span>
+                            <input type="text" name="edit_title" class="form-control" id="edit_title">
+                            <span id="edit_title_error" class="text-danger"></span>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="edit_banglaInputText" class="form-label">Bangla Name</label>
-                            <input type="text" name="edit_banglaInputText" class="form-control"
-                                id="edit_banglaInputText">
-                            <span id="edit_banglaInputText_error" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="edit_description" class="form-label">Description</label>
-                            <textarea name="edit_description" class="form-control" id="edit_description" rows="4"></textarea>
-                            <span id="edit_description_error" class="text-danger"></span>
-                        </div>
-
-                      
-
-                        <div class="form-group mb-3">
-                            <label for="edit_image" class="form-label">Image</label>
-                            <input class="form-control" name="edit_image" type="file" id="edit_image">
-                        </div>
-
-                        <!-- Image preview -->
-                        <div class="form-group mb-3">
-                            <img id="edit_showImage" class="wd-100 rounded-circle"
-                                src="{{ !empty($category->image) ? url('upload/category/' . $category->image) : url('upload/no_image.jpg') }}"
-                                alt="profile">
+                            <label for="color" class="form-label">Color</label>
+                            <input type="color" name="edit_color" class="form-control" id="edit_color"> <!-- Default hex color value -->
+                            <span id="color_error" class="text-danger"></span> <!-- Error message placeholder -->
                         </div>
 
                         <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
-                            <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
-                                <input type="checkbox" name="is_featured" class="form-check-input" id="edit_is_featured">
-                                <label class="form-check-label" for="edit_is_featured">
-                                    Featured Category
-                                </label>
-                            </div>
                             <div class="form-check mb-2">
-                                <input type="checkbox" name="enableSubcat" class="form-check-input" id="edit_enableSubcat">
-                                <label class="form-check-label" for="edit_enableSubcat">
-                                    Enable Sub Category
+                                <input type="checkbox" name="status" class="form-check-input"
+                                    id="edit_status">
+                                <label class="form-check-label" for="edit_status">
+                                  Enable Status
                                 </label>
                             </div>
                         </div>
-
 
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
@@ -217,16 +189,14 @@
 
 
 
-    {{-- Store Category--}}
+    {{-- Store Attribute Set --}}
     <script type="text/javascript">
-        function StoreCategory() {
-            var formData = new FormData(document.getElementById('addCategoryForm'));
-
-           
+        function StoreAttribute() {
+            var formData = new FormData(document.getElementById('addAttributeForm'));
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('category.store') }}',
+                url: '{{ route('attribute.store') }}',
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -236,7 +206,7 @@
                     if (data.success) {
                         $('#addModal').modal('hide'); // Close modal
                         toastr.success(data.message);
-                        $('#addCategoryForm')[0].reset();
+                        $('#addAttributeForm')[0].reset();
                         setTimeout(function() {
                             window.location.reload(); // Reload the page to see the new brand
                         }, 1500);
@@ -257,41 +227,26 @@
         }
     </script>
 
-    {{-- Preview Image --}}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#image').change(function(e) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#showImage').attr('src', e.target.result).css('display',
-                        'block'); // Ensure it displays
-                }
-                reader.readAsDataURL(e.target.files[0]);
-            });
-        });
-    </script>
 
-    {{-- Edit Brand --}}
+    {{-- Edit Attribute Set --}}
     <script type="text/javascript">
-        function categoryEdit(cat_id) {
+        function AttributeEdit(id) {
             $.ajax({
                 type: 'GET',
-                url: '/category/' + cat_id + '/edit', // Ensure this is the correct route
+                url: '/attribute/' + id + '/edit', // Ensure this is the correct route
                 dataType: 'json',
                 success: function(data) {
                     if (data.error) {
                         console.log(data.error);
                     } else {
-                        $('#cat_id').val(data.cat_id);
-                        $('#edit_name').val(data.name);
-                        $('#edit_banglaInputText').val(data.name_bangla);
-                        $('#edit_description').val(data.description);
-                        
-                        // $('#edit_image').val(data.logo);
-                        var imgSrc = data.image ? data.image : '/upload/no_image.jpg';
-                        $('#edit_showImage').attr('src', imgSrc);
-                        $('#edit_is_featured').prop('checked', data.is_featured == 1); // Check if 'is_featured' is true
-                        $('#edit_enableSubcat').prop('checked', data.enableSubcat == 1); // Check if 'enableSubcat' is true
+                        $('#id').val(data.id);
+                        $('#set_id').val(data.set_id);
+                        $('#edit_title').val(data.title);
+                        $('#edit_status').prop('checked', data.status ==
+                        'active'); // Check if 'enableSubcat' is true
+                        $('#edit_color').val( data.color);
+                        $('#edit_attribute_set_id').val(data.set_id);
+                        $('#edit_attribute_set_id').trigger("change");
                         $('#editModal').modal('show'); // Open modal with data loaded
 
                     }
@@ -303,16 +258,16 @@
         }
     </script>
 
-    {{-- Update Brand --}}
+    {{-- Update Attribute Set --}}
     <script type="text/javascript">
-        function UpdateCategory() {
-            var formData = new FormData(document.getElementById('editCategoryForm'));
-            var cat_Id = $('#cat_id').val(); // Get the brand ID
-            console.log(cat_Id);
+        function UpdateAttribute() {
+            var formData = new FormData(document.getElementById('editAttributeForm'));
+            var Id = $('#id').val(); // Get the brand ID
+            console.log(Id);
 
             $.ajax({
                 type: 'POST', // POST method to support _method PATCH
-                url: '/category/' + cat_Id,
+                url: '/attribute/' + Id,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -347,12 +302,12 @@
         }
     </script>
 
-    {{-- Delete Brand --}}
+    {{-- Delete Attribute Set --}}
     <script type="text/javascript">
         $(document).on('click', '.delete-btn', function(e) {
             e.preventDefault();
             var id = $(this).data('id'); // Get the data-id from the button
-            var url = '{{ route('category.destroy', ':id') }}';
+            var url = '{{ route('attribute.destroy', ':id') }}';
             url = url.replace(":id", id); // Replace placeholder with actual ID
 
             // SweetAlert confirmation popup
@@ -380,11 +335,12 @@
                                     response.message,
                                     'success'
                                 );
-                               
-                                    toastr.success('Deleted Successfully.');
-                                    setTimeout(function() {
-                                        window.location.reload(); // Reload the page to see the new brand
-                                    }, 1500);
+
+                                toastr.success('Deleted Successfully.');
+                                setTimeout(function() {
+                                    window.location
+                                .reload(); // Reload the page to see the new brand
+                                }, 1500);
                             } else {
                                 toastr.error('Failed to delete the brand.');
                             }
@@ -398,21 +354,6 @@
             });
         });
     </script>
-
-    {{-- Bangla Language --}}
-    <script src="{{ asset('backend/assets/js/bangla.js') }}"></script>
-    <script>
-        $('#edit_banglaInputText').bangla({
-            enable: true
-        });
-        $('#edit_banglaInputText').bangla('on');
-
-        $('#edit_banglaInputText').bangla({
-            enable: true
-        });
-        $('#edit_banglaInputText').bangla('on');
-    </script>
-
 
 
 @endsection

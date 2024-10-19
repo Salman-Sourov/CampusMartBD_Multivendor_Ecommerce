@@ -50,8 +50,7 @@
                         <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
                             <div
                                 class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
-                                <img class="wd-30 ht-30 rounded-circle" src="https://via.placeholder.com/30x30"
-                                    alt="userr">
+                               
                             </div>
                             <div class="flex-grow-1 me-2">
                                 <p>New customer registered</p>

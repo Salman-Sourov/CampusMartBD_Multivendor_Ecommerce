@@ -27,7 +27,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        $inactive_brands = Brand::where('status', 'inactive')->get();
+        return view("backend.brand.all_inactive_brand", compact('inactive_brands'));
     }
 
     /**
@@ -35,13 +36,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
+
         // Validation
         $request->validate([
             'name' => 'required|string|max:255',
             'name_bangla' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'website' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+
         ]);
 
         if ($request->file('image')) {
@@ -76,8 +77,17 @@ class BrandController extends Controller
             'lang_code' => 'bn',
             'brand_id' => $brand->id,
         ]);
+
+        // Flash message for success
+        $notification = array(
+            'message' => 'Brand Created Successfully', // The message you want to display
+            'alert-type' => 'success' // Success notification type
+        );
+
+        // Redirect back to the list page with the notification
+        // return redirect()->back()->with($notification);
         // Return success response
-        return response()->json(['success' => true, 'message' => 'Brand updated successfully']);
+        return response()->json(['success' => true, 'message' => 'Brand added successfully']);
     }
 
 
@@ -167,7 +177,10 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::findOrFail($id);
-        $brand->status = 0; // Mark as inactive or deleted
+        $brand->status = 'inactive'; // Mark as inactive or deleted
+        // if (file_exists(public_path($brand->logo)) && !empty($brand->logo)) {
+        //     unlink(public_path($brand->logo));
+        // }
         $brand->save();
 
         return response()->json([
@@ -176,24 +189,22 @@ class BrandController extends Controller
         ]);
     }
 
-
     public function brandChangeStatus(Request $request)
     {
 
-        // dd('Yes');
+        // dd($request->status);
+        // dd('hello');
+        $brand = Brand::find($request->brand_id);
+        
+        if ($brand->status == 'inactive'){
+            $brand->status = 'active';
+            $brand->save();
+        }
+        
 
-        // $brand = Brand::find($request->brand_id);
-
-        // // Toggle status between 'active' and 'inactive'
-        // $brand->status = $brand->status == 'active' ? 'inactive' : 'active';
-
-        // //$user->status = $request->status ==1? 'active' : 'inactive';
-        // $brand->save();
-
-        // return response()->json(['success' => 'Status Change Successfully']);
-
-        \Log::info('Brand Change Status Request:', $request->all());
-
-        dd('Yes'); // This will help to check if this line gets executed
+        // Return updated status
+        return response()->json(['success' => 'Status changed successfully']);
+        
     } // End Method
+
 }

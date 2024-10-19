@@ -17,16 +17,19 @@
             <li class="nav-item nav-category">Bazar BD</li>
 
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
-                    aria-controls="emails">
+                <a class="nav-link" data-bs-toggle="collapse" href="#brand" role="button" aria-expanded="false"
+                    aria-controls="brand">
                     <i class="link-icon" data-feather="home"></i>
                     <span class="link-title">Brands</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="emails">
+                <div class="collapse" id="brand">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="{{ route('brand.index') }}" class="nav-link">All Brands</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('brand.create') }}" class="nav-link">Inactive Brands</a>
                         </li>
                     </ul>
                 </div>
@@ -47,6 +50,78 @@
                     </ul>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#subcategory" role="button" aria-expanded="false"
+                    aria-controls="subcategory">
+                    <i class="link-icon" data-feather="home"></i>
+                    <span class="link-title">Sub Category</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="subcategory">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('sub-category.index') }}" class="nav-link">All Sub Category</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#attributeset" role="button" aria-expanded="false"
+                    aria-controls="attributeset">
+                    <i class="link-icon" data-feather="home"></i>
+                    <span class="link-title">Attribute Set</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="attributeset">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('attribute-set.index') }}" class="nav-link">All Attribute Set</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#attribute" role="button" aria-expanded="false"
+                    aria-controls="attribute">
+                    <i class="link-icon" data-feather="home"></i>
+                    <span class="link-title">Attribute</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="attribute">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('attribute.index') }}" class="nav-link">All Attribute</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#product" role="button" aria-expanded="false"
+                    aria-controls="product">
+                    <i class="link-icon" data-feather="home"></i>
+                    <span class="link-title">Product</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="product">  <!-- Single collapse div -->
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('product.create') }}" class="nav-link">Add Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('product.index') }}" class="nav-link">All Product</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            
+
+
         </ul>
     </div>
 </nav>
