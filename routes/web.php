@@ -70,6 +70,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('product', ProductController::class);
 
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
+    Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
+    Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
+    Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
+
+ 
 }); //End Group Admin Middleware
 
 

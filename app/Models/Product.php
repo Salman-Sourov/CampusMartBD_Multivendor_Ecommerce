@@ -30,14 +30,14 @@ class Product extends Model
     }
     public function videos()
     {
-        return $this->hasMany(Videos::class, 'product_id', 'id')->with(['video_detail']);
+        return $this->hasMany(Product_with_videos::class, 'product_id', 'id')->with(['video_detail']);
     }
     public function attribute_set()
     {
-        return $this->hasOne(Product_with_attribute_set::class,'product_id','id')->with(['attributes']);
+        return $this->hasOne(Product_with_attribute_set::class, 'product_id', 'id')->with(['attributes']);
     }
     public function inventory_stocks()
     {
-        return $this->hasMany(Product_attribute_wise_stock::class,'product_id','id')->with(['inventory_details']);
+        return $this->hasMany(Product_attribute_wise_stock::class, 'product_id', 'id')->with(['inventory_details']);
     }
 }

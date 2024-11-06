@@ -4,7 +4,7 @@
 
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
-                <a href="{{ route('product.create') }}" class="btn btn-inverse-info"> Add Property </a>
+                <a href="{{ route('product.create') }}" class="btn btn-inverse-info"> Add Product</a>
             </ol>
         </nav>
 
@@ -52,7 +52,7 @@
                                             </td>
                                             <td>
 
-                                                <a href="#" class="btn btn-inverse-warning" title="Edit"> <i
+                                                <a href="{{ route('product.edit', $item->id)}}" class="btn btn-inverse-warning" title="Edit"> <i
                                                         data-feather="edit"></i> </a>
 
                                                 <a href="#" class="btn btn-inverse-danger" id="delete"

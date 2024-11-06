@@ -22594,4 +22594,12 @@ div.tox .tox-dialog__body {
   margin: 0;
   width: 100%;
 }
+
+.table td {
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 0% !important;
+  }
+}
 /*# sourceMappingURL=../maps/demo2/style.css.map */

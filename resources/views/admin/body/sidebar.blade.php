@@ -15,7 +15,8 @@
                 </a>
             </li>
             <li class="nav-item nav-category">Bazar BD</li>
-
+            
+            {{-- Brands --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#brand" role="button" aria-expanded="false"
                     aria-controls="brand">
@@ -35,6 +36,7 @@
                 </div>
             </li>
 
+            {{-- Category --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#category" role="button" aria-expanded="false"
                     aria-controls="category">
@@ -51,6 +53,7 @@
                 </div>
             </li>
 
+            {{-- Sub Category --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#subcategory" role="button" aria-expanded="false"
                     aria-controls="subcategory">
@@ -67,6 +70,7 @@
                 </div>
             </li>
 
+            {{-- Attribute Set --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#attributeset" role="button" aria-expanded="false"
                     aria-controls="attributeset">
@@ -83,7 +87,7 @@
                 </div>
             </li>
 
-
+            {{-- Attribute --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#attribute" role="button" aria-expanded="false"
                     aria-controls="attribute">
@@ -100,7 +104,7 @@
                 </div>
             </li>
 
-
+            {{-- Product --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#product" role="button" aria-expanded="false"
                     aria-controls="product">
@@ -108,7 +112,7 @@
                     <span class="link-title">Product</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="product">  <!-- Single collapse div -->
+                <div class="collapse" id="product"> <!-- Single collapse div -->
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="{{ route('product.create') }}" class="nav-link">Add Product</a>
@@ -119,8 +123,6 @@
                     </ul>
                 </div>
             </li>
-            
-
 
         </ul>
     </div>

@@ -31,13 +31,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request);
+        // dd($request);
         // Validation
         $request->validate([
             'name' => 'required|string|max:255',
             'name_bangla' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-          
+
         ]);
 
         if ($request->file('image')) {
@@ -88,7 +88,7 @@ class CategoryController extends Controller
                 'name' => $category->name ?? null,
                 'name_bangla' => $category->translations->name ?? null,
                 'description' => $category->description ?? null,
-                
+
                 'image' => $category->image ?? null,
                 'is_featured' => $category->is_featured ?? null,
                 'enableSubcat' => $category->enableSubcat ?? null,
@@ -104,47 +104,47 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-          // Fetch the brand with its translations
-          $category = Product_category::with('translations')->find($id);
+        // Fetch the brand with its translations
+        $category = Product_category::with('translations')->find($id);
 
-          // Validate the incoming request
-          $request->validate([
+        // Validate the incoming request
+        $request->validate([
             'edit_name' => 'required|string|max:255',
             'edit_banglaInputText' => 'required|string|max:255',
             'edit_description' => 'required|string|max:255',
-          ]);
-  
-          // Handle file upload
-          if ($request->file('edit_image')) {
-              // Delete old logo if it exists
-              if (file_exists(public_path($category->image)) && !empty($category->image)) {
-                  unlink(public_path($category->image));
-              }
-  
-              // Save new logo
-              $logo = $request->file('edit_image');
-              $photoName = date("Y-m-d") . '_' . time() . '.' . $logo->getClientOriginalExtension();
-              $directory = 'upload/category/';
-              $logo->move($directory, $photoName);
-              $category->image = $directory . $photoName;
-          }
-  
-          // Update the brand's basic details
-          $category->update([
-              'name' => $request->edit_name,
-              'description' => $request->edit_description,
-              'is_featured' => $request->has('is_featured') ? 0 : 1,
-              'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,
-          ]);
-  
-          // Update the translation for Bangla
-          $category->translations()->updateOrCreate(
-              ['lang_code' => 'bn', 'categories_id' => $category->id],
-              ['name' => $request->edit_banglaInputText]
-          );
-  
-          // Return success response
-          return response()->json(['success' => true, 'message' => 'Category updated successfully']);
+        ]);
+
+        // Handle file upload
+        if ($request->file('edit_image')) {
+            // Delete old logo if it exists
+            if (file_exists(public_path($category->image)) && !empty($category->image)) {
+                unlink(public_path($category->image));
+            }
+
+            // Save new logo
+            $logo = $request->file('edit_image');
+            $photoName = date("Y-m-d") . '_' . time() . '.' . $logo->getClientOriginalExtension();
+            $directory = 'upload/category/';
+            $logo->move($directory, $photoName);
+            $category->image = $directory . $photoName;
+        }
+
+        // Update the brand's basic details
+        $category->update([
+            'name' => $request->edit_name,
+            'description' => $request->edit_description,
+            'is_featured' => $request->has('is_featured') ? 0 : 1,
+            'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,
+        ]);
+
+        // Update the translation for Bangla
+        $category->translations()->updateOrCreate(
+            ['lang_code' => 'bn', 'categories_id' => $category->id],
+            ['name' => $request->edit_banglaInputText]
+        );
+
+        // Return success response
+        return response()->json(['success' => true, 'message' => 'Category updated successfully']);
     }
 
     /**
@@ -166,6 +166,12 @@ class CategoryController extends Controller
     }
 
     public function getSubcategories($id)
+    {
+        $subcategories = Product_category::where('parent_id', $id)->get();
+        return response()->json($subcategories);
+    }
+
+    public function selectedSubcategories($id)
     {
         $subcategories = Product_category::where('parent_id', $id)->get();
         return response()->json($subcategories);

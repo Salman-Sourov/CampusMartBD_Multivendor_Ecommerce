@@ -14,7 +14,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Product Name</label>
+                                            <label class="form-label">Product Name *</label>
                                             <input type="text" name="product_name" class="form-control"
                                                 value="{{ old('product_name') }}">
                                             @error('product_name')
@@ -25,7 +25,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
-                                            <label for="banglaInputText" class="form-label">Name in Bangla</label>
+                                            <label for="banglaInputText" class="form-label">Name in Bangla *</label>
                                             <input type="text" name="product_name_bangla" class="form-control"
                                                 id="banglaInputText">
                                             @error('product_name_bangla')
@@ -34,9 +34,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Product Quantity</label>
+                                            <label class="form-label">Product Quantity *</label>
                                             <input type="text" name="quantity" class="form-control"
                                                 value="{{ old('quantity') }}">
                                             @error('quantity')
@@ -47,7 +47,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label for="brand" class="form-label">Select Brand</label>
+                                            <label for="brand" class="form-label">Brand *</label>
                                             <select name="brand_id" class="form-control" id="brand">
                                                 <option value="">Select a Brand</option>
                                                 <!-- Options will be dynamically populated here -->
@@ -63,7 +63,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label for="category" class="form-label">Select Category</label>
+                                            <label for="category" class="form-label">Category *</label>
                                             <select name="category_id" class="form-control" id="category_id"
                                                 onChange="categoryChanged()">
                                                 <option value="">Select a Category</option>
@@ -80,7 +80,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label for="sub_category" class="form-label">Select Sub Category</label>
+                                            <label for="sub_category" class="form-label">Sub Category</label>
                                             <select name="sub_category_id" class="form-control" id="sub_category">
 
 
@@ -93,7 +93,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Price</label>
+                                            <label class="form-label">Price *</label>
                                             <input type="text" name="price" class="form-control"
                                                 value="{{ old('price') }}">
                                             @error('price')
@@ -191,7 +191,7 @@
 
                                     <div class="col-sm-12">
                                         <div class="mb-3">
-                                            <label class="form-label">Long Description</label>
+                                            <label class="form-label">Long Description *</label>
                                             <textarea name="description" class="form-control" rows="10">{{ old('description') }}</textarea>
                                             @error('description')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -201,7 +201,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Main Thumbnail</label>
+                                            <label class="form-label">Main Thumbnail *</label>
                                             <input type="file" name="thumbnail" class="form-control"
                                                 onChange="mainThamUrl(this)">
                                             <img src="" id="mainThmb">
@@ -227,9 +227,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <label class="form-label">Video Type</label>
-                                        <select name="video_type" class="form-control">
+                                        <select name="video_type[]" class="form-control">
                                             <option value="" disabled selected>Select Video Type</option>
                                             <option value="youtube">Youtube</option>
                                             <option value="vimeo">Vimeo</option>
@@ -237,7 +237,7 @@
                                         </select>
                                     </div><!-- Col -->
 
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-8">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Video Link</label>
                                             <input type="text" name="video_link[]" class="form-control"

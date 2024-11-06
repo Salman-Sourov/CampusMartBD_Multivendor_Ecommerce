@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('lang_code', 191);
             $table->unsignedBigInteger('products_id');
-            $table->string('translation_name', 191)->nullable();
+            $table->string('name', 191)->nullable();
             $table->timestamps();
 
             // Define foreign key constraint
