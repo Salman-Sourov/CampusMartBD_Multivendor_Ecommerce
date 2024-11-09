@@ -46,29 +46,28 @@ class ProductController extends Controller
     {
         // dd($request->all());
         // dd('hello');
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'product_name_bangla' => 'required|string|max:255',
+            'brand_id' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'nullable',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+            'sale_price' => 'nullable|numeric',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'length' => 'nullable|numeric',
+            'wide' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
+            'short_content' => 'nullable|string',
+            'description' => 'required|string',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ]);
 
         DB::beginTransaction();
         try {
-
-            $request->validate([
-                'product_name' => 'required|string|max:255',
-                'product_name_bangla' => 'required|string|max:255',
-                'brand_id' => 'required',
-                'category_id' => 'required',
-                'sub_category_id' => 'nullable',
-                'quantity' => 'required|integer',
-                'price' => 'required|numeric',
-                'sale_price' => 'nullable|numeric',
-                'start_date' => 'nullable|date',
-                'end_date' => 'nullable|date|after_or_equal:start_date',
-                'length' => 'nullable|numeric',
-                'wide' => 'nullable|numeric',
-                'height' => 'nullable|numeric',
-                'weight' => 'nullable|numeric',
-                'content' => 'nullable|string',
-                'description' => 'required|string',
-                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
 
             if ($request->file('thumbnail')) {
                 $image = $request->file('thumbnail');
@@ -155,6 +154,15 @@ class ProductController extends Controller
                     $product_video->video_id = $data->id;
                     $product_video->save();
                 }
+            }  
+            else if($request->has('video_type') && $request->has('video_link'))
+            {
+                $notification = [
+                    'message' => 'Video Type or Link Missing',
+                    'alert-type' => 'error',
+                ];
+
+                return redirect()->back()->with($notification);
             }
 
             DB::commit();
@@ -170,7 +178,7 @@ class ProductController extends Controller
             DB::rollback();
 
             $notification = array(
-                'message' => 'Failed to store product. Please try again.',
+                'message' => 'Failed to store product',
                 'alert-type' => 'error',
             );
 
@@ -197,7 +205,7 @@ class ProductController extends Controller
         $product->end_date = \Carbon\Carbon::parse($product->end_date)->format('Y-m-d');
 
         $brands = Brand::where('status', 'active')->get();
-       
+
         $categories = Product_category::where('status', 'active')->whereNull('parent_id')->orderBy('name', 'asc')->get();
         // dd($product->brands);
         return view('backend.product.edit_product', compact('product', 'brands', 'categories'));
@@ -209,15 +217,166 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+        $product = Product::findOrFail($id);
+        // Validate the incoming request
+        $request->validate([
+            'product_name' => 'required|string|max:255',
+            'quantity' => 'required|integer',
+            'price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'length' => 'nullable|numeric',
+            'wide' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
+            'short_content' => 'nullable|string',
+            'description' => 'required|string',
+
+        ]);
+
+        DB::beginTransaction();
+        try {
+
+            // Handle thumbnail upload
+            if ($request->file('thumbnail')) {
+                // Delete old thumbnail if it exists
+                if ($product->thumbnail && file_exists(public_path($product->thumbnail))) {
+                    unlink(public_path($product->thumbnail));
+                }
+                $image = $request->file('thumbnail');
+                $imageName = date("Y-m-d") . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $directory = 'upload/product/';
+                $image->move(public_path($directory), $imageName);
+                $product->thumbnail = $directory . $imageName;
+            }
+
+            // Update product details
+            $product->name = $request->product_name;
+            $product->description = $request->description;
+            $product->content = $request->short_content;
+            $product->quantity = $request->quantity;
+            $product->price = $request->price;
+            $product->sale_price = $request->sale_price;
+            $product->status = $request->has('status') ? 'active' : 'inactive';
+            $product->is_featured = $request->has('is_featured') ? 1 : 0;
+            $product->is_variation = $request->has('is_variation') ? 1 : 0;
+            $product->brand_id = $request->brand_id ?? null;
+            $product->start_date = $request->start_date;
+            $product->end_date = $request->end_date;
+            $product->length = $request->length;
+            $product->wide = $request->wide;
+            $product->height = $request->height;
+            $product->weight = $request->weight;
+            $product->created_by_id = Auth::id();
+
+            // Save updated product
+            $product->save();
+
+            //dd('hello');
+
+            $translation = product_translation::where('products_id', $product->id)->first();
+
+            $translation->name = $request->product_name_bangla;
+            $translation->lang_code = 'bn';
+            $translation->products_id = $product->id;
+            $translation->save();
+
+            // dd($request->all());
+
+            // Handle sub_category_id
+            if ($request->filled('sub_category_id')) {
+                $category = Product_category_product::where('product_id', $product->id)->first();
+                $category->category_id = $request->sub_category_id;
+                $category->product_id = $product->id;
+                $category->save();
+            } else {
+                $category = Product_category_product::where('product_id', $product->id)->first();
+                $category->category_id = $request->category_id;
+                $category->product_id = $product->id;
+                $category->save();
+            }
+
+
+            $videoTypes = $request->input('video_type');
+            $videoLinks = $request->input('video_link');
+
+            if ($videoTypes &&  $videoLinks) {
+                //dd($videoTypes);
+                $data = Videos::where('product_id', $product->id)->first();
+                $product_video =  Product_with_videos::where('product_id', $product->id)->first();
+
+                if ($data && $product_video) {
+                    $data->video_type = $videoTypes;
+                    $data->video_link = $videoLinks;
+                    $data->product_id = $product->id;
+                    $data->save();
+                    $product_video->product_id    = $product->id;
+                    $product_video->video_id = $data->id;
+                    $product_video->save();
+                } else {
+
+                    $videoTypes = $request->input('video_type');
+                    $videoLinks = $request->input('video_link');
+
+                    $data = new Videos();
+                    $product_video = new Product_with_videos();
+                    $data->video_type = $videoTypes;
+                    $data->video_link = $videoLinks;
+                    $data->product_id = $product->id;
+                    $data->save();
+                    $product_video->product_id    = $product->id;
+                    $product_video->video_id = $data->id;
+                    $product_video->save();
+                }
+            } else if($videoTypes ||  $videoLinks)
+            {
+                $notification = [
+                    'message' => 'Video Type or Link Missing',
+                    'alert-type' => 'error',
+                ];
+
+                return redirect()->back()->with($notification);
+            }
+
+            DB::commit();
+
+            // Notification message
+            $notification = [
+                'message' => 'Product Successfully Updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+        } catch (\Exception $e) {
+
+            DB::rollback();
+
+            $notification = array(
+                'message' => 'Failed to update product. Error: ',
+                'alert-type' => 'error',
+            );
+
+            return back()->with($notification);
+        }
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        // dd($id);
+        $product = Product::findOrFail($id);
+        $product->status = 'inactive'; // Mark as inactive or deleted
+        $product->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product Successfully Deleted'
+        ]);
     }
 
     public function uploadMultiImg(Request $request)
@@ -228,24 +387,24 @@ class ProductController extends Controller
 
         if ($request->file('multi_img')) {
             $image = $request->file('multi_img');
-                $data = new Multi_image();
-                $product_image = new Product_with_multi_image();
-                $photoName = date("Y-m-d") . '.' . rand() . '.' . time() . '.' . $image->getClientOriginalExtension();
-                $directory = 'upload/product/';
-                $image->move($directory, $photoName);
-                $data->image = $directory . $photoName;
-                $data->product_id = $request->upload_product_id;
-                $data->save();
-                $multiImageId = $data->id;
-                $product_image->product_id = $request->upload_product_id;
-                $product_image->multiImage_id = $multiImageId;
-                $product_image->save();
+            $data = new Multi_image();
+            $product_image = new Product_with_multi_image();
+            $photoName = date("Y-m-d") . '.' . rand() . '.' . time() . '.' . $image->getClientOriginalExtension();
+            $directory = 'upload/product/';
+            $image->move($directory, $photoName);
+            $data->image = $directory . $photoName;
+            $data->product_id = $request->upload_product_id;
+            $data->save();
+            $multiImageId = $data->id;
+            $product_image->product_id = $request->upload_product_id;
+            $product_image->multiImage_id = $multiImageId;
+            $product_image->save();
 
-                $notification = array(
-                    'message' => 'Product Successfully Added',
-                    'alert-type' => 'success'
-                );
-                return back()->with($notification);
+            $notification = array(
+                'message' => 'Product Successfully Added',
+                'alert-type' => 'success'
+            );
+            return back()->with($notification);
         }
 
         $notification = array(
@@ -254,10 +413,10 @@ class ProductController extends Controller
         );
 
         return back()->with($notification);
-        
     }
 
-    public function deleteMultiImg($id){
+    public function deleteMultiImg($id)
+    {
 
         // dd(vars: $id);
 
@@ -277,5 +436,4 @@ class ProductController extends Controller
 
         return redirect()->back()->with($notification);
     }
-   
 }

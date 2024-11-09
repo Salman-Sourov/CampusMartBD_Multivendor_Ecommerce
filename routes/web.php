@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\AttributeSetController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\ProductStockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //Product
     Route::resource('product', ProductController::class);
+
+    //Stock
+    Route::resource('stock', ProductStockController::class);
+    Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
+    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
+
+
 
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);

@@ -9,12 +9,12 @@
                         <div class="card-body">
                             <h6 class="card-title">Edit Product</h6>
 
-                            <form method="POST" action="{{ route('product.update',$product->id) }}" id="myForm"
+                            <form method="POST" action="{{ route('product.update', $product->id) }}" id="myForm"
                                 enctype="multipart/form-data">
                                 @csrf
+                                @method('patch') <!-- This tells Laravel to treat the request as a PUT request -->
+                                {{-- <input type="hidden" value="{{ $product->id }}" name="update_prduct_id"> --}}
 
-                                <input type="hidden" value="{{ $product->id }}" name="update_prduct_id">
-                                
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
@@ -29,10 +29,10 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
-                                            <label for="banglaInputText" class="form-label">Name in Bangla</label>
+                                            <label for="banglaInputText" class="form-label">Name in Bangla *</label>
                                             <input type="text" name="product_name_bangla" class="form-control"
                                                 id="banglaInputText"
-                                                value="{{ $product->translatiosn ? $product->translations->name : 'N/A' }}">
+                                                value="{{ $product->translations ? $product->translations->name : 'N/A' }}">
                                             @error('product_name_bangla')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -41,7 +41,7 @@
 
                                     <div class="col-sm-4">
                                         <div class="form-group mb-3">
-                                            <label for="brand" class="form-label">Brand</label>
+                                            <label for="brand" class="form-label">Brand *</label>
                                             <select name="brand_id" class="form-control" id="brand">
                                                 <option selected="" disabled="">Select a Brand</option>
                                                 @foreach ($brands as $brand)
@@ -59,7 +59,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label for="category" class="form-label">Category</label>
+                                            <label for="category" class="form-label">Category *</label>
                                             <input type="hidden" id="sub_category_id"
                                                 value="{{ $product->categories->category_id }}">
                                             <select name="category_id" class="form-control" id="category_id"
@@ -81,8 +81,6 @@
                                                         </option>
                                                     @endforeach
                                                 @endif
-
-
                                             </select>
                                             @error('category_id')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -95,15 +93,12 @@
                                             <label for="sub_category" class="form-label">Sub Category</label>
                                             <select name="sub_category_id" class="form-control" id="sub_category">
                                             </select>
-                                            @error('sub_category_id')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-sm-2">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Product Quantity</label>
+                                            <label class="form-label">Product Quantity *</label>
                                             <input type="text" name="quantity" class="form-control" placeholder="N/A"
                                                 value="{{ old('quantity', $product->quantity) }}">
                                             @error('quantity')
@@ -114,7 +109,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Price</label>
+                                            <label class="form-label">Price *</label>
                                             <input type="text" name="price" class="form-control" placeholder="N/A"
                                                 value="{{ old('price', $product->price) }}">
                                             @error('price')
@@ -125,7 +120,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Sale Price</label>
+                                            <label class="form-label">Sale Price*</label>
                                             <input type="text" name="sale_price" class="form-control" placeholder="N/A"
                                                 value="{{ old('sale_price', $product->sale_price) }}">
                                             @error('sale_price')
@@ -145,9 +140,6 @@
                                             <label class="form-label">Start Date</label>
                                             <input type="date" name="start_date" class="form-control"
                                                 value="{{ old('start_date', $product->start_date) }}">
-                                            @error('start_date')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -156,9 +148,6 @@
                                             <label class="form-label">End Date</label>
                                             <input type="date" name="end_date" class="form-control"
                                                 value="{{ old('end_date', $product->end_date) }}">
-                                            @error('end_date')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -167,9 +156,6 @@
                                             <label class="form-label">Length</label>
                                             <input type="text" name="length" class="form-control" placeholder="N/A"
                                                 value="{{ old('length', $product->length) }}">
-                                            @error('length')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -178,9 +164,6 @@
                                             <label class="form-label">Wide</label>
                                             <input type="text" name="wide" class="form-control" placeholder="N/A"
                                                 value="{{ old('wide', $product->wide) }}">
-                                            @error('wide')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -189,9 +172,6 @@
                                             <label class="form-label">Height</label>
                                             <input type="text" name="height" class="form-control" placeholder="N/A"
                                                 value="{{ old('height', $product->height) }}">
-                                            @error('height')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
@@ -200,15 +180,12 @@
                                             <label class="form-label">Weight</label>
                                             <input type="text" name="weight" class="form-control" placeholder="N/A"
                                                 value="{{ old('weight', $product->weight) }}">
-                                            @error('weight')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-sm-12">
                                         <div class="mb-3">
-                                            <label class="form-label">Short Content</label>
+                                            <label class="form-label">Short Content*</label>
                                             <textarea name="short_content" class="form-control" id="exampleFormControlTextarea1" rows="3"
                                                 placeholder="N/A">{{ old('short_content', $product->content) }}</textarea>
                                             @error('short_content')
@@ -219,7 +196,7 @@
 
                                     <div class="col-sm-12">
                                         <div class="mb-3">
-                                            <label class="form-label">Long Description</label>
+                                            <label class="form-label">Long Description*</label>
                                             <textarea name="description" class="form-control" rows="10">{{ old('description', $product->description) }}</textarea>
                                             @error('description')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -227,170 +204,28 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label class="form-label">Main Thumbnail</label>
-                                            <input type="file" name="thumbnail" class="form-control"
-                                                onChange="mainThamUrl(this)">
-                                            <img src="" id="mainThmb">
-                                            @error('thumbnail')
+                                            <label class="form-label">Main Thumbnail*</label>
+                                            <!-- File input to upload a new thumbnail -->
+                                            <input type="file" name="thumbnail" class="form-control" id="image">
+                                            {{-- @error('thumbnail')
                                                 <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                            @enderror --}}
+                                            <br>
                                         </div>
-                                        <div class="form-group mb-4">
-                                            <img src="{{ asset($product->thumbnail) }}"
-                                                style="width:100px; height:100px;">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-7">
-                                        <div class="page-content" style="margin-top: -35px;">
-                                            <div class="row profile-body">
-                                                <div class="col-md-12 col-xl-12 middle-wrapper">
-                                                    <div class="row">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <h6 class="card-title">Edit Multi Image</h6>
-
-                                                                <form method="post" action="" id="myForm"
-                                                                    enctype="multipart/form-data">
-                                                                    @csrf
-
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-striped">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Sl</th>
-                                                                                    <th>Image</th>
-                                                                                    {{-- <th>Change Image</th> --}}
-                                                                                    <th>Delete</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                @foreach ($product->multi_images as $multi_image => $img)
-                                                                                    <tr>
-                                                                                        <td>{{ $multi_image + 1 }}</td>
-                                                                                        <td class="py-1">
-                                                                                            <img src="{{ asset($img->image_detail->image) }}"
-                                                                                                alt="image"
-                                                                                                style="width: 80px";
-                                                                                                height="190px">
-                                                                                        </td>
-
-                                                                                        {{-- <td><input type="file" 
-                                                                                                class="form-control"
-                                                                                                name="multi_img[{{ $img->id }}]"
-                                                                                                value="{{ $img->image_detail->id }}">
-
-                                                                                        </td> --}}
-                                                                                        {{-- multiimage id --}}
-                                                                                        <td>
-                                                                                            {{-- <input type="submit"
-                                                                                                class="btn btn-primary px-4"
-                                                                                                value="Update Image"> --}}
-                                                                                            <a href="{{ route('deleteMultiImg.delete', $img->image_detail->id) }}"
-                                                                                                class="btn btn-danger"
-                                                                                                id="delete">Delete</a>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                @endforeach
-
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-
-                                                                    <br><br>
-
-                                                                </form>
-
-
-
-                                                                <form method="post"
-                                                                    action="{{ route('uploadMultiImg.add') }}"
-                                                                    id="myForm" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <input type="hidden" name="imageid" value="">
-                                                                    <input type="hidden" value="{{ $product->id }}"
-                                                                        name="upload_product_id">
-                                                                    <table class="table table-striped">
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <input type="file"
-                                                                                        class="form-control"
-                                                                                        name="multi_img">
-                                                                                    @error('multi_img')
-                                                                                        <span
-                                                                                            class="text-danger">{{ $message }}</span>
-                                                                                    @enderror
-                                                                                </td>
-
-                                                                                <td>
-                                                                                    <input type="submit"
-                                                                                        class="btn btn-info px-4"
-                                                                                        value="Add Image">
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </form>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                        <div class="mb-10">
+                                            <div>
+                                                <img id="showImage" class="wd-100"
+                                                    src="{{ !empty($product->thumbnail) ? url($product->thumbnail) : url('upload/no_image.jpg') }}"
+                                                    alt="profile">
                                             </div>
                                         </div>
                                     </div>
-
-
-                                    {{-- @foreach ($product->multi_images as $multi_image) --}}
-                                    {{-- <div class="row">
-                                            <div class="mb-4 row align-items-center image-field">
-
-                                                <div class="col-sm-6">
-                                                    <input type="file" class="form-control image-input" name="multi_img__{{ $multi_image->image_detail->id }}" onchange="previewImage(this)">
-                                                    <div class="invalid-feedback error-message"></div>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <input class="ec_multi_images_id" type="hidden" name="ec_multi_images_id[]" value="{{ $multi_image->image_detail->id }}" />
-                                                    <img class="image-preview mb-4 row align-items-right" style="height: 80px; width:100px;"  src="{{ asset($multi_image->image_detail->image) }}" />
-
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <button class="btn btn-danger" onclick="removeImagePreview(this)">X</button>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
-                                    {{-- <div class="col-sm-7" id="imageFieldsContainer">
-                                            <div id="image-input-container" class="form-group mb-3 image-field">
-                                                <label class="form-label">Multiple Images</label>
-                                                <div class="d-flex mb-2">
-                                                    <input type="file" name="multi_img[]"
-                                                        class="form-control multiImg">
-                                                    <button type="button"
-                                                        class="btn btn-primary ms-2 addMoreButton">+</button>
-                                                </div>
-                                                <img class="image-preview ms-2"
-                                                    style="width: 50px; height:50px; display: none;" src="" />
-                                                @error('multi_img')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div> --}}
-                                    {{-- @endforeach --}}
-
-
-                                    <!-- //multi image update// -->
-
-
-
 
                                     <div class="col-sm-3">
                                         <label class="form-label">Video Type</label>
-                                        <select name="video_type[]" class="form-control">
+                                        <select name="video_type" class="form-control">
                                             <option value="" disabled selected>Select Video Type</option>
                                             <option value="youtube"
                                                 {{ optional($product->videos->first()->video_detail ?? null)->video_type == 'youtube' ? 'selected' : '' }}>
@@ -404,18 +239,16 @@
                                         </select>
                                     </div><!-- Col -->
 
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-6">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Video Link</label>
-                                            <input type="text" name="video_link[]" class="form-control"
+                                            <input type="text" name="video_link" class="form-control"
                                                 value="{{ $product->videos->first()->video_detail->video_link ?? '' }}"
-                                                placeholder="N/A">
+                                                placeholder="Submit Video Link Here: ">
                                         </div>
                                     </div><!-- Col -->
 
-
                                 </div>
-
                                 <hr>
 
                                 <div class="row">
@@ -444,8 +277,105 @@
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Save Changes </button>
-
                             </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-7 d-flex justify-content-center align-items-center">
+                    <div class="page-content" style="margin-top: 10px;">
+                        <div class="row profile-body">
+                            <div class="col-md-12 col-xl-12 middle-wrapper">
+                                <div class="row">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Edit Multi Image</h6>
+
+                                            <form method="post" action="" id="myForm"
+                                                enctype="multipart/form-data">
+                                                @csrf
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Sl</th>
+                                                                <th>Image</th>
+                                                                {{-- <th>Change Image</th> --}}
+                                                                <th>Delete</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($product->multi_images as $multi_image => $img)
+                                                                <tr>
+                                                                    <td>{{ $multi_image + 1 }}</td>
+                                                                    <td class="py-1">
+                                                                        <img src="{{ asset($img->image_detail->image) }}"
+                                                                            alt="image"
+                                                                            style="width: 80px";
+                                                                            height="190px">
+                                                                    </td>
+
+                                                                    {{-- <td><input type="file" 
+                                                                            class="form-control"
+                                                                            name="multi_img[{{ $img->id }}]"
+                                                                            value="{{ $img->image_detail->id }}">
+
+                                                                    </td> --}}
+                                                                    {{-- multiimage id --}}
+                                                                    <td>
+                                                                        {{-- <input type="submit"
+                                                                            class="btn btn-primary px-4"
+                                                                            value="Update Image"> --}}
+                                                                        <a href="{{ route('deleteMultiImg.delete', $img->image_detail->id) }}"
+                                                                            class="btn btn-danger"
+                                                                            id="delete">Delete</a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <br><br>
+
+                                            </form>
+
+                                            <form method="post"
+                                                action="{{ route('uploadMultiImg.add') }}"
+                                                id="myForm" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="imageid" value="">
+                                                <input type="hidden" value="{{ $product->id }}"
+                                                    name="upload_product_id">
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="file"
+                                                                    class="form-control"
+                                                                    name="multi_img">
+                                                                @error('multi_img')
+                                                                    <span
+                                                                        class="text-danger">{{ $message }}</span>
+                                                                @enderror
+                                                            </td>
+
+                                                            <td>
+                                                                <input type="submit"
+                                                                    class="btn btn-info px-4"
+                                                                    value="Add Image">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -603,6 +533,19 @@
         }
     </script>
 
+    <!-- JavaScript function to display the uploaded image -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#image').change(function(e) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files['0']);
+            });
+        });
+    </script>
+
     {{-- Bangla Language --}}
     <script src="{{ asset('backend/assets/js/bangla.js') }}"></script>
     <script>
@@ -616,4 +559,5 @@
         });
         $('#banglaInputText').bangla('on');
     </script>
+    
 @endsection

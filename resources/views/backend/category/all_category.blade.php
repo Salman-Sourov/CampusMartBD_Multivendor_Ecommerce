@@ -347,7 +347,7 @@
         }
     </script>
 
-    {{-- Delete Brand --}}
+    {{-- Delete Category --}}
     <script type="text/javascript">
         $(document).on('click', '.delete-btn', function(e) {
             e.preventDefault();
