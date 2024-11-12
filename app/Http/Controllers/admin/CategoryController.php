@@ -23,7 +23,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $inactive_category = Product_category::where('status', 'inactive')->get();
+        return view("backend.category.all_inactive_category", compact('inactive_category'));
     }
 
     /**
@@ -175,5 +176,11 @@ class CategoryController extends Controller
     {
         $subcategories = Product_category::where('parent_id', $id)->get();
         return response()->json($subcategories);
+    }
+
+    public function categoryChangeStatus(Request $request){
+
+        $category = Product_category::findOrFail($request->id);
+        dd($category);
     }
 }

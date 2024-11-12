@@ -21,8 +21,8 @@
                     </div>
                     <div class="modal-body">
                         <form id="addCategoryForm" method="POST" action="" class="forms-sample"
-                        onsubmit="event.preventDefault(); StoreCategory();">
-                        @csrf
+                            onsubmit="event.preventDefault(); StoreCategory();">
+                            @csrf
                             <div class="form-group mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" name="name" class="form-control" id="name">
@@ -72,7 +72,7 @@
         </div>
 
 
-        {{-- ALL category Modal--}}
+        {{-- ALL category Modal --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -98,7 +98,7 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->translations->  name }}</td>
+                                                <td>{{ $item->translations->name }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td><img src="{{ !empty($item->image) ? url($item->image) : url('upload/no_image.jpg') }}"
                                                         style="width:70px; height:40px;"> </td>
@@ -178,7 +178,7 @@
                             <span id="edit_description_error" class="text-danger"></span>
                         </div>
 
-                      
+
 
                         <div class="form-group mb-3">
                             <label for="edit_image" class="form-label">Image</label>
@@ -194,13 +194,15 @@
 
                         <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                             <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
-                                <input type="checkbox" name="is_featured" class="form-check-input" id="edit_is_featured">
+                                <input type="checkbox" name="is_featured" class="form-check-input"
+                                    id="edit_is_featured">
                                 <label class="form-check-label" for="edit_is_featured">
                                     Featured Category
                                 </label>
                             </div>
                             <div class="form-check mb-2">
-                                <input type="checkbox" name="enableSubcat" class="form-check-input" id="edit_enableSubcat">
+                                <input type="checkbox" name="enableSubcat" class="form-check-input"
+                                    id="edit_enableSubcat">
                                 <label class="form-check-label" for="edit_enableSubcat">
                                     Enable Sub Category
                                 </label>
@@ -217,12 +219,12 @@
 
 
 
-    {{-- Store Category--}}
+    {{-- Store Category --}}
     <script type="text/javascript">
         function StoreCategory() {
             var formData = new FormData(document.getElementById('addCategoryForm'));
 
-           
+
 
             $.ajax({
                 type: 'POST',
@@ -286,12 +288,14 @@
                         $('#edit_name').val(data.name);
                         $('#edit_banglaInputText').val(data.name_bangla);
                         $('#edit_description').val(data.description);
-                        
+
                         // $('#edit_image').val(data.logo);
                         var imgSrc = data.image ? data.image : '/upload/no_image.jpg';
                         $('#edit_showImage').attr('src', imgSrc);
-                        $('#edit_is_featured').prop('checked', data.is_featured == 1); // Check if 'is_featured' is true
-                        $('#edit_enableSubcat').prop('checked', data.enableSubcat == 1); // Check if 'enableSubcat' is true
+                        $('#edit_is_featured').prop('checked', data.is_featured ==
+                        1); // Check if 'is_featured' is true
+                        $('#edit_enableSubcat').prop('checked', data.enableSubcat ==
+                        1); // Check if 'enableSubcat' is true
                         $('#editModal').modal('show'); // Open modal with data loaded
 
                     }
@@ -380,11 +384,12 @@
                                     response.message,
                                     'success'
                                 );
-                               
-                                    toastr.success('Deleted Successfully.');
-                                    setTimeout(function() {
-                                        window.location.reload(); // Reload the page to see the new brand
-                                    }, 1500);
+
+                                toastr.success('Deleted Successfully.');
+                                setTimeout(function() {
+                                    window.location
+                                .reload(); // Reload the page to see the new brand
+                                }, 1500);
                             } else {
                                 toastr.error('Failed to delete the brand.');
                             }

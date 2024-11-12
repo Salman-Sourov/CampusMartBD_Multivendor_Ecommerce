@@ -57,6 +57,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //Category
     Route::resource('category', CategoryController::class);
+    Route::post('/category/changeStatus', [CategoryController::class, 'categoryChangeStatus'])->name('category.change.status');
 
     //Sub Category
     Route::resource('sub-category', SubCategoryController::class);
@@ -74,6 +75,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('stock', ProductStockController::class);
     Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
     Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
+    Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
 
 
 
@@ -81,6 +83,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
     Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
+
 
  
 }); //End Group Admin Middleware

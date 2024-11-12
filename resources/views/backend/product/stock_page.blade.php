@@ -140,7 +140,7 @@
                                                 <td>
                                                     <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
-                                                        id="{{ $item->id }}" onclick="categoryEdit(this.id)">
+                                                        id="{{ $item->id }}" onclick="stockEdit(this.id)">
                                                         Edit
                                                     </button>
 
@@ -171,68 +171,68 @@
 
     <!-- Edit Stock Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Stock</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editCategoryForm" method="POST" enctype="multipart/form-data" class="forms-sample"
-                        onsubmit="event.preventDefault(); UpdateCategory();">
+                    <form id="editStockForm" method="POST" enctype="multipart/form-data" class="forms-sample"
+                        onsubmit="event.preventDefault(); UpdateStock();">
                         @csrf
                         <!-- Simulate PATCH method -->
                         <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="cat_id" id="cat_id">
+                        <input type="hidden" name="product_id" id="product_id">
 
                         <div class="form-group mb-3">
-                            <label for="edit_name" class="form-label">Name</label>
-                            <input type="text" name="edit_name" class="form-control" id="edit_name">
-                            <span id="edit_name_error" class="text-danger"></span>
-                        </div>
+                            <label for="edit_name" class="form-label">Attribute Set</label>
 
-                        <div class="form-group mb-3">
-                            <label for="edit_banglaInputText" class="form-label">Bangla Name</label>
-                            <input type="text" name="edit_banglaInputText" class="form-control"
-                                id="edit_banglaInputText">
-                            <span id="edit_banglaInputText_error" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="edit_description" class="form-label">Description</label>
-                            <textarea name="edit_description" class="form-control" id="edit_description" rows="4"></textarea>
-                            <span id="edit_description_error" class="text-danger"></span>
+                            <select name="edit_attribute_set" class="form-control" id="edit_attribute_set"
+                                onChange="attributeChange()">
+                                <option value="">Select Attribute Set</option>
+                                <!-- Options will be dynamically populated here -->
+                                @foreach ($attributeSets as $attributeSet)
+                                    <option value="{{ $attributeSet->id }}">{{ $attributeSet->title }}</option>
+                                @endforeach
+                            </select>
+                            <span id="edit_attribute_set_error" class="text-danger"></span>
                         </div>
 
 
+                        <div class="form-group mb-3 attribute_container">
+                            <label for="attribute" class="form-label">Attribute</label>
+                            <select name="edit_attribute" class="form-control" id="edit_attribute_id">
 
-                        <div class="form-group mb-3">
-                            <label for="edit_image" class="form-label">Image</label>
-                            <input class="form-control" name="edit_image" type="file" id="edit_image">
+                            </select>
+                            @error('attribute')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            <span id="edit_attribute_error" class="text-danger"></span>
                         </div>
 
-                        <!-- Image preview -->
+
+
                         <div class="form-group mb-3">
-                            <img id="edit_showImage" class="wd-100 rounded-circle"
-                                src="{{ !empty($category->image) ? url('upload/category/' . $category->image) : url('upload/no_image.jpg') }}"
-                                alt="profile">
+                            <label for="description" class="form-label">Price</label>
+                            <input name="edit_price" type="number" class="form-control" id="edit_price">
+                            <span id="edit_price_error" class="text-danger"></span> <!-- Error message placeholder -->
                         </div>
 
-                        <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
-                            <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
-                                <input type="checkbox" name="is_featured" class="form-check-input"
-                                    id="edit_is_featured">
-                                <label class="form-check-label" for="edit_is_featured">
-                                    Featured Category
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input type="checkbox" name="enableSubcat" class="form-check-input"
-                                    id="edit_enableSubcat">
-                                <label class="form-check-label" for="edit_enableSubcat">
-                                    Enable Sub Category
-                                </label>
-                            </div>
+                        <div class="form-group mb-3">
+                            <label for="description" class="form-label">Sale Price</label>
+                            <input name="edit_sale_price" type="number" class="form-control" id="edit_sale_price">
+                            <span id="edit_sale_price_error" class="text-danger"></span>
+                            <!-- Error message placeholder -->
+                        </div>
+
+
+
+
+                        <div class="form-group mb-3">
+                            <label for="description" class="form-label">Stock</label>
+                            <input name="edit_stock" type="number" class="form-control" id="edit_stock">
+                            <span id="edit_stock_error" class="text-danger"></span> <!-- Error message placeholder -->
                         </div>
 
 
@@ -285,12 +285,8 @@
             }
         }
 
-
-
         function StoreStock() {
             var formData = new FormData(document.getElementById('addStockForm'));
-
-
 
             $.ajax({
                 type: 'POST',
@@ -341,27 +337,53 @@
 
     {{-- Edit Stock  --}}
     <script type="text/javascript">
-        function categoryEdit(cat_id) {
+        function stockEdit(stock_id) {
             $.ajax({
                 type: 'GET',
-                url: '/category/' + cat_id + '/edit', // Ensure this is the correct route
+                url: '/stock/' + stock_id + '/edit', // Ensure this is the correct route
                 dataType: 'json',
                 success: function(data) {
                     if (data.error) {
                         console.log(data.error);
                     } else {
-                        $('#cat_id').val(data.cat_id);
-                        $('#edit_name').val(data.name);
-                        $('#edit_banglaInputText').val(data.name_bangla);
-                        $('#edit_description').val(data.description);
+                        $('#edit_attribute_set').val(data.edit_attribute_set).trigger('change');
 
-                        // $('#edit_image').val(data.logo);
-                        var imgSrc = data.image ? data.image : '/upload/no_image.jpg';
-                        $('#edit_showImage').attr('src', imgSrc);
-                        $('#edit_is_featured').prop('checked', data.is_featured ==
-                            1); // Check if 'is_featured' is true
-                        $('#edit_enableSubcat').prop('checked', data.enableSubcat ==
-                            1); // Check if 'enableSubcat' is true
+                        var edit_attribute_set =  data.edit_attribute_set;
+                        console.log(edit_attribute_set);
+                        if ('#edit_attribute_set') {
+                            $.ajax({
+                                type: 'GET',
+                                url: '/get-stock-attribute/' + edit_attribute_set,
+                                // Ensure this is the correct route
+                                dataType: 'json',
+                                success: function(data) {
+                                    if (data.error) {
+                                        console.log(data.error);
+                                    } else {
+                                        $('#edit_attribute_id').empty();
+
+                                        // Add default option
+                                        $('#edit_attribute_id').append(
+                                            '<option value="">Select an Attribute</option>');
+
+                                        // Iterate over the data and populate the dropdown
+                                        $.each(data, function(index, attribute) {
+                                            $('#edit_attribute_id').append('<option value="' +
+                                                attribute.id + '">' +
+                                                attribute.title + '</option>');
+                                        });
+
+                                        $('#edit_attribute_id').val(data.edit_attribute).trigger('change');
+                                    }
+                                },
+                            });
+                        }
+
+                        $('#product_id').val(data.name);
+                        $('#edit_attribute').val(data.edit_attribute);
+                        $('#edit_price').val(data.edit_price);
+                        $('#edit_sale_price').val(data.edit_sale_price);
+                        $('#edit_stock').val(data.edit_stock);
                         $('#editModal').modal('show'); // Open modal with data loaded
 
                     }
@@ -375,8 +397,8 @@
 
     {{-- Update Stock  --}}
     <script type="text/javascript">
-        function UpdateCategory() {
-            var formData = new FormData(document.getElementById('editCategoryForm'));
+        function UpdateStock() {
+            var formData = new FormData(document.getElementById('editStockForm'));
             var cat_Id = $('#cat_id').val(); // Get the brand ID
             console.log(cat_Id);
 
@@ -422,7 +444,7 @@
         $(document).on('click', '.delete-btn', function(e) {
             e.preventDefault();
             var id = $(this).data('id'); // Get the data-id from the button
-            var url = '{{ route('category.destroy', ':id') }}';
+            var url = '{{ route('stock.destroy', ':id') }}';
             url = url.replace(":id", id); // Replace placeholder with actual ID
 
             // SweetAlert confirmation popup
@@ -457,7 +479,7 @@
                                         .reload(); // Reload the page to see the new brand
                                 }, 1500);
                             } else {
-                                toastr.error('Failed to delete the brand.');
+                                toastr.error('Failed to delete the Stock.');
                             }
                         },
                         error: function(xhr) {

@@ -49,6 +49,9 @@
                         <li class="nav-item">
                             <a href="{{ route('category.index') }}" class="nav-link">All Category</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('category.create') }}" class="nav-link">Inactive Category</a>
+                        </li>
                     </ul>
                 </div>
             </li>
