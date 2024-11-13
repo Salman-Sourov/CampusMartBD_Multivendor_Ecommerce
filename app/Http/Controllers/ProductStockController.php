@@ -20,7 +20,7 @@ class ProductStockController extends Controller
     {
         $attributeSets = Product_attribute_set::where('status', 'active')->get();
         $product_id = Product::where('id', $id)->where('status', 'active')->first();
-        $stocks = Product_attribute_wise_stock::where('product_id',$id)->get();
+        $stocks = Product_attribute_wise_stock::where('product_id', $id)->get();
         //dd($stocks);
         return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'stocks'));
     }
@@ -81,7 +81,6 @@ class ProductStockController extends Controller
             $data->attribute_set_id  = $request->attribute_set;
             $data->save();
 
-
             return response()->json(['success' => true, 'message' => 'Stock added successfully']);
         } else {
             return response()->json(['success' => true, 'message' => 'Already Added This Attribute']);
@@ -104,7 +103,7 @@ class ProductStockController extends Controller
         $stock = Product_attribute_wise_stock::findOrFail($id);
         // dd($stock);
         $attribute_set = Product_attribute::where('id', $stock->attribute_id)->first();
-       // dd($attribute_set->attribute_set_id);
+        // dd($attribute_set->attribute_set_id);
 
         if ($stock) {
             return response()->json([
@@ -114,6 +113,8 @@ class ProductStockController extends Controller
                 'edit_sale_price' => $stock->sale_price ?? null,
                 'edit_stock' => $stock->stock ?? null,
                 'edit_product_id' => $stock->product_id ?? null,
+
+          
             ]);
         } else {
 
@@ -126,7 +127,41 @@ class ProductStockController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($request);
+        // dd('Product ID: ', $id);
+        $request->validate([
+            'edit_attribute_set' => 'required',
+            'edit_attribute' => 'required',
+            'edit_price' => 'required',
+            'edit_sale_price' => 'required',
+            'edit_stock' => 'required',
+        ]);
+
+        $update_attribute = Product_attribute_wise_stock::where('product_id', $id)->first();
+         //dd($update_attribute);
+
+        if ($update_attribute) {
+
+            $update_attribute->attribute_id = $request->edit_attribute;
+            $update_attribute->price = $request->edit_price;
+            $update_attribute->sale_price = $request->edit_sale_price;
+            $update_attribute->stock = $request->edit_stock;
+            // $update_attribute->status = 1;
+            $update_attribute->save();
+
+
+            $data = Product_with_attribute_set::where('product_id',$id)->first();
+            //dd($data);
+            $data->attribute_set_id = $request->edit_attribute_set;
+            $data->save();
+
+            // Product_with_attribute_set::updateOrCreate(
+            //     ['product_id' => $update_attribute->product_id],
+            //     ['attribute_set_id' => $update_attribute->id]
+            // );
+            return response()->json(['success' => true, 'message' => 'Stock Updated successfully']);
+        } else {
+            return response()->json(['error' => true, 'message' => 'Wrong Input']);
+        }
     }
 
     /**
@@ -145,11 +180,12 @@ class ProductStockController extends Controller
     }
 
 
-    public function getStockAttribute(string $id){
-            //dd($id);
+    public function getStockAttribute(string $id)
+    {
+        //dd($id);
 
-            $StockAttribute = Product_attribute::where('attribute_set_id', $id)->get();
-           //dd(vars: $StockAttribute);
-            return response()->json($StockAttribute);
+        $StockAttribute = Product_attribute::where('attribute_set_id', $id)->get();
+        //dd(vars: $StockAttribute);
+        return response()->json($StockAttribute);
     }
 }
