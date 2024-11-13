@@ -74,7 +74,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     //Stock
     Route::resource('stock', ProductStockController::class);
     Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
-    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
+    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']); 
+    Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
 
 

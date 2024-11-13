@@ -189,7 +189,7 @@
                             <label for="edit_name" class="form-label">Attribute Set</label>
 
                             <select name="edit_attribute_set" class="form-control" id="edit_attribute_set"
-                                onChange="attributeChange()">
+                                onChange="EditAttributeChange()">
                                 <option value="">Select Attribute Set</option>
                                 <!-- Options will be dynamically populated here -->
                                 @foreach ($attributeSets as $attributeSet)
@@ -200,7 +200,7 @@
                         </div>
 
 
-                        <div class="form-group mb-3 attribute_container">
+                        <div class="form-group mb-3 edit_attribute_container">
                             <label for="attribute" class="form-label">Attribute</label>
                             <select name="edit_attribute" class="form-control" id="edit_attribute_id">
 
@@ -285,6 +285,45 @@
             }
         }
 
+        function EditAttributeChange()
+        {
+            var attribute_set = $('#edit_attribute_set').val();
+            console.log(attribute_set);
+
+            if (attribute_set) {
+                $.ajax({
+                    url: '/get-edit-attribute/' + attribute_set, // URL to fetch attributes
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log('Fetched Attributes:', data); // Log the fetched attributes for debugging
+
+                        $('.edit_attribute_container').show();
+                        // Clear existing options
+                        $('#edit_attribute_id').empty();
+
+                        // Add default option
+                        $('#edit_attribute_id').append('<option value="">Select an Attribute</option>');
+
+                        // Iterate over the data and populate the dropdown
+                        $.each(data, function(index, attribute) {
+                            $('#edit_attribute_id').append('<option value="' + attribute.id + '">' +
+                                attribute.title + '</option>');
+                        });
+
+                        $('#edit_attribute_id').trigger('change');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching attributes:', error);
+                    }
+                });
+            } else {
+                // If no attribute set is selected, clear the attribute dropdown
+                $('#edit_attribute').empty();
+                $('#edit_attribute').append('<option value="">Select an Attribute</option>');
+            }
+        }
+
         function StoreStock() {
             var formData = new FormData(document.getElementById('addStockForm'));
 
@@ -335,76 +374,84 @@
         });
     </script>
 
-    {{-- Edit Stock  --}}
-    <script type="text/javascript">
-        function stockEdit(stock_id) {
-            $.ajax({
-                type: 'GET',
-                url: '/stock/' + stock_id + '/edit', // Ensure this is the correct route
-                dataType: 'json',
-                success: function(data) {
-                    if (data.error) {
-                        console.log(data.error);
-                    } else {
-                        $('#edit_attribute_set').val(data.edit_attribute_set).trigger('change');
+<script type="text/javascript">
+    function stockEdit(stock_id) {
+        $.ajax({
+            type: 'GET',
+            url: '/stock/' + stock_id + '/edit', // Ensure this is the correct route
+            dataType: 'json',
+            success: function(data) {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    // Set the value of edit_attribute_set dropdown
+                    $('#edit_attribute_set').val(data.edit_attribute_set).trigger('change');
 
-                        var edit_attribute_set =  data.edit_attribute_set;
-                        console.log(edit_attribute_set);
-                        if ('#edit_attribute_set') {
-                            $.ajax({
-                                type: 'GET',
-                                url: '/get-stock-attribute/' + edit_attribute_set,
-                                // Ensure this is the correct route
-                                dataType: 'json',
-                                success: function(data) {
-                                    if (data.error) {
-                                        console.log(data.error);
-                                    } else {
-                                        $('#edit_attribute_id').empty();
+                    var edit_attribute_set = data.edit_attribute_set;
+                    console.log(edit_attribute_set); // To verify the selected attribute set ID
 
-                                        // Add default option
+                    // Fetch attributes if a valid attribute set is selected
+                    if (edit_attribute_set) {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/get-stock-attribute/' + edit_attribute_set, // Correct the route
+                            dataType: 'json',
+                            success: function(attributeData) {
+                                if (attributeData.error) {
+                                    console.log(attributeData.error);
+                                } else {
+                                    $('#edit_attribute_id').empty(); // Clear existing options
+
+                                    // Add default option
+                                    $('#edit_attribute_id').append(
+                                        '<option value="">Select an Attribute</option>'
+                                    );
+
+                                    // Populate attribute options dynamically
+                                    $.each(attributeData, function(index, attribute) {
                                         $('#edit_attribute_id').append(
-                                            '<option value="">Select an Attribute</option>');
+                                            '<option value="' + attribute.id + '">' + attribute.title + '</option>'
+                                        );
+                                    });
 
-                                        // Iterate over the data and populate the dropdown
-                                        $.each(data, function(index, attribute) {
-                                            $('#edit_attribute_id').append('<option value="' +
-                                                attribute.id + '">' +
-                                                attribute.title + '</option>');
-                                        });
-
-                                        $('#edit_attribute_id').val(data.edit_attribute).trigger('change');
-                                    }
-                                },
-                            });
-                        }
-
-                        $('#product_id').val(data.name);
-                        $('#edit_attribute').val(data.edit_attribute);
-                        $('#edit_price').val(data.edit_price);
-                        $('#edit_sale_price').val(data.edit_sale_price);
-                        $('#edit_stock').val(data.edit_stock);
-                        $('#editModal').modal('show'); // Open modal with data loaded
-
+                                    // Set the previously selected attribute
+                                    $('#edit_attribute_id').val(data.edit_attribute).trigger('change');
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            }
+                        });
                     }
-                },
-                error: function(err) {
-                    console.log(err);
+
+                    // Set the rest of the fields in the modal
+                    $('#product_id').val(data.product_id); // Ensure 'product_id' is in the response
+                    $('#edit_price').val(data.edit_price);
+                    $('#edit_sale_price').val(data.edit_sale_price);
+                    $('#edit_stock').val(data.edit_stock);
+
+                    // Open the modal
+                    $('#editModal').modal('show');
                 }
-            });
-        }
-    </script>
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+</script>
+
 
     {{-- Update Stock  --}}
     <script type="text/javascript">
         function UpdateStock() {
             var formData = new FormData(document.getElementById('editStockForm'));
-            var cat_Id = $('#cat_id').val(); // Get the brand ID
-            console.log(cat_Id);
+            var product_Id = $('#product_id').val(); // Get the brand ID
+            console.log('hello');
 
             $.ajax({
-                type: 'POST', // POST method to support _method PATCH
-                url: '/category/' + cat_Id,
+                type: 'POST',  // POST method, but _method field will simulate PATCH
+                url: '/stock/' + product_Id,
                 data: formData,
                 contentType: false,
                 processData: false,

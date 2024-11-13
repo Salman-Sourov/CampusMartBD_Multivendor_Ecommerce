@@ -20,11 +20,19 @@ class ProductStockController extends Controller
     {
         $attributeSets = Product_attribute_set::where('status', 'active')->get();
         $product_id = Product::where('id', $id)->where('status', 'active')->first();
-        $stocks = Product_attribute_wise_stock::all();
+        $stocks = Product_attribute_wise_stock::where('product_id',$id)->get();
+        //dd($stocks);
         return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'stocks'));
     }
 
     public function getAttribute(string $id)
+    {
+        $attributes = Product_attribute::where('attribute_set_id', $id)->get();
+        //dd($attributes);
+        return response()->json($attributes);
+    }
+
+    public function getEditAttribute(string $id)
     {
         $attributes = Product_attribute::where('attribute_set_id', $id)->get();
         //dd($attributes);
@@ -117,7 +125,7 @@ class ProductStockController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request);
     }
 
     /**
