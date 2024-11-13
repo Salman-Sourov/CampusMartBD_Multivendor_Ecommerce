@@ -181,9 +181,10 @@
                     <form id="editStockForm" method="POST" enctype="multipart/form-data" class="forms-sample"
                         onsubmit="event.preventDefault(); UpdateStock();">
                         @csrf
-                        <!-- Simulate PATCH method -->
+                        {{-- <!-- Simulate PATCH method -->
+                        {{-- <input type="hidden" name="_method" value="PATCH"> --}}
                         <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="product_id" id="product_id">
+                        <input type="hidden" name="product_id" id="edit_product_id">
 
                         <div class="form-group mb-3">
                             <label for="edit_name" class="form-label">Attribute Set</label>
@@ -285,8 +286,7 @@
             }
         }
 
-        function EditAttributeChange()
-        {
+        function EditAttributeChange() {
             var attribute_set = $('#edit_attribute_set').val();
             console.log(attribute_set);
 
@@ -374,114 +374,122 @@
         });
     </script>
 
-<script type="text/javascript">
-    function stockEdit(stock_id) {
-        $.ajax({
-            type: 'GET',
-            url: '/stock/' + stock_id + '/edit', // Ensure this is the correct route
-            dataType: 'json',
-            success: function(data) {
-                if (data.error) {
-                    console.log(data.error);
-                } else {
-                    // Set the value of edit_attribute_set dropdown
-                    $('#edit_attribute_set').val(data.edit_attribute_set).trigger('change');
+    {{-- Edit Stock  --}}
+    <script type="text/javascript">
+        function stockEdit(stock_id) {
+            $.ajax({
+                type: 'GET',
+                url: '/stock/' + stock_id + '/edit', // Ensure this is the correct route
+                dataType: 'json',
+                success: function(data) {
+                    if (data.error) {
+                        console.log(data.error);
+                    } else {
+                        // Set the value of edit_attribute_set dropdown
+                        $('#edit_attribute_set').val(data.edit_attribute_set).trigger('change');
 
-                    var edit_attribute_set = data.edit_attribute_set;
-                    console.log(edit_attribute_set); // To verify the selected attribute set ID
+                        var edit_attribute_set = data.edit_attribute_set;
+                        console.log(edit_attribute_set); // To verify the selected attribute set ID
 
-                    // Fetch attributes if a valid attribute set is selected
-                    if (edit_attribute_set) {
-                        $.ajax({
-                            type: 'GET',
-                            url: '/get-stock-attribute/' + edit_attribute_set, // Correct the route
-                            dataType: 'json',
-                            success: function(attributeData) {
-                                if (attributeData.error) {
-                                    console.log(attributeData.error);
-                                } else {
-                                    $('#edit_attribute_id').empty(); // Clear existing options
+                        // Fetch attributes if a valid attribute set is selected
+                        if (edit_attribute_set) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '/get-stock-attribute/' + edit_attribute_set, // Correct the route
+                                dataType: 'json',
+                                success: function(attributeData) {
+                                    if (attributeData.error) {
+                                        console.log(attributeData.error);
+                                    } else {
+                                        $('#edit_attribute_id').empty(); // Clear existing options
 
-                                    // Add default option
-                                    $('#edit_attribute_id').append(
-                                        '<option value="">Select an Attribute</option>'
-                                    );
-
-                                    // Populate attribute options dynamically
-                                    $.each(attributeData, function(index, attribute) {
+                                        // Add default option
                                         $('#edit_attribute_id').append(
-                                            '<option value="' + attribute.id + '">' + attribute.title + '</option>'
+                                            '<option value="">Select an Attribute</option>'
                                         );
-                                    });
 
-                                    // Set the previously selected attribute
-                                    $('#edit_attribute_id').val(data.edit_attribute).trigger('change');
+                                        // Populate attribute options dynamically
+                                        $.each(attributeData, function(index, attribute) {
+                                            $('#edit_attribute_id').append(
+                                                '<option value="' + attribute.id +
+                                                '">' + attribute.title + '</option>'
+                                            );
+                                        });
+
+                                        // Set the previously selected attribute
+                                        $('#edit_attribute_id').val(data.edit_attribute).trigger(
+                                            'change');
+                                    }
+                                },
+                                error: function(err) {
+                                    console.log(err);
                                 }
-                            },
-                            error: function(err) {
-                                console.log(err);
-                            }
-                        });
+                            });
+                        }
+
+                        // Set the rest of the fields in the modal
+                        $('#edit_product_id').val(data.edit_product_id); // Ensure 'product_id' is in the response
+                        $('#edit_price').val(data.edit_price);
+                        $('#edit_sale_price').val(data.edit_sale_price);
+                        $('#edit_stock').val(data.edit_stock);
+
+                        // console.log('Product ID:', data.edit_product_id);
+
+                        // Open the modal
+                        $('#editModal').modal('show');
                     }
-
-                    // Set the rest of the fields in the modal
-                    $('#product_id').val(data.product_id); // Ensure 'product_id' is in the response
-                    $('#edit_price').val(data.edit_price);
-                    $('#edit_sale_price').val(data.edit_sale_price);
-                    $('#edit_stock').val(data.edit_stock);
-
-                    // Open the modal
-                    $('#editModal').modal('show');
+                },
+                error: function(err) {
+                    console.log(err);
                 }
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
 
     {{-- Update Stock  --}}
     <script type="text/javascript">
         function UpdateStock() {
             var formData = new FormData(document.getElementById('editStockForm'));
-            var product_Id = $('#product_id').val(); // Get the brand ID
-            console.log('hello');
+            var product_Id = $('#edit_product_id').val();
+
+            console.log('Product ID:', product_Id);
+
+            // Clear previous error messages
+            $('.text-danger').text('');
 
             $.ajax({
-                type: 'POST',  // POST method, but _method field will simulate PATCH
+                type: 'POST', // Simulates PATCH request via _method field
                 url: '/stock/' + product_Id,
                 data: formData,
                 contentType: false,
                 processData: false,
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Add CSRF token header
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(data) {
-                    if (data.success) {
-                        $('#editModal').modal('hide'); // Close the modal
-                        toastr.success(data.message); // Show success notification
-                        // Optionally refresh the brand list or table here
+                success: function(response) {
+                    if (response.success) {
+                        $('#editModal').modal('hide'); // Close modal
+                        toastr.success(response.message); // Show success notification
                         setTimeout(function() {
-                            window.location.reload(); // Reload the page to see the new brand
+                            window.location.reload(); // Reload the page
                         }, 1500);
                     } else {
-                        for (let field in data.errors) {
-                            $('#' + field + '_error').text(data.errors[field][0]); // Show error
+                        // Handle validation errors
+                        if (response.errors) {
+                            for (let field in response.errors) {
+                                $('#' + field + '_error').text(response.errors[field][0]);
+                            }
                         }
                     }
                 },
-
                 error: function(xhr) {
-                    console.log(xhr); // Log the error for debugging
-                    const errors = xhr.responseJSON.errors;
+                    console.log(xhr); // Log error for debugging
+                    const errors = xhr.responseJSON?.errors || {};
                     for (let field in errors) {
-                        $('#' + field + '_error').text(errors[field][0]); // Show error
+                        $('#' + field + '_error').text(errors[field][0]);
                     }
                 }
-
-
             });
         }
     </script>

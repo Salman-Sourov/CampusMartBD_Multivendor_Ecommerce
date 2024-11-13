@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Validation\Rules\Password;
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Product_category;
 
 class RegisteredUserController extends Controller
 {
@@ -21,7 +24,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $categories = Product_category::with('translations')->where('status','active')->get();
+        $brands = Brand::with('translations')->where('status','active')->get();
+        $products = Product::with('translations','inventory_stocks')->where('status','active')->get();
+        return view('auth.register',compact('categories','brands','products'));
     }
 
     /**

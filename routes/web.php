@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\AttributeSetController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\indexController;
 use App\Http\Controllers\ProductStockController;
 
 /*
@@ -23,9 +24,12 @@ use App\Http\Controllers\ProductStockController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
+// Route::get('/', function () {
+//     return view('frontend.index');
+// });
+
+Route::get('/', [indexController::class, 'index'])->name('index');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
