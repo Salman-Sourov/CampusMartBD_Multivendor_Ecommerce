@@ -113,6 +113,7 @@ class ProductStockController extends Controller
                 'edit_price' => $stock->price ?? null,
                 'edit_sale_price' => $stock->sale_price ?? null,
                 'edit_stock' => $stock->stock ?? null,
+                'edit_product_id' => $stock->product_id ?? null,
             ]);
         } else {
 

@@ -183,7 +183,7 @@
                         @csrf
                         <!-- Simulate PATCH method -->
                         <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="product_id" id="product_id">
+                        <input type="hidden" name="edit_product_id" id="edit_product_id">
 
                         <div class="form-group mb-3">
                             <label for="edit_name" class="form-label">Attribute Set</label>
@@ -425,7 +425,7 @@
                     }
 
                     // Set the rest of the fields in the modal
-                    $('#product_id').val(data.product_id); // Ensure 'product_id' is in the response
+                    $('#edit_product_id').val(data.edit_product_id); // Ensure 'product_id' is in the response
                     $('#edit_price').val(data.edit_price);
                     $('#edit_sale_price').val(data.edit_sale_price);
                     $('#edit_stock').val(data.edit_stock);
@@ -446,8 +446,8 @@
     <script type="text/javascript">
         function UpdateStock() {
             var formData = new FormData(document.getElementById('editStockForm'));
-            var product_Id = $('#product_id').val(); // Get the brand ID
-            console.log('hello');
+            var product_Id = $('#edit_product_id').val(); // Get the brand ID
+            console.log('hello'.product_Id);
 
             $.ajax({
                 type: 'POST',  // POST method, but _method field will simulate PATCH
