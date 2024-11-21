@@ -18,7 +18,7 @@ class Product extends Model
     }
     public function categories()
     {
-        return $this->hasOne(product_category_product::class,  'product_id', 'id')->with(['category_detail']);
+        return $this->hasOne(Product_category_product::class,  'product_id', 'id')->with(['category_detail']);
     }
     public function brands()
     {

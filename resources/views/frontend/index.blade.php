@@ -52,7 +52,7 @@
     <section>
         <div class="container-fluid-lg">
             <div class="title">
-                <h2>Browse by Categories</h2>
+                <h2>{{ __('content.browse_by_Categories') }}</h2>
                 <span class="title-leaf">
                     <svg class="icon-width">
                         <use xlink:href="{{ asset('frontend') }}/assets/svg/leaf.svg#leaf"></use>
@@ -60,12 +60,14 @@
                 </span>
                 <p>Top Categories Of The Week</p>
             </div>
+
+            @if (App::getLocale() == 'en')
             <div class="row">
                 <div class="col-12">
                     <div class="slider-9">
                         @forelse ($categories as $category)
                             <div>
-                                <a href="shop-left-sidebar.html" class="category-box wow fadeInUp">
+                                <a href="{{ route('category.details', $category->id) }}" class="category-box wow fadeInUp">
                                     <div>
                                         <img src="{{ asset($category->image) }}" class="blur-up lazyload" alt="">
                                         <h5>{{ $category->name }}</h5>
@@ -79,6 +81,28 @@
                     </div>
                 </div>
             </div>
+
+            @else
+            <div class="row">
+                <div class="col-12">
+                    <div class="slider-9">
+                        @forelse ($categories as $category)
+                            <div>
+                                <a href="{{ route('category.details', $category->id) }}" class="category-box wow fadeInUp">
+                                    <div>
+                                        <img src="{{ asset($category->image) }}" class="blur-up lazyload" alt="">
+                                        <h5>{{ $category->translations->name }}</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        @empty
+                            <!-- You can display a message if no categories are available -->
+                            <li>No categories available.</li>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </section>
     <!-- Category Section End -->
@@ -111,7 +135,7 @@
     <section class="section-b-space shop-section">
         <div class="container-fluid-lg">
             <div class="title">
-                <h2>Recently &amp; Added</h2>
+                <h2>{{ __('content.recently_added') }}</h2>
                 <span class="title-leaf">
                     <svg class="icon-width">
                         <use xlink:href="{{ asset('frontend') }}/assets/svg/leaf.svg#leaf"></use>
@@ -138,10 +162,15 @@
                                     </div>
                                     <div class="product-footer">
                                         <div class="product-detail">
-                                            <span class="span-name">Vegetable</span>
+                                            <span class="span-name">{{ $product->categories->category_detail->name }}</span>
                                             <a href="product-left-thumbnail.html">
+                                                @if (App::getLocale() == 'en')
                                                 <h5 class="name">{{ Str::limit($product->name, 20) }}</h5>
+                                                @else
+                                                <h5 class="name">{{ Str::limit($product->translations->name, 20) }}</h5>
+                                                @endif
                                             </a>
+                                            
                                             <p class="text-content mt-1 mb-2 product-content">{{ $product->description }}
                                             </p>
                                             {{-- <div class="product-rating mt-2">
@@ -164,7 +193,10 @@
                                                 </ul>
                                                 <span>(4.0)</span>
                                             </div> --}}
-                                            <h6 class="unit">{{ $product->brand }}</h6>
+                                            @php
+                                                $get_brand = App\Models\Brand::where('id',$product->brand_id)->first();
+                                            @endphp
+                                            <h6 class="unit">{{ $get_brand->name ?? 'No Brand' }}</h6>
                                             <h5 class="price"><span class="theme-color">{{ $product->sale_price }}</span>
                                                 <del>{{ $product->price }}</del>
                                                 <br> <br>
@@ -236,7 +268,7 @@
                     <br>
                     <br>
                     <div class="title">
-                        <h2>For &amp; You</h2>
+                        <h2>{{ __('content.for_you') }}</h2>
                         <span class="title-leaf">
                             <svg class="icon-width">
                                 <use xlink:href="{{ asset('frontend') }}/assets/svg/leaf.svg#leaf"></use>

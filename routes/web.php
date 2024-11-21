@@ -12,6 +12,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\ProductStockController;
+use App\Http\Controllers\LangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,10 @@ use App\Http\Controllers\ProductStockController;
 //     return view('frontend.index');
 // });
 
+Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
 Route::get('/', [indexController::class, 'index'])->name('index');
+Route::get('/category-details/{id}',[indexController::class, 'categoryDetails'])->name('category.details');
+Route::get('/brand-details/{id}',[indexController::class, 'brandDetails'])->name('brand.details');
 
 
 Route::get('/dashboard', function () {

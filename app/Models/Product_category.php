@@ -25,9 +25,9 @@ class Product_category extends Model
     {
         return $this->hasMany(Product_category::class,'parent_id','id');
     }
-    public function totalProduct()
+    public function totalProducts()
     {
-        return $this->hasOne(Product_category_product::class,'category_id');
+        return $this->hasMany(Product_category_product::class,'category_id')->with('products');
     }
     
     public function subcategory()

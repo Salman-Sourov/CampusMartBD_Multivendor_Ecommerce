@@ -41,31 +41,44 @@
                                 <div class="dropdown theme-form-select">
                                     <button class="btn dropdown-toggle" type="button" id="select-language"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="{{ asset('frontend') }}/assets/images/country/united-states.png"
-                                            class="img-fluid blur-up lazyload" alt="">
-                                        <span>English</span>
+                                        @if (App::getLocale() == 'bn')
+                                            <img src="{{ asset('frontend/assets/images/country/Bangladesh.png') }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                            <span>বাংলা</span>
+                                        @else
+                                            <img src="{{ asset('frontend/assets/images/country/united-states.png') }}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                            <span>English</span>
+                                        @endif
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="select-language">
+                                        {{-- English Language Option --}}
                                         <li>
-                                            <a class="dropdown-item" href="javascript:void(0)" id="english">
-                                                <img src="{{ asset('frontend') }}/assets/images/country/united-kingdom.png"
+                                            <a href="{{ route('lang.change', 'en') }}"
+                                                class="dropdown-item {{ App::getLocale() == 'en' ? 'active' : '' }}"
+                                                id="english">
+                                                <img src="{{ asset('frontend/assets/images/country/united-states.png') }}"
                                                     class="img-fluid blur-up lazyload" alt="">
                                                 <span>English</span>
                                             </a>
                                         </li>
+
+                                        {{-- Bangla Language Option --}}
                                         <li>
-                                            <a class="dropdown-item" href="javascript:void(0)" id="france">
-                                                <img src="{{ asset('frontend') }}/assets/images/country/germany.png"
+                                            <a href="{{ route('lang.change', 'bn') }}"
+                                                class="dropdown-item {{ App::getLocale() == 'bn' ? 'active' : '' }}"
+                                                id="bangla">
+                                                <img src="{{ asset('frontend/assets/images/country/Bangladesh.png') }}"
                                                     class="img-fluid blur-up lazyload" alt="">
-                                                <span>Bangla</span>
+                                                <span>বাংলা</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -89,8 +102,9 @@
                             <div class="middle-box">
                                 <div class="search-box">
                                     <div class="input-group">
-                                        <input type="search" class="form-control" placeholder="I'm searching for..."
-                                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <input type="search" class="form-control"
+                                            placeholder="{{ __('content.search') }}" aria-label="Recipient's username"
+                                            aria-describedby="button-addon2">
                                         <button class="btn" type="button" id="button-addon2">
                                             <i data-feather="search"></i>
                                         </button>
@@ -257,7 +271,7 @@
                         <div class="header-nav-left">
                             <button class="dropdown-category">
                                 <i data-feather="align-left"></i>
-                                <span>All Categories</span>
+                                <span>{{ __('content.all_category') }}</span>
                             </button>
 
                             {{-- Categories --}}
@@ -271,40 +285,60 @@
 
                                 <ul class="category-list">
                                     @forelse ($categories as $category)
-                                    <li class="onhover-category-list">
-                                        <a href="javascript:void(0)" class="category-name">
-                                            <img src="{{ asset($category->image) }}" alt="">
-                                            <h6>{{ $category->name }}</h6>
-                                            <i class="fa-solid fa-angle-right"></i>
-                                        </a>
-                                
-                                        {{-- Check if the category has child categories --}}
-                                        @if ($category->hasChild->isNotEmpty())
-                                            <div class="onhover-category-box w-100">
-                                                <div class="list-1">
-                                                    <div class="category-title-box">
-                                                        <h5>{{ $category->name }} Subcategories</h5>
+                                        <li class="onhover-category-list">
+                                            <a href="{{ route('category.details', $category->id) }}"
+                                                class="category-name">
+                                                <img src="{{ asset($category->image) }}" alt="">
+
+                                                @if (App::getLocale() == 'en')
+                                                    <h6>{{ $category->name }}</h6>
+                                                @else
+                                                    <h6>{{ $category->translations->name }}</h6>
+                                                @endif
+
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </a>
+
+                                            {{-- Check if the category has child categories --}}
+                                            @if ($category->hasChild->isNotEmpty())
+                                                <div class="onhover-category-box w-100">
+                                                    <div class="list-1">
+                                                        <div class="category-title-box">
+                                                            @if (App::getLocale() == 'en')
+                                                                <h5>{{ $category->name }} {{ __('content.Subcat') }}
+                                                                </h5>
+                                                            @else
+                                                                <h5>{{ $category->translations->name }}
+                                                                    {{ __('content.Subcat') }}</h5>
+                                                            @endif
+                                                        </div>
+                                                        <ul>
+                                                            {{-- Loop through each child category --}}
+                                                            @foreach ($category->hasChild as $child)
+                                                                <li>
+                                                                    <a
+                                                                        href="{{ route('category.details', $category->id) }}">
+                                                                        <img src="{{ asset($child->image) }}"
+                                                                            alt="">
+                                                                        @if (App::getLocale() == 'en')
+                                                                            <h6>{{ $child->name }}</h6>
+                                                                        @else
+                                                                            <h6>{{ $child->translations->name }}</h6>
+                                                                        @endif
+
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
                                                     </div>
-                                                    <ul>
-                                                        {{-- Loop through each child category --}}
-                                                        @foreach ($category->hasChild as $child)
-                                                            <li>
-                                                                <a href="javascript:void(0)">
-                                                                    <img src="{{ asset($child->image) }}" alt="">
-                                                                    <h6>{{ $child->name }}</h6>
-                                                                </a>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
                                                 </div>
-                                            </div>
-                                        @endif
-                                    </li>
-                                @empty
-                                    <!-- You can display a message if no categories are available -->
-                                    <li>No categories available.</li>
-                                @endforelse
-                                
+                                            @endif
+                                        </li>
+                                    @empty
+                                        <!-- You can display a message if no categories are available -->
+                                        <li>No categories available.</li>
+                                    @endforelse
+
                                 </ul>
                             </div>
                         </div>
@@ -322,19 +356,28 @@
                                     <div class="offcanvas-body">
                                         <ul class="navbar-nav">
                                             <li class="nav-item dropdown">
-                                                <a href="{{ url('/') }}" class="nav-link">Home</a>
+                                                <a href="{{ url('/') }}"
+                                                    class="nav-link">{{ __('content.home') }}</a>
                                             </li>
 
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                                                    data-bs-toggle="dropdown">Brands</a>
+                                                    data-bs-toggle="dropdown">{{ __('content.brands') }}</a>
 
                                                 <ul class="dropdown-menu">
                                                     @forelse ($brands as $brand)
                                                         <li>
-                                                            <a class="dropdown-item" href="shop-category-slider.html">
-                                                                {{ $brand->name }}
-                                                            </a>
+                                                            @if (App::getLocale() == 'en')
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('brand.details', $brand->id) }}">
+                                                                    {{ $brand->name }}
+                                                                </a>
+                                                            @else
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('brand.details', $brand->id) }}">
+                                                                    {{ $brand->translations->name }}
+                                                                </a>
+                                                            @endif
                                                         </li>
                                                     @empty
                                                         <!-- Do nothing or display a message if needed -->
@@ -344,7 +387,7 @@
 
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                                                    data-bs-toggle="dropdown">Product</a>
+                                                    data-bs-toggle="dropdown">{{ __('content.product') }}</a>
 
                                                 @php
                                                     use Illuminate\Support\Str;
@@ -353,9 +396,18 @@
                                                 <ul class="dropdown-menu">
                                                     @forelse ($products->take(5) as $product)
                                                         <li>
-                                                            <a class="dropdown-item" href="shop-category-slider.html">
-                                                                {{ Str::limit($product->name, 20) }}
-                                                            </a>
+                                                            @if (App::getLocale() == 'en')
+                                                                <a class="dropdown-item"
+                                                                    href="shop-category-slider.html">
+                                                                    {{ Str::limit($product->name, 20) }}
+                                                                </a>
+                                                            @else
+                                                                <a class="dropdown-item"
+                                                                    href="shop-category-slider.html">
+                                                                    {{ Str::limit($product->translations->name, 20) }}
+                                                                </a>
+                                                            @endif
+
                                                         </li>
                                                     @empty
                                                         <!-- Do nothing or display a message if needed -->
@@ -365,12 +417,13 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a href="{{ url('/') }}" class="nav-link">About US</a>
+                                                <a href="{{ url('/') }}"
+                                                    class="nav-link">{{ __('content.about') }}</a>
                                             </li>
 
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                                                    data-bs-toggle="dropdown">Blog</a>
+                                                    data-bs-toggle="dropdown">{{ __('content.blog') }}</a>
                                             </li>
                                         </ul>
                                     </div>
