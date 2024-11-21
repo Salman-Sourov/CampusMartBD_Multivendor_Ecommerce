@@ -428,12 +428,11 @@
                         }
 
                         // Set the rest of the fields in the modal
-                        $('#edit_product_id').val(data.edit_product_id); // Ensure 'product_id' is in the response
-                        $('#edit_price').val(data.edit_price);
-                        $('#edit_sale_price').val(data.edit_sale_price);
-                        $('#edit_stock').val(data.edit_stock);
-
-                        // console.log('Product ID:', data.edit_product_id);
+                         // Set the rest of the fields in the modal
+                    $('#edit_product_id').val(data.edit_product_id); // Ensure 'product_id' is in the response
+                    $('#edit_price').val(data.edit_price);
+                    $('#edit_sale_price').val(data.edit_sale_price);
+                    $('#edit_stock').val(data.edit_stock);
 
                         // Open the modal
                         $('#editModal').modal('show');
@@ -451,12 +450,8 @@
     <script type="text/javascript">
         function UpdateStock() {
             var formData = new FormData(document.getElementById('editStockForm'));
-            var product_Id = $('#edit_product_id').val();
-
-            console.log('Product ID:', product_Id);
-
-            // Clear previous error messages
-            $('.text-danger').text('');
+            var product_Id = $('#product_id').val(); // Get the brand ID
+            console.log('hello');
 
             $.ajax({
                 type: 'POST', // Simulates PATCH request via _method field
