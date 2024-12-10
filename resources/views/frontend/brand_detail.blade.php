@@ -75,13 +75,13 @@
 
                             <div
                                 class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                                @forelse ($products as $product)
+                                @forelse ($brand_product as $product)
                                     <div>
                                         <div class="product-box-3 h-100 wow fadeInUp">
                                             <div class="product-header">
                                                 <div class="product-image">
-                                                    <a href="product-left-thumbnail.html">
-                                                        <img src="{{ asset(optional($product)->thumbnail ?? 'upload/no_image.jpg') }}"
+                                                    <a href="{{ route('product.details', $product->id) }}">
+                                                        <img src="{{ asset($product->thumbnail) }}"
                                                             class="img-fluid blur-up lazyload" alt="">
                                                     </a>
                                                 </div>
@@ -89,8 +89,8 @@
                                             <div class="product-footer">
                                                 <div class="product-detail">
                                                     <span
-                                                        {{-- class="span-name">{{ $product->categories->category_detail->name }}</span> --}}
-                                                    <a href="product-left-thumbnail.html">
+                                                        class="span-name">{{ $product->categories->category_detail->name }}</span>
+                                                    <a href="{{ route('product.details', $product->id) }}">
                                                         @if (App::getLocale() == 'en')
                                                             <h5 class="name">
                                                                 {{ Str::limit($product->name, 20) }}</h5>
@@ -98,7 +98,7 @@
                                                             @php
                                                                 $get_product_bangla = App\Models\product_translation::where(
                                                                     'products_id',
-                                                                    $product->id,
+                                                                    $product->products->id,
                                                                 )->first();
                                                                 // print_r ($get_product_bangla);
                                                             @endphp
@@ -110,8 +110,7 @@
                                                         {{ $product->description }}</p>
                                                     <h6 class="unit">{{ $product->brands->name }}</h6>
                                                     <h5 class="price">
-                                                        <span
-                                                            class="theme-color">{{ $product->sale_price }}</span>
+                                                        <span class="theme-color">{{ $product->sale_price }}</span>
                                                         <del>{{ $product->price }}</del>
                                                         <br> <br>
                                                     </h5>
@@ -126,12 +125,10 @@
                                 @empty
                                     <!-- No products available -->
                                 @endforelse
-
                             </div>
 
                         </div>
                     </div>
                 </div>
     </section>
-
 @endsection

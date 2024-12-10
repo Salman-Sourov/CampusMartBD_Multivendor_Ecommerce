@@ -398,12 +398,12 @@
                                                         <li>
                                                             @if (App::getLocale() == 'en')
                                                                 <a class="dropdown-item"
-                                                                    href="shop-category-slider.html">
+                                                                    href="{{ route('product.details',$product->id) }}">
                                                                     {{ Str::limit($product->name, 20) }}
                                                                 </a>
                                                             @else
                                                                 <a class="dropdown-item"
-                                                                    href="shop-category-slider.html">
+                                                                    href="{ route('product.details',$product->id) }}">
                                                                     {{ Str::limit($product->translations->name, 20) }}
                                                                 </a>
                                                             @endif

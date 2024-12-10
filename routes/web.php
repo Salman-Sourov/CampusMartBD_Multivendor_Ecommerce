@@ -33,6 +33,7 @@ Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('
 Route::get('/', [indexController::class, 'index'])->name('index');
 Route::get('/category-details/{id}',[indexController::class, 'categoryDetails'])->name('category.details');
 Route::get('/brand-details/{id}',[indexController::class, 'brandDetails'])->name('brand.details');
+Route::get('/product-details/{id}',[indexController::class, 'productDetails'])->name('product.details');
 
 
 Route::get('/dashboard', function () {
@@ -92,6 +93,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
     Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
+
 
 
  
