@@ -24,12 +24,12 @@
                         onsubmit="event.preventDefault(); StoreBrand();">
                             @csrf
                             <div class="form-group mb-3">
-                                <label for="name" class="form-label">Name</label>
+                                <label for="name" class="form-label">Name *</label>
                                 <input type="text" name="name" class="form-control" id="name">
                                 <span id="name_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
                             <div class="form-group mb-3">
-                                <label for="banglaInputText" class="form-label">Name in Bangla</label>
+                                <label for="banglaInputText" class="form-label">Name in Bangla *</label>
                                 <input type="text" name="name_bangla" class="form-control" id="banglaInputText">
                                 <span id="name_bangla_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
@@ -44,7 +44,7 @@
                                 <span id="website_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
                             <div class="form-group mb-3">
-                                <label for="image" class="form-label">Image</label>
+                                <label for="image" class="form-label">Image *</label>
                                 <input class="form-control" name="image" type="file" id="image">
                                 <span id="image_error" class="text-danger"></span>
                             </div>
@@ -158,13 +158,13 @@
                         <input type="hidden" name="brand_id" id="brand_id">
 
                         <div class="form-group mb-3">
-                            <label for="edit_name" class="form-label">Name</label>
+                            <label for="edit_name" class="form-label">Name *</label>
                             <input type="text" name="edit_name" class="form-control" id="edit_name">
                             <span id="edit_name_error" class="text-danger"></span>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="edit_banglaInputText" class="form-label">Bangla Name</label>
+                            <label for="edit_banglaInputText" class="form-label">Bangla Name *</label>
                             <input type="text" name="edit_banglaInputText" class="form-control"
                                 id="edit_banglaInputText">
                             <span id="edit_banglaInputText_error" class="text-danger"></span>
@@ -183,7 +183,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="edit_image" class="form-label">Image</label>
+                            <label for="edit_image" class="form-label">Image *</label>
                             <input class="form-control" name="edit_image" type="file" id="edit_image">
                         </div>
 

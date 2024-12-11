@@ -36,30 +36,24 @@
                                     <div class="col-12">
                                         <div class="product-main no-arrow">
 
-                                              <div class="slider-image">
-                                                    <img src="{{ asset($selected_product->thumbnail) }}" id="img-1"
-                                                        data-zoom-image="{{ asset($selected_product->thumbnail) }}"
-                                                        class="
+                                            <div class="slider-image">
+                                                <img src="{{ asset($selected_product->thumbnail) }}" id="img-1"
+                                                    data-zoom-image="{{ asset($selected_product->thumbnail) }}"
+                                                    class="
                                                         img-fluid image_zoom_cls-0 blur-up lazyload"
-                                                        alt="">
-                                                </div>
-                                            @forelse($selected_product->multi_images as $images)
-                                            <div>
-                                              
-
-                                               
-                                                <div class="slider-image">
-                                                    <img src="{{ asset($images->image_detail->image) }}" id="img"
-                                                        data-zoom-image="{{ asset($images->image_detail->image) }}"
-                                                        class="
-                                                        img-fluid image_zoom_cls-0 blur-up lazyload"
-                                                        alt="">
-                                                </div>
-                                               
-
+                                                    alt="">
                                             </div>
+                                            @forelse($selected_product->multi_images as $images)
+                                                <div>
+                                                    <div class="slider-image">
+                                                        <img src="{{ asset($images->image_detail->image) }}" id="img"
+                                                            data-zoom-image="{{ asset($images->image_detail->image) }}"
+                                                            class="
+                                                        img-fluid image_zoom_cls-0 blur-up lazyload"
+                                                            alt="">
+                                                    </div>
+                                                </div>
                                             @empty
-
                                             @endforelse
                                         </div>
                                     </div>
@@ -68,22 +62,17 @@
                                         <div class="left-slider-image left-slider no-arrow slick-top">
                                             <div class="sidebar-image">
                                                 <img src="{{ asset($selected_product->thumbnail) }}"
-                                                    class="img-fluid blur-up lazyload" alt="">
+                                                    class="img-fluid blur-up lazyload" alt="" style="width: 82px;">
                                             </div>
                                             @forelse($selected_product->multi_images as $images)
-                                            <div>
-                                                
+                                                <div>
+                                                    <div class="sidebar-image">
+                                                        <img src="{{ asset($images->image_detail->image) }}"
+                                                            class="img-fluid blur-up lazyload" alt="" style="width: 82px;">
+                                                    </div>
 
-                                              
-                                                <div class="sidebar-image">
-                                                    <img src="{{ asset($images->image_detail->image) }}"
-                                                        class="img-fluid blur-up lazyload" alt="">
                                                 </div>
-
-                                              
-                                            </div>
                                             @empty
-
                                             @endforelse
                                         </div>
                                     </div>
@@ -222,7 +211,7 @@
                                         aria-labelledby="description-tab">
                                         <div class="product-description">
                                             <div class="nav-desh">
-                                                <p>{{ $selected_product->description }}</p>
+                                                <h5>{!! nl2br(e($selected_product->description)) !!}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -319,8 +308,8 @@
                                     <div class="product-box-3 wow fadeInUp">
                                         <div class="product-header">
                                             <div class="product-image">
-                                                <a href="product-left.htm">
-                                                    <img src="{{ asset('frontend') }}/assets/images/cake/product/11.png"
+                                                <a href="{{ route('product.details', $product->products->id) }}">
+                                                    <img src="{{ asset($product->products->thumbnail) }}"
                                                         class="img-fluid blur-up lazyload" alt="">
                                                 </a>
                                             </div>
@@ -328,13 +317,13 @@
 
                                         <div class="product-footer">
                                             <div class="product-detail">
-                                                <span class="span-name">Cake</span>
-                                                <a href="product-left-thumbnail.html">
+                                                {{-- <span class="span-name">Cake</span> --}}
+                                                <a href="{{ route('product.details', $product->products->id) }}">
                                                     <h5 class="name">{{ $product->products->name }}</h5>
                                                 </a>
-                                                <h6 class="unit">500 G</h6>
-                                                <h5 class="price"><span class="theme-color">$10.25</span>
-                                                    <del>$12.57</del>
+                                                {{-- <h6 class="unit">500 G</h6> --}}
+                                                <h5 class="price"><span class="theme-color">৳ {{ $product->products->sale_price }}</span>
+                                                    <del>৳ {{ $product->products->price }}</del>
                                                 </h5>
                                                 <div class="add-to-cart-box bg-white">
                                                     <button class="btn btn-add-cart addcart-button">Add

@@ -13,7 +13,7 @@ class indexController extends Controller
     public function index()
     {
 
-        $categories = Product_category::with('translations', 'hasChild')->where('status', 'active')->get();
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
         // dd($brands);
@@ -22,8 +22,7 @@ class indexController extends Controller
 
     public function categoryDetails($id)
     {
-
-        $categories = Product_category::with('translations', 'hasChild')->where('status', 'active')->get();
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
 
@@ -39,7 +38,7 @@ class indexController extends Controller
 
     public function brandDetails($id)
     {
-        $categories = Product_category::with('translations', 'hasChild')->where('status', 'active')->get();
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
 
@@ -59,11 +58,11 @@ class indexController extends Controller
 
     public function productDetails($id)
     {
-        $categories = Product_category::with('translations', 'hasChild')->where('status', 'active')->get();
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
 
-        $selected_product = Product::with('multi_images')->findOrFail($id);
+        $selected_product = Product::with('multi_images','inventory_stocks')->findOrFail($id);
 
         $category_product = Product_category_product::with('products', 'category_detail')
             ->where('product_id', $id)           // Filter by the specific id
@@ -80,7 +79,7 @@ class indexController extends Controller
             ->where('id',  $category_product->category_id) // Exclude the current product
             ->first();
 
-        // dd($selected_product);
+        //  dd($selected_product);
 
         return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products'));
     }

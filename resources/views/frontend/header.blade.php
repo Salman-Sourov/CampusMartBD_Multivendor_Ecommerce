@@ -317,7 +317,7 @@
                                                             @foreach ($category->hasChild as $child)
                                                                 <li>
                                                                     <a
-                                                                        href="{{ route('category.details', $category->id) }}">
+                                                                        href="{{ route('category.details', $child->id) }}">
                                                                         <img src="{{ asset($child->image) }}"
                                                                             alt="">
                                                                         @if (App::getLocale() == 'en')

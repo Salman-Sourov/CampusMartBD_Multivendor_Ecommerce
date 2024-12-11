@@ -37,7 +37,7 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'name_bangla' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            // 'description' => 'required|string|max:255',
 
         ]);
 
@@ -112,7 +112,7 @@ class CategoryController extends Controller
         $request->validate([
             'edit_name' => 'required|string|max:255',
             'edit_banglaInputText' => 'required|string|max:255',
-            'edit_description' => 'required|string|max:255',
+            // 'edit_description' => 'required|string|max:255',
         ]);
 
         // Handle file upload

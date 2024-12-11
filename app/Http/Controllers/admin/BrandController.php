@@ -134,7 +134,7 @@ class BrandController extends Controller
             'edit_name' => 'required|string|max:255',
             'edit_banglaInputText' => 'required|string|max:255',
             'edit_description' => 'required|string|max:255',
-            'edit_website' => 'required|string|max:255',
+            // 'edit_website' => 'required|string|max:255',
             'edit_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 

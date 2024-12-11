@@ -63,7 +63,7 @@ class ProductController extends Controller
             'weight' => 'nullable|numeric',
             'short_content' => 'nullable|string',
             'description' => 'required|string',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,webp,gif',
         ]);
 
         DB::beginTransaction();
@@ -382,7 +382,7 @@ class ProductController extends Controller
     public function uploadMultiImg(Request $request)
     {
         $request->validate([
-            'multi_img' => 'required|image|mimes:jpeg,png,jpg,gif|',
+            'multi_img' => 'required|image|mimes:jpeg,png,jpg,webp,gif|',
         ]);
 
         if ($request->file('multi_img')) {

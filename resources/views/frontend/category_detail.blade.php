@@ -128,7 +128,7 @@
                                 <div class="product-box-3 h-100 wow fadeInUp">
                                     <div class="product-header">
                                         <div class="product-image">
-                                            <a href="product-left-thumbnail.html">
+                                            <a href="{{ route('product.details',$product->products->id) }}">
                                                 <img src="{{ asset($product->products->thumbnail) }}"
                                                     class="img-fluid blur-up lazyload" alt="">
                                             </a>
@@ -138,7 +138,7 @@
                                         <div class="product-detail">
                                             <span
                                                 class="span-name">{{ $product->products->categories->category_detail->name }}</span>
-                                            <a href="product-left-thumbnail.html">
+                                            <a href="{{ route('product.details',$product->products->id) }}">
                                                 @if (App::getLocale() == 'en')
                                                     <h5 class="name">{{ Str::limit($product->products->name, 20) }}</h5>
                                                 @else
