@@ -13,7 +13,7 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Inactive Category  ({{count($inactive_category)}})</h6>
+                        <h6 class="card-title">All Inactive Category  ({{count($inactive_attribute_set)}})</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
@@ -21,21 +21,16 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Logo</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="brandTableBody">
-                                    @if ($inactive_category && count($inactive_category) > 0)
-                                        @foreach ($inactive_category as $key => $item)
+                                    @if ($inactive_attribute_set && count($inactive_attribute_set) > 0)
+                                        @foreach ($inactive_attribute_set as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->description }}</td>
-                                                <td><img src="{{ !empty($item->logo) ? url($item->logo) : url('upload/no_image.jpg') }}"
-                                                        style="width:70px; height:40px;"> </td>
+                                                <td>{{ $item->title }}</td>
                                                 <td>
                                                     @if ($item->status == 'active')
                                                         <span class="badge rounded-pill bg-success">Active</span>
@@ -93,17 +88,17 @@
             $('.toggle-class').click(function() {
                 var $this = $(this);
                 var status = $this.attr('data-status');
-                var category_id = $this.data('id');
+                var inactive_attribute_set_id = $this.data('id');
                 console.log($('meta[name="csrf-token"]').attr('content'));
 
     
                 $.ajax({
                     type: "POST",  // Use POST for status change
                     dataType: "json",
-                    url: '{{ route('category.change.status') }}',
+                    url: '{{ route('attribute-set.change.status') }}',
                     data: {
                         'status': status,
-                        'category_id': category_id,
+                        'inactive_attribute_set_id': inactive_attribute_set_id,
                     },
                     success: function(data) {
                         const Toast = Swal.mixin({

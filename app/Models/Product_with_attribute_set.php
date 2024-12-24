@@ -14,7 +14,7 @@ class Product_with_attribute_set extends Model
     
     public function attributes()
     {
-        return $this->hasOne(product_attribute::class, 'attribute_set_id', 'id');
+        return $this->hasMany(product_attribute::class, 'attribute_set_id', 'attribute_set_id');
     }
 }
 

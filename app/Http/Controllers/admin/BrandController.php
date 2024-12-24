@@ -191,16 +191,12 @@ class BrandController extends Controller
 
     public function brandChangeStatus(Request $request)
     {
-
-        // dd($request->status);
-        // dd('hello');
         $brand = Brand::find($request->brand_id);
         
         if ($brand->status == 'inactive'){
             $brand->status = 'active';
             $brand->save();
         }
-        
 
         // Return updated status
         return response()->json(['success' => 'Status changed successfully']);

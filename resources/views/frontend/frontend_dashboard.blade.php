@@ -8,8 +8,8 @@
     <meta name="description" content="Fastkart">
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
-    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/3.png" type="image/x-icon">
-    <title>Bazar BD</title>
+    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/ElhaamBD_logo_Fav_icon.png" type="image/x-icon">
+    <title>Elhaam BD</title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -272,6 +272,11 @@
 
     <!-- script js -->
     <script src="{{ asset('frontend') }}/assets/js/script.js"></script>
+
+
+    @yield('script')
+
+    
 
 </body>
 

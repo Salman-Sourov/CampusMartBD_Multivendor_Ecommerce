@@ -34,7 +34,7 @@ class Product extends Model
     }
     public function attribute_set()
     {
-        return $this->hasOne(Product_with_attribute_set::class, 'product_id', 'id')->with(['attributes']);
+        return $this->hasMany(Product_with_attribute_set::class, 'product_id', 'id')->with(['attributes']);
     }
     public function inventory_stocks()
     {

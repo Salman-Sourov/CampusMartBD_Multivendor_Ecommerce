@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li class="nav-item nav-category">Bazar BD</li>
-            
+
             {{-- Brands --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#brand" role="button" aria-expanded="false"
@@ -69,6 +69,9 @@
                         <li class="nav-item">
                             <a href="{{ route('sub-category.index') }}" class="nav-link">All Sub Category</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('sub-category.create') }}" class="nav-link">Inactive Sub Category</a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -86,6 +89,9 @@
                         <li class="nav-item">
                             <a href="{{ route('attribute-set.index') }}" class="nav-link">All Attribute Set</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attribute-set.create') }}" class="nav-link">Inactive Attribute Set</a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -102,6 +108,9 @@
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="{{ route('attribute.index') }}" class="nav-link">All Attribute</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attribute.index') }}" class="nav-link">Inactive Attribute</a>
                         </li>
                     </ul>
                 </div>
@@ -122,6 +131,9 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('product.index') }}" class="nav-link">All Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('inactive.product') }}" class="nav-link">Inactive Product</a>
                         </li>
                     </ul>
                 </div>

@@ -2,20 +2,22 @@
 @section('admin')
 
     <div class="page-content">
+
+        {{-- Variant --}}
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
                 <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
-                    Add Stock
+                    Add Variant
                 </button>
             </ol>
         </nav>
 
-        <!-- Add Category Stock  -->
+        <!-- Add Variant-->
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Add Stock</h5>
+                        <h5 class="modal-title" id="addModalLabel">Add Variant</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                     </div>
                     <div class="modal-body">
@@ -37,39 +39,7 @@
                                 <!-- Error message placeholder -->
                             </div>
 
-                            <div class="form-group mb-3 attribute_container">
-                                <label for="attribute" class="form-label">Attribute</label>
-                                <select name="attribute" class="form-control" id="attribute_id">
-
-                                </select>
-                                @error('attribute')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                <span id="attribute_error" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="description" class="form-label">Price</label>
-                                <input name="price" type="number" class="form-control" id="price">
-                                <span id="price_error" class="text-danger"></span> <!-- Error message placeholder -->
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="description" class="form-label">Sale Price</label>
-                                <input name="sale_price" type="number" class="form-control" id="sale_price">
-                                <span id="sale_price_error" class="text-danger"></span> <!-- Error message placeholder -->
-                            </div>
-
-
-
-
-                            <div class="form-group mb-3">
-                                <label for="description" class="form-label">Stock</label>
-                                <input name="stock" type="number" class="form-control" id="stock">
-                                <span id="stock_error" class="text-danger"></span> <!-- Error message placeholder -->
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Add Stock</button>
+                            <button type="submit" class="btn btn-primary">Add Variant</button>
                         </form>
 
                     </div>
@@ -77,74 +47,48 @@
             </div>
         </div>
 
-
-        {{-- ALL category Modal --}}
+        {{-- ALL Variant --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Category</h6>
+                        <h6 class="card-title">
+                            {{ $product_id->name }}</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Product Name</th>
-                                        <th>Attribute</th>
-                                        <th>Price</th>
-                                        <th>Sale Price</th>
-                                        <th>Stock</th>
-                                        <th>Status</th>
+                                        <th>Attribute Set</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody id="brandTableBody">
-                                    @if ($stocks && count($stocks) > 0)
-                                        @foreach ($stocks as $key => $item)
+                                    @if ($variants && count($variants) > 0)
+                                        @foreach ($variants as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>
                                                     @php
-                                                        $product = App\Models\Product::where(
+                                                        $attribute = App\Models\Product_attribute_set::where(
                                                             'id',
-                                                            $item->product_id,
-                                                        )->first();
-                                                    @endphp
-                                                    {{ $product->name }}
-                                                </td>
-
-                                                <td>
-                                                    @php
-                                                        $attribute = App\Models\Product_attribute::where(
-                                                            'id',
-                                                            $item->attribute_id,
+                                                            $item->attribute_set_id,
                                                         )->first();
                                                     @endphp
                                                     {{ $attribute->title }}
                                                 </td>
 
-                                                <td>{{ $item->price }}</td>
-                                                <td>{{ $item->sale_price }}</td>
-                                                <td>{{ $item->stock }}</td>
-
+                                               
                                                 <td>
-                                                    @if ($item->status == 1)
-                                                        <span class="badge rounded-pill bg-success">Active</span>
-                                                    @else
-                                                        <span class="badge rounded-pill bg-danger">InActive</span>
-                                                    @endif
-                                                </td>
-
-                                                <td>
-                                                    <button type="button" class="btn btn-inverse-warning"
+                                                    {{-- <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
                                                         id="{{ $item->id }}" onclick="stockEdit(this.id)">
                                                         Edit
-                                                    </button>
+                                                    </button> --}}
 
-                                                    <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
+                                                    <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btns"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
                                                     </a>
 
@@ -166,164 +110,172 @@
             </div>
         </div>
 
-    </div>
+
+        {{-- Variant Wise Stock --}}
+        {{-- <nav class="page-breadcrumb">
+            <ol class="breadcrumb">
+                <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
+                    Add Variant
+                </button>
+            </ol>
+        </nav> --}}
+
+       
+        {{-- ALL Variant Wise Stock--}}
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            Add variant wise stock of - {{ $product_id->name }}</h6>
+
+                        <div class="table-responsive">
+                            <table id="dataTableExample" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Attribute</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        // Step 1: Initialize the combinations array
+                                        $combinations = [];
+                                        $attributes = [];
+                                
+                                        // Step 2: Collect all active attribute options dynamically into a simple array
+                                        if ($product_id->attribute_set && $product_id->attribute_set->count() > 0) {
+                                            foreach ($product_id->attribute_set as $set) {
+                                                // Collect only active attribute options (titles and ids)
+                                                $attributes[] = $set->attributes
+                                                    ->where('status', 'active')  // Filter active attributes
+                                                    ->pluck('title', 'id')       // Get the title and id of each option
+                                                    ->toArray();                 // Convert to array
+                                            }
+                                        }
+                                    @endphp
+                                
+                                    @php
+                                        // Step 3: Generate combinations dynamically using nested loops
+                                        if (!empty($attributes)) {
+                                            // Initialize combinations with an empty combination
+                                            $combinations[] = [];
+                                
+                                            // Loop through each attribute set
+                                            foreach ($attributes as $setKey => $attribute) {
+                                                $temp = [];
+                                
+                                                // For each existing combination, add the current attribute options to it
+                                                foreach ($combinations as $combination) {
+                                                    foreach ($attribute as $id => $option) {
+                                                        // Merge the current combination with the option from the current attribute set
+                                                        $temp[] = array_merge($combination, [$option, $id]); // Add attribute ID to each combination
+                                                    }
+                                                }
+                                
+                                                // Update the combinations array with the new set of combinations
+                                                $combinations = $temp;
+                                            }
+                                        }
+                                    @endphp
+                                
+                                    @if (!empty($combinations))
+                                        @foreach ($combinations as $key => $combination)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>
+                                                    <!-- Display the combination of attributes but hide IDs -->
+                                                    {{ implode(' × ', collect($combination)->map(fn($item, $index) => $index % 2 === 0 ? $item : null)->filter()->toArray()) }}
+                                                </td>
+
+                                                <td>
+                                                    @php
+                                                        // Extract only the IDs (every second element from the combination array)
+                                                        $attributeIds = collect($combination)->filter(fn($item, $index) => $index % 2 !== 0)->toArray();
+                                                        $attributeIdString = implode(',', $attributeIds);
+                                                        $stock = App\Models\Product_attribute_wise_stock::where('attribute_id', $attributeIdString)->first();
+                                                    @endphp
+                                                    {{ $stock ? $stock->stock : 0 }}
+                                                </td>
 
 
-    <!-- Edit Stock Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Stock</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editStockForm" method="POST" enctype="multipart/form-data" class="forms-sample"
-                        onsubmit="event.preventDefault(); UpdateStock();">
-                        @csrf
-                        {{-- <!-- Simulate PATCH method -->
-                        {{-- <input type="hidden" name="_method" value="PATCH"> --}}
-                        <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="product_id" id="edit_product_id">
+                                                <td>
+                                                    <!-- Pass the attribute IDs and options through data-attributes (hidden IDs) -->
+                                                    <button type="button" class="btn btn-inverse-danger delete-btn"
+                                                       data-id="{{ $key }}"
+                                                       data-attributes="{{ json_encode(array_chunk($combination, 2)) }}" 
+                                                       title="Add" data-bs-toggle="modal" data-bs-target="#addStock"  onclick="setAttributeData(this)">Add</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="3" class="text-center">No combinations available</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                                
+                                
+                                
+                                
+                                
+                                
+                            
 
-                        <div class="form-group mb-3">
-                            <label for="edit_name" class="form-label">Attribute Set</label>
-
-                            <select name="edit_attribute_set" class="form-control" id="edit_attribute_set"
-                                onChange="EditAttributeChange()">
-                                <option value="">Select Attribute Set</option>
-                                <!-- Options will be dynamically populated here -->
-                                @foreach ($attributeSets as $attributeSet)
-                                    <option value="{{ $attributeSet->id }}">{{ $attributeSet->title }}</option>
-                                @endforeach
-                            </select>
-                            <span id="edit_attribute_set_error" class="text-danger"></span>
+                            </table>
                         </div>
-
-
-                        <div class="form-group mb-3 edit_attribute_container">
-                            <label for="attribute" class="form-label">Attribute</label>
-                            <select name="edit_attribute" class="form-control" id="edit_attribute_id">
-
-                            </select>
-                            @error('attribute')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            <span id="edit_attribute_error" class="text-danger"></span>
-                        </div>
-
-
-
-                        <div class="form-group mb-3">
-                            <label for="description" class="form-label">Price</label>
-                            <input name="edit_price" type="number" class="form-control" id="edit_price">
-                            <span id="edit_price_error" class="text-danger"></span> <!-- Error message placeholder -->
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="description" class="form-label">Sale Price</label>
-                            <input name="edit_sale_price" type="number" class="form-control" id="edit_sale_price">
-                            <span id="edit_sale_price_error" class="text-danger"></span>
-                            <!-- Error message placeholder -->
-                        </div>
-
-
-
-
-                        <div class="form-group mb-3">
-                            <label for="description" class="form-label">Stock</label>
-                            <input name="edit_stock" type="number" class="form-control" id="edit_stock">
-                            <span id="edit_stock_error" class="text-danger"></span> <!-- Error message placeholder -->
-                        </div>
-
-
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
+         <!-- Add Variant Wise Stock-->
+         <div class="modal fade" id="addStock" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalLabel">Add Variant</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addAttributeStockForm" method="POST" action="" class="forms-sample"
+                            onsubmit="event.preventDefault(); StoreAttributeWiseStock();">
+                            @csrf
+                            <input type="hidden" name="attribute_ids" id="attribute_ids">
+                            <input type="hidden" name="product_id" value={{ $product_id->id }}>
+                            <div class="form-group mb-3">
+                                <label for="quantity" class="form-label">Quantity</label>
+                                {{-- <select name="attribute_set" class="form-control" id="attribute_set"
+                                    onChange="attributeChange()">
+                                    <option value="">Select Attribute Set</option>
+                                    <!-- Options will be dynamically populated here -->
+                                    @foreach ($attributeSets as $attributeSet)
+                                        <option value="{{ $attributeSet->id }}">{{ $attributeSet->title }}</option>
+                                    @endforeach
+                                </select> --}}
+                                <input type="text" name="quantity" class="form-control" id="quantity">
+                                <span id="quantity_error" class="text-danger"></span>
+                                <!-- Error message placeholder -->
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Add Stock</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-
-
 
     {{-- Store Stock --}}
     <script type="text/javascript">
-        function attributeChange() {
-            var attribute_set = $('#attribute_set').val();
-            console.log('Selected Attribute Set ID:', attribute_set);
-
-            if (attribute_set) {
-                $.ajax({
-                    url: '/get-attribute/' + attribute_set, // URL to fetch attributes
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log('Fetched Attributes:', data); // Log the fetched attributes for debugging
-
-                        $('.attribute_container').show();
-                        // Clear existing options
-                        $('#attribute_id').empty();
-
-                        // Add default option
-                        $('#attribute_id').append('<option value="">Select an Attribute</option>');
-
-                        // Iterate over the data and populate the dropdown
-                        $.each(data, function(index, attribute) {
-                            $('#attribute_id').append('<option value="' + attribute.id + '">' +
-                                attribute.title + '</option>');
-                        });
-
-                        $('#attribute_id').trigger('change');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching attributes:', error);
-                    }
-                });
-            } else {
-                // If no attribute set is selected, clear the attribute dropdown
-                $('#attribute').empty();
-                $('#attribute').append('<option value="">Select an Attribute</option>');
-            }
-        }
-
-        function EditAttributeChange() {
-            var attribute_set = $('#edit_attribute_set').val();
-            console.log(attribute_set);
-
-            if (attribute_set) {
-                $.ajax({
-                    url: '/get-edit-attribute/' + attribute_set, // URL to fetch attributes
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log('Fetched Attributes:', data); // Log the fetched attributes for debugging
-
-                        $('.edit_attribute_container').show();
-                        // Clear existing options
-                        $('#edit_attribute_id').empty();
-
-                        // Add default option
-                        $('#edit_attribute_id').append('<option value="">Select an Attribute</option>');
-
-                        // Iterate over the data and populate the dropdown
-                        $.each(data, function(index, attribute) {
-                            $('#edit_attribute_id').append('<option value="' + attribute.id + '">' +
-                                attribute.title + '</option>');
-                        });
-
-                        $('#edit_attribute_id').trigger('change');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching attributes:', error);
-                    }
-                });
-            } else {
-                // If no attribute set is selected, clear the attribute dropdown
-                $('#edit_attribute').empty();
-                $('#edit_attribute').append('<option value="">Select an Attribute</option>');
-            }
-        }
-
         function StoreStock() {
             var formData = new FormData(document.getElementById('addStockForm'));
 
@@ -358,6 +310,55 @@
                 }
             });
         }
+
+
+        function setAttributeData(button) {
+            var attributes = $(button).data('attributes');  // Get attributes from button
+            console.log(attributes);  // Debugging log
+
+            var attributeIds = attributes.map(function(attr) {
+                return attr[1];  // Extract attribute IDs
+            });
+
+            // Set the hidden input value
+            $('#attribute_ids').val(JSON.stringify(attributeIds));
+        }
+
+
+        function StoreAttributeWiseStock() {
+            var formData = new FormData(document.getElementById('addAttributeStockForm'));
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('attributeWise.stock.store') }}',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data); // Check the success response in the console
+
+                    if (data.success) {
+                        $('#addStock').modal('hide'); // Close modal
+                        toastr.success(data.message);
+                        $('#addAttributeStockForm')[0].reset();
+                        setTimeout(function() {
+                            window.location.reload(); // Reload the page to see the new brand
+                        }, 1500);
+                    } else {
+                        for (let field in data.errors) {
+                            $('#' + field + '_error').text(data.errors[field][0]); // Show error
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr); // Log the error for debugging
+                    const errors = xhr.responseJSON.errors;
+                    for (let field in errors) {
+                        $('#' + field + '_error').text(errors[field][0]); // Show error
+                    }
+                }
+            });
+        }
     </script>
 
     {{-- Preview Image --}}
@@ -374,124 +375,9 @@
         });
     </script>
 
-    {{-- Edit Stock  --}}
-    <script type="text/javascript">
-        function stockEdit(stock_id) {
-            $.ajax({
-                type: 'GET',
-                url: '/stock/' + stock_id + '/edit', // Ensure this is the correct route
-                dataType: 'json',
-                success: function(data) {
-                    if (data.error) {
-                        console.log(data.error);
-                    } else {
-                        // Set the value of edit_attribute_set dropdown
-                        $('#edit_attribute_set').val(data.edit_attribute_set).trigger('change');
-
-                        var edit_attribute_set = data.edit_attribute_set;
-                        console.log(edit_attribute_set); // To verify the selected attribute set ID
-
-                        // Fetch attributes if a valid attribute set is selected
-                        if (edit_attribute_set) {
-                            $.ajax({
-                                type: 'GET',
-                                url: '/get-stock-attribute/' + edit_attribute_set, // Correct the route
-                                dataType: 'json',
-                                success: function(attributeData) {
-                                    if (attributeData.error) {
-                                        console.log(attributeData.error);
-                                    } else {
-                                        $('#edit_attribute_id').empty(); // Clear existing options
-
-                                        // Add default option
-                                        $('#edit_attribute_id').append(
-                                            '<option value="">Select an Attribute</option>'
-                                        );
-
-                                        // Populate attribute options dynamically
-                                        $.each(attributeData, function(index, attribute) {
-                                            $('#edit_attribute_id').append(
-                                                '<option value="' + attribute.id +
-                                                '">' + attribute.title + '</option>'
-                                            );
-                                        });
-
-                                        // Set the previously selected attribute
-                                        $('#edit_attribute_id').val(data.edit_attribute).trigger(
-                                            'change');
-                                    }
-                                },
-                                error: function(err) {
-                                    console.log(err);
-                                }
-                            });
-                        }
-
-                        // Set the rest of the fields in the modal
-                         // Set the rest of the fields in the modal
-                    $('#edit_product_id').val(data.edit_product_id); // Ensure 'product_id' is in the response
-                    $('#edit_price').val(data.edit_price);
-                    $('#edit_sale_price').val(data.edit_sale_price);
-                    $('#edit_stock').val(data.edit_stock);
-
-                        // Open the modal
-                        $('#editModal').modal('show');
-                    }
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
-        }
-    </script>
-
-
-    {{-- Update Stock  --}}
-    <script type="text/javascript">
-        function UpdateStock() {
-            var formData = new FormData(document.getElementById('editStockForm'));
-            var product_Id = $('#product_id').val(); // Get the brand ID
-            console.log('hello');
-
-            $.ajax({
-                type: 'POST', // Simulates PATCH request via _method field
-                url: '/stock/' + product_Id,
-                data: formData,
-                contentType: false,
-                processData: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $('#editModal').modal('hide'); // Close modal
-                        toastr.success(response.message); // Show success notification
-                        setTimeout(function() {
-                            window.location.reload(); // Reload the page
-                        }, 1500);
-                    } else {
-                        // Handle validation errors
-                        if (response.errors) {
-                            for (let field in response.errors) {
-                                $('#' + field + '_error').text(response.errors[field][0]);
-                            }
-                        }
-                    }
-                },
-                error: function(xhr) {
-                    console.log(xhr); // Log error for debugging
-                    const errors = xhr.responseJSON?.errors || {};
-                    for (let field in errors) {
-                        $('#' + field + '_error').text(errors[field][0]);
-                    }
-                }
-            });
-        }
-    </script>
-
     {{-- Delete Stock  --}}
     <script type="text/javascript">
-        $(document).on('click', '.delete-btn', function(e) {
+        $(document).on('click', '.delete-btns', function(e) {
             e.preventDefault();
             var id = $(this).data('id'); // Get the data-id from the button
             var url = '{{ route('stock.destroy', ':id') }}';

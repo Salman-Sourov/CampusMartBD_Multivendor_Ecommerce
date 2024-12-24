@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\ProductStockController;
 use App\Http\Controllers\LangController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,12 @@ Route::get('/', [indexController::class, 'index'])->name('index');
 Route::get('/category-details/{id}',[indexController::class, 'categoryDetails'])->name('category.details');
 Route::get('/brand-details/{id}',[indexController::class, 'brandDetails'])->name('brand.details');
 Route::get('/product-details/{id}',[indexController::class, 'productDetails'])->name('product.details');
+
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+
 
 
 Route::get('/dashboard', function () {
@@ -70,15 +77,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //Sub Category
     Route::resource('sub-category', SubCategoryController::class);
+    Route::post('/subcategory/changeStatus', [SubCategoryController::class, 'subcategoryChangeStatus'])->name('subcategory.change.status');
 
     //Attribute Set
     Route::resource('attribute-set', AttributeSetController::class);
+    Route::post('/attribute-set/changeStatus', [AttributeSetController::class, 'attributesetChangeStatus'])->name('attribute-set.change.status');
 
     //Attribute
     Route::resource('attribute', AttributeController::class);
 
     //Product
     Route::resource('product', ProductController::class);
+    Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
+    Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
 
     //Stock
     Route::resource('stock', ProductStockController::class);
@@ -86,16 +97,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']); 
     Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
-
-
+    Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
 
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
     Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
-
-
-
  
 }); //End Group Admin Middleware
 

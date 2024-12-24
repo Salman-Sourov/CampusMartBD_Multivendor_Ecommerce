@@ -1,7 +1,6 @@
 @extends('admin.admin_dashboard')
 @section('admin')
 
-
     <div class="page-content">
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
@@ -25,7 +24,7 @@
                             @csrf
 
                             <div class="form-group mb-3">
-                                <label for="category" class="form-label">Category</label>
+                                <label for="category" class="form-label">Category*</label>
                                 <select name="category_id" class="form-control" id="category">
                                     <option value="">Select a Category</option>
                                     <!-- Options will be dynamically populated here -->
@@ -37,12 +36,12 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="name" class="form-label">Name</label>
+                                <label for="name" class="form-label">Name*</label>
                                 <input type="text" name="name" class="form-control" id="name">
                                 <span id="name_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
                             <div class="form-group mb-3">
-                                <label for="banglaInputText" class="form-label">Name in Bangla</label>
+                                <label for="banglaInputText" class="form-label">Name in Bangla*</label>
                                 <input type="text" name="name_bangla" class="form-control" id="banglaInputText">
                                 <span id="name_bangla_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
@@ -61,14 +60,14 @@
                                     style="max-width: 200px; display: none;">
                             </div>
 
-                            <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
+                            {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                                 <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
                                     <input type="checkbox" name="is_featured" class="form-check-input" id="is_featured">
                                     <label class="form-check-label" for="is_featured">
                                         Featured Category
                                     </label>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <button type="submit" class="btn btn-primary">Add Category</button>
                         </form>
@@ -183,7 +182,7 @@
 
 
                         <div class="form-group mb-3">
-                            <label for="category" class="form-label">Category</label>
+                            <label for="category" class="form-label">Category*</label>
                             <select name="edit_category_id" class="form-control" id="edit_category_id">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">
@@ -196,13 +195,13 @@
 
 
                         <div class="form-group mb-3">
-                            <label for="edit_name" class="form-label">Name</label>
+                            <label for="edit_name" class="form-label">Name*</label>
                             <input type="text" name="edit_name" class="form-control" id="edit_name">
                             <span id="edit_name_error" class="text-danger"></span>
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="edit_banglaInputText" class="form-label">Bangla Name</label>
+                            <label for="edit_banglaInputText" class="form-label">Bangla Name*</label>
                             <input type="text" name="edit_banglaInputText" class="form-control"
                                 id="edit_banglaInputText">
                             <span id="edit_banglaInputText_error" class="text-danger"></span>
@@ -228,7 +227,7 @@
                                 alt="profile">
                         </div>
 
-                        <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
+                        {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                             <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
                                 <input type="checkbox" name="edit_is_featured" class="form-check-input"
                                     id="edit_is_featured">
@@ -236,7 +235,7 @@
                                     Featured Category
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
 
 
                         <button type="submit" class="btn btn-primary">Save changes</button>

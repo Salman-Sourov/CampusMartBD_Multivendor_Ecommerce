@@ -41,7 +41,7 @@
                                                     data-zoom-image="{{ asset($selected_product->thumbnail) }}"
                                                     class="
                                                         img-fluid image_zoom_cls-0 blur-up lazyload"
-                                                    alt="">
+                                                    alt="" style="width: 570px;">
                                             </div>
                                             @forelse($selected_product->multi_images as $images)
                                                 <div>
@@ -68,7 +68,8 @@
                                                 <div>
                                                     <div class="sidebar-image">
                                                         <img src="{{ asset($images->image_detail->image) }}"
-                                                            class="img-fluid blur-up lazyload" alt="" style="width: 82px;">
+                                                            class="img-fluid blur-up lazyload" alt=""
+                                                            style="width: 82px;">
                                                     </div>
 
                                                 </div>
@@ -83,8 +84,20 @@
 
                         <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="right-box-contain">
-                                <h6 class="offer-top">30% Off</h6>
-                                <h2 class="name">{{ $selected_product->name }}</h2>
+                                @php
+                                    $Per_Price =
+                                        (($selected_product->price - $selected_product->sale_price) /
+                                            $selected_product->price) *
+                                        100;
+                                @endphp
+                                <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
+
+                                @if (App::getLocale() == 'en')
+                                <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
+                                @else
+                                <h2 class="name">{{ Str::limit($selected_product->translations->name) }}</h2>
+                                @endif
+                                
                                 <div class="price-rating">
                                     <h3 class="theme-color price">৳ {{ $selected_product->sale_price }} <del
                                             class="text-content">৳ {{ $selected_product->price }}</del></h3>
@@ -93,53 +106,62 @@
                                 <div class="procuct-contain">
                                     <p>{{ $selected_product->content }}</p>
                                 </div>
-
+                            <form id="" method="POST" action="" class="forms-sample"
+                                onsubmit="event.preventDefault();">
+                                     @csrf
+                                @forelse($selected_product->attribute_set as $attributes)
                                 <div class="product-packege">
                                     <div class="product-title">
-                                        <h4>Weight</h4>
+                                        @php 
+                                            $set = App\Models\Product_attribute_set::where('id', $attributes->attribute_set_id)->first();                   
+                                        @endphp
+                                        <h4 style="font-weight: bold">{{ $set ? $set->title : 'NA' }}</h4>
                                     </div>
+                            
                                     <ul class="select-packege">
-                                        <li>
-                                            <a href="javascript:void(0)" class="active">1/2 KG</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">1 KG</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">1.5 KG</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">Red Roses</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">With Pink Roses</a>
-                                        </li>
+                                        @forelse($attributes->attributes as $attribute)
+                                            <li>
+                                                <input type="radio" 
+                                                       name="attribute_set_{{ $attributes->attribute_set_id }}" 
+                                                       value="{{ $attribute->id }}" 
+                                                       id="attr_{{ $attribute->id }}">
+                                                <label for="attr_{{ $attribute->id }}" class="attribute-label">{{ $attribute->title }}</label>
+                                            </li>
+                                        @empty
+                                            <li>No attributes found.</li>
+                                        @endforelse
                                     </ul>
                                 </div>
-
+                            @empty
+                                <p>No attribute sets found.</p>
+                            @endforelse
 
                                 <div class="note-box product-packege">
                                     <div class="cart_qty qty-box product-qty">
                                         <div class="input-group">
-                                            <button type="button" class="qty-right-plus" data-type="plus" data-field="">
+                                            <button id="max_value" type="button" class="qty-right-plus" data-type="plus"
+                                                data-field="">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                             </button>
-                                            <input class="form-control input-number qty-input" type="text"
-                                                name="quantity" value="0">
+                                            <input id="cart_value" class="form-control input-number qty-input"
+                                                type="text" name="quantity" value="1">
                                             <button type="button" class="qty-left-minus" data-type="minus" data-field="">
                                                 <i class="fa fa-minus" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </div>
 
-                                    <button onclick="location.href = 'cart.html';"
-                                        class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                    <button type="button"
+                                    onclick="addTocart()"
+                                    class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                
+                            </form>
                                 </div>
 
                                 <div class="buy-box">
                                     <a href="wishlist.html">
                                         <i data-feather="heart"></i>
-                                        <span>Add To Wishlist</span>
+                                        <h4 style="font-weight: bold;">Add To Wishlist</h4>
                                     </a>
                                 </div>
 
@@ -300,7 +322,6 @@
             </div>
             <div class="row">
                 <div class="col-12">
-
                     <div class="slider-6_1 product-wrapper">
                         @forelse ($related_products->totalProducts as $product)
                             @if ($product->products->id != $category_product->product_id)
@@ -322,7 +343,8 @@
                                                     <h5 class="name">{{ $product->products->name }}</h5>
                                                 </a>
                                                 {{-- <h6 class="unit">500 G</h6> --}}
-                                                <h5 class="price"><span class="theme-color">৳ {{ $product->products->sale_price }}</span>
+                                                <h5 class="price"><span class="theme-color">৳
+                                                        {{ $product->products->sale_price }}</span>
                                                     <del>৳ {{ $product->products->price }}</del>
                                                 </h5>
                                                 <div class="add-to-cart-box bg-white">
@@ -361,3 +383,21 @@
     </section>
     <!-- Releted Product Section End -->
 @endsection
+
+@section('script')
+    <script>
+        var num = $('#cart_value').val();
+        $('#max_value').on('click', function() {
+            num++;
+            $('#cart_value').val(num);
+        });
+        console.log(num);
+
+        function addTocart(){
+            
+        }
+    </script>
+
+   
+@endsection
+

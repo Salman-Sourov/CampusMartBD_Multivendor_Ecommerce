@@ -60,7 +60,7 @@
                                                 </a>
 
                                                 <a href="{{ route('get.stock', $item->id)}}" class="btn btn-inverse-info"
-                                                    title="Delete">Variant
+                                                    title="Viariant">Variant & Stock
                                                 </a>
                                               
                                             </td>

@@ -59,23 +59,28 @@
                         <div class="footer-logo">
                             <div class="theme-logo">
                                 <a href="index.html">
-                                    <img src="{{ asset('frontend') }}/assets/images/logo/1.png"
+                                    <img src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
                                         class="blur-up lazyload" alt="">
                                 </a>
+                                {{-- <a href="{{ url('/') }}" class="web-logo nav-logo">
+                                    <img src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
+                                        class="img-fluid blur-up lazyload" alt="">
+                                </a> --}}
                             </div>
 
                             <div class="footer-logo-contain">
-                                <p>We are a friendly bar serving a variety of cocktails, wines and beers. Our bar is a
-                                    perfect place for a couple.</p>
-
+                                <p>Welcome to ElhaamBD!
+                                    Your go-to for quality products, great prices, and exceptional service.
+                                    We prioritize convenience, sustainability, and a seamless shopping experience. Shop confidently—your satisfaction is our mission!</p>
                                 <ul class="address">
                                     <li>
                                         <i data-feather="home"></i>
-                                        <a href="javascript:void(0)">1418 Riverwood Drive, CA 96052, US</a>
+                                        <a href="javascript:void(0)">House 36, Road-5, Block B, Banasree, <br> Rampura, Dhaka, Bangladesh,1219
+                                        </a>
                                     </li>
                                     <li>
                                         <i data-feather="mail"></i>
-                                        <a href="javascript:void(0)">support@fastkart.com</a>
+                                        <a href="javascript:void(0)">info@elhaambd.com </a>
                                     </li>
                                 </ul>
                             </div>
@@ -84,31 +89,22 @@
 
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-title">
-                            <h4>Categories</h4>
+                            <h4>{{ __('content.all_category') }}</h4>
                         </div>
 
                         <div class="footer-contain">
                             <ul>
-                                <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Vegetables & Fruit</a>
-                                </li>
-                                <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Beverages</a>
-                                </li>
-                                <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Meats & Seafood</a>
-                                </li>
-                                <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Frozen Foods</a>
-                                </li>
-                                <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Biscuits & Snacks</a>
-                                </li>
-                                <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Grocery & Staples</a>
-                                </li>
+                                @forelse ($categories as $category)
+                                    <li>
+                                        <a href="{{ route('category.details', $category->id) }}" class="text-content">{{ $category->name }}</a>
+                                    </li>
+                                @empty
+                                    <!-- You can display a message if no categories are available -->
+                                    <li>No categories available.</li>
+                                @endforelse
                             </ul>
                         </div>
+                        
                     </div>
 
                     <div class="col-xl col-lg-2 col-sm-3">
@@ -178,7 +174,7 @@
                                         <i data-feather="phone"></i>
                                         <div class="contact-number">
                                             <h6 class="text-content">Hotline 24/7 :</h6>
-                                            <h5>+91 888 104 2340</h5>
+                                            <h5>01740401014</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -188,12 +184,12 @@
                                         <i data-feather="mail"></i>
                                         <div class="contact-number">
                                             <h6 class="text-content">Email Address :</h6>
-                                            <h5>fastkart@hotmail.com</h5>
+                                            <h5>support@elhaambd.com</h5>
                                         </div>
                                     </div>
                                 </li>
 
-                                <li class="social-app">
+                                {{-- <li class="social-app">
                                     <h5 class="mb-2 text-content">Download App :</h5>
                                     <ul>
                                         <li class="mb-0">
@@ -209,7 +205,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -218,13 +214,13 @@
 
             <div class="sub-footer section-small-space">
                 <div class="reserve">
-                    <h6 class="text-content">©2022 Fastkart All rights reserved</h6>
+                    <h6 class="text-content">Developed by <strong><a href="https://www.empotechbd.com" target="_blank" style="color: #007bff; text-decoration: none;">Empotech BD</a></strong></h6>
                 </div>
 
-                <div class="payment">
+                {{-- <div class="payment">
                     <img src="{{ asset('frontend') }}/assets/images/payment/1.png" class="blur-up lazyload"
                         alt="">
-                </div>
+                </div> --}}
 
                 <div class="social-link">
                     <h6 class="text-content">Stay connected :</h6>

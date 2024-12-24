@@ -13,7 +13,7 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Inactive Category  ({{count($inactive_category)}})</h6>
+                        <h6 class="card-title">All Inactive Category ({{ count($inactive_category) }})</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
@@ -46,10 +46,12 @@
                                                 <td>
 
                                                     <a class="btn toggle-class {{ $item->status == 'active' ? 'btn-inverse-success' : 'btn-inverse-danger' }}"
-                                                        title="Status" data-id="{{ $item->id }}" data-status="{{ $item->status }}">
-                                                         <i data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
-                                                     </a>
-                                                    
+                                                        title="Status" data-id="{{ $item->id }}"
+                                                        data-status="{{ $item->status }}">
+                                                        <i
+                                                            data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
+                                                    </a>
+
                                                     {{-- <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
                                                         id="{{ $item->id }}" onclick="brandEdit(this.id)">
@@ -78,7 +80,6 @@
         </div>
     </div>
 
-
     {{-- Change Status --}}
     <script type="text/javascript">
         $(function() {
@@ -88,7 +89,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-    
+
             // Toggle brand status on button click
             $('.toggle-class').click(function() {
                 var $this = $(this);
@@ -96,9 +97,9 @@
                 var category_id = $this.data('id');
                 console.log($('meta[name="csrf-token"]').attr('content'));
 
-    
+
                 $.ajax({
-                    type: "POST",  // Use POST for status change
+                    type: "POST", // Use POST for status change
                     dataType: "json",
                     url: '{{ route('category.change.status') }}',
                     data: {
@@ -113,24 +114,28 @@
                             showConfirmButton: false,
                             timer: 3000
                         });
-    
+
                         if (!data.error) {
                             Toast.fire({
                                 icon: 'success',
                                 title: 'Status Updated Successfully'
                             });
-    
+
                             var $statusSpan = $this.closest('tr').find('.status-span');
                             if (data.status === 'inactive') {
-                                $this.removeClass('btn-inverse-success').addClass('btn-inverse-danger');
+                                $this.removeClass('btn-inverse-success').addClass(
+                                    'btn-inverse-danger');
                                 $this.find('i').attr('data-feather', 'toggle-right');
-                                $statusSpan.removeClass('bg-success').addClass('bg-danger').text('Inactive');
+                                $statusSpan.removeClass('bg-success').addClass('bg-danger')
+                                    .text('Inactive');
                             } else {
-                                $this.removeClass('btn-inverse-danger').addClass('btn-inverse-success');
+                                $this.removeClass('btn-inverse-danger').addClass(
+                                    'btn-inverse-success');
                                 $this.find('i').attr('data-feather', 'toggle-left');
-                                $statusSpan.removeClass('bg-danger').addClass('bg-success').text('Active');
+                                $statusSpan.removeClass('bg-danger').addClass('bg-success')
+                                    .text('Active');
                             }
-    
+
                             $this.attr('data-status', data.status);
                             feather.replace(); // Re-initialize Feather icons
                             window.location.reload();
@@ -145,8 +150,5 @@
             });
         });
     </script>
-    
-    
-
 
 @endsection

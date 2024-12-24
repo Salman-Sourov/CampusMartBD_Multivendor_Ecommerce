@@ -24,7 +24,8 @@ class AttributeSetController extends Controller
      */
     public function create()
     {
-        //
+       $inactive_attribute_set = Product_attribute_set::where('status','inactive')->get();
+       return view("backend.attributeset.all_inactive_attribute_set",compact("inactive_attribute_set"));
     }
 
     /**
@@ -41,7 +42,7 @@ class AttributeSetController extends Controller
         $AttributeSet = Product_attribute_set::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title), 
-            'status' => $request->has('status') ? 'active' : 'inactive',
+            'status' =>  'active',
         ]);
 
         return response()->json(['success' => true, 'message' => 'Attribute Set added successfully']);
@@ -66,7 +67,7 @@ class AttributeSetController extends Controller
             return response()->json([
                 'set_id' => $AttributeSet->id ?? null,
                 'title' => $AttributeSet->title ?? null,
-                'status' => $AttributeSet->status ?? null,
+                // 'status' => $AttributeSet->status ?? 'active',
             ]);
         } else {
             return response()->json(['error' => true, 'message' => 'Attribute Set not found']);
@@ -87,7 +88,7 @@ class AttributeSetController extends Controller
         $AttributeSet->update([
             'title' => $request->edit_title,
             'slug' => Str::slug($request->edit_title), 
-            'status' => $request->has('status') ? 'active' : 'inactive',
+            // 'status' => $request->has('status') ? 'active' : 'inactive',
         ]);
         return response()->json(['success' => true, 'message' => 'Attribute Set updated successfully']);
     }
@@ -109,5 +110,20 @@ class AttributeSetController extends Controller
             'success' => true,
             'message' => 'Attribute Set Successfully Deleted'
         ]);
+    }
+
+    public function attributesetChangeStatus(Request $request){
+
+        $product_attribute_set = Product_attribute_set::findOrFail($request->inactive_attribute_set_id);
+        
+        if ($product_attribute_set->status == 'inactive'){
+            $product_attribute_set->status = 'active';
+            $product_attribute_set->save();
+        }
+
+        // Return updated status
+        return response()->json(['success' => 'Status changed successfully']);
+        // dd($category);
+
     }
 }

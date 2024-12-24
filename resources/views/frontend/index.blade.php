@@ -36,8 +36,8 @@
                                 </h2>
                                 <h3 class="theme-color">Real Refresement</h3>
                                 <h5 class="text-content">Only this week, Don't miss..</h5>
-                                <a href="shop-left-sidebar.html" class="shop-button">Shop Now <i
-                                        class="fa-solid fa-right-long ms-2"></i></a>
+                                {{-- <a href="shop-left-sidebar.html" class="shop-button">Shop Now <i
+                                        class="fa-solid fa-right-long ms-2"></i></a> --}}
                             </div>
                         </div>
                     </div>
@@ -119,8 +119,8 @@
                                 class="bg-img blur-up lazyload" alt="">
                             <div class="banner-details p-center p-sm-4 p-3 text-white text-center">
                                 <div>
-                                    <h3 class="lh-base fw-bold text-light">Get $3 Cashback! Min Order of $30</h3>
-                                    <h6 class="coupon-code">Use Code : GROCERY1920</h6>
+                                    <h3 class="lh-base fw-bold text-light">Look Good, Feel Good – Shop Here!</h3>
+                                    <h6 class="coupon-code">Your stisfaction is our priority</h6>
                                 </div>
                             </div>
                         </div>
@@ -224,12 +224,14 @@
                         <img src="{{ asset('frontend') }}/assets/images/vegetable/empotech_bd_banner_5.jpg"
                             class="bg-img blur-up lazyload" alt="">
                         <div class="offer-contain p-4">
-                            <div class="offer-detail">
-                                <h2 class="text-dark">Special Offers <span class="text-danger fw-bold">of the
-                                        week!</span></h2>
-                                <p class="text-content">Special offer on this discount, Hurry Up!</p>
+                            <div class="offer-detail" style="color: white; text-align: center;">
+                                <h2 class="text-dark" style="color: white !important;">Special Offers 
+                                    <span class="text-danger fw-bold" style="color: white !important;">of the week!</span>
+                                </h2>
+                                <p class="text-content" style="color: white !important;">Special offer on this week, Hurry Up!</p>
                             </div>
-                            <div class="offer-timing">
+                            
+                            {{-- <div class="offer-timing">
                                 <div class="time" id="clockdiv-1" data-hours="1" data-minutes="2" data-seconds="3">
                                     <ul>
                                         <li>
@@ -262,7 +264,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <br>
@@ -275,7 +277,7 @@
                             </svg>
                         </span>
                     </div>
-                    <div
+                    {{-- <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                         <div>
                             <div class="product-box-3 h-100 wow fadeInUp">
@@ -732,7 +734,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="col-xxl-3 col-xl-4 d-none d-xl-block">
@@ -743,7 +745,7 @@
                                     class="bg-img blur-up lazyload" alt="">
                                 <div class="banner-detail p-top-left">
                                     <div>
-                                        <h6 class="text-uppercase theme-color fw-500">seafood</h6>
+                                        <h6 class="text-uppercase theme-color fw-500">Leather Item</h6>
                                         <h3 class="text-uppercase">
                                             special <span class="brand-name">brand</span>
                                         </h3>
@@ -755,13 +757,13 @@
                                             <h2 class="mt-2">50%</h2>
                                             <h3 class="text-uppercase">off</h3>
                                         </div>
-
+{{-- 
                                         <div>
                                             <button onclick="location.href = 'shop-left-sidebar.html';"
                                                 class="btn text-white btn-md mt-xxl-4 mt-2 home-button mend-auto theme-bg-color">Shop
                                                 Now<i class="fa-solid fa-right-long icon ms-2"></i>
                                             </button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

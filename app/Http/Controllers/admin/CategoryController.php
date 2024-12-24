@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Product_category::with('translations')->get();
+        $categories = Product_category::with('translations')->where('status', 'active')->whereNull('parent_id')->get();
         return view("backend.category.all_category", compact("categories"));
     }
 
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $inactive_category = Product_category::where('status', 'inactive')->get();
+        $inactive_category = Product_category::where('status', 'inactive')->whereNull('parent_id')->get();
         return view("backend.category.all_inactive_category", compact('inactive_category'));
     }
 
@@ -32,13 +32,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+
         // Validation
         $request->validate([
             'name' => 'required|string|max:255',
             'name_bangla' => 'required|string|max:255',
             // 'description' => 'required|string|max:255',
-
         ]);
 
         if ($request->file('image')) {
@@ -52,8 +51,8 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'image' => $request->file('image') ? $directory . $imageName : null,
-            'is_featured' => $request->has('is_featured') ? 0 : 1,
-            'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,
+            // 'is_featured' => $request->has('is_featured') ? 0 : 1,
+            // 'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,
             'status' => 'active',
             'level' => 1,
         ]);
@@ -91,8 +90,8 @@ class CategoryController extends Controller
                 'description' => $category->description ?? null,
 
                 'image' => $category->image ?? null,
-                'is_featured' => $category->is_featured ?? null,
-                'enableSubcat' => $category->enableSubcat ?? null,
+                // 'is_featured' => $category->is_featured ?? null,
+                // 'enableSubcat' => $category->enableSubcat ?? null,
             ]);
         } else {
 
@@ -134,8 +133,8 @@ class CategoryController extends Controller
         $category->update([
             'name' => $request->edit_name,
             'description' => $request->edit_description,
-            'is_featured' => $request->has('is_featured') ? 0 : 1,
-            'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,
+            // 'is_featured' => $request->has('is_featured') ? 0 : 1,
+            // 'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,
         ]);
 
         // Update the translation for Bangla
@@ -180,7 +179,15 @@ class CategoryController extends Controller
 
     public function categoryChangeStatus(Request $request){
 
-        $category = Product_category::findOrFail($request->id);
-        dd($category);
+        $category = Product_category::findOrFail($request->category_id);
+        
+        if ($category->status == 'inactive'){
+            $category->status = 'active';
+            $category->save();
+        }
+
+        // Return updated status
+        return response()->json(['success' => 'Status changed successfully']);
+        // dd($category);
     }
 }

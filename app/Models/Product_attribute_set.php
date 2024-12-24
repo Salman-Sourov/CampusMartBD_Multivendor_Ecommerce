@@ -11,4 +11,5 @@ class Product_attribute_set extends Model
 
     protected $guarded = [];
     protected $table = 'product_attribute_sets';
+
 }

@@ -15,9 +15,8 @@
                             <div class="notification-slider">
                                 <div>
                                     <div class="timer-notification">
-                                        <h6><strong class="me-1">Welcome to Bazar BD!</strong>Wrap new
-                                            offers/gift.<strong class="ms-1">New Coupon Code: Fast024
-                                            </strong>
+                                        <h6><strong class="me-1">Welcome to Elhaam BD. </strong>Wrap new
+                                            offers/gift.
 
                                         </h6>
                                     </div>
@@ -26,7 +25,7 @@
                                 <div>
                                     <div class="timer-notification">
                                         <h6>Something you love is now on sale!
-                                            <a href="shop-left-sidebar.html" class="text-white">Buy Now
+                                            <a href="{{ url('/') }}" class="text-white">Buy Now
                                                 !</a>
                                         </h6>
                                     </div>
@@ -95,7 +94,7 @@
                                 </span>
                             </button>
                             <a href="{{ url('/') }}" class="web-logo nav-logo">
-                                <img src="{{ asset('frontend') }}/assets/images/logo/bazar-bd-logo.png"
+                                <img src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
                                     class="img-fluid blur-up lazyload" alt="">
                             </a>
 
@@ -142,7 +141,7 @@
                                             </div>
                                             <div class="delivery-detail">
                                                 <h6>24/7 Delivery</h6>
-                                                <h5>+8801869520885</h5>
+                                                <h5>+8801740401014</h5>
                                             </div>
                                         </a>
                                     </li>
@@ -403,8 +402,8 @@
                                                                 </a>
                                                             @else
                                                                 <a class="dropdown-item"
-                                                                    href="{ route('product.details',$product->id) }}">
-                                                                    {{ Str::limit($product->translations->name, 20) }}
+                                                                    href="{{ route('product.details',$product->id) }}">
+                                                                    {{ Str::limit($product->translations->name, 25) }}
                                                                 </a>
                                                             @endif
 

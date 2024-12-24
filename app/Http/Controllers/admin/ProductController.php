@@ -191,7 +191,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -435,5 +435,12 @@ class ProductController extends Controller
         );
 
         return redirect()->back()->with($notification);
+    }
+
+    public function inactive_product(): void{
+        
+        // $inactive_product = Product::where('status', 'active')->get();
+        // dd($inactive_product);
+       // return view('backend.product.all_inactive_product', compact('inactive_product'));
     }
 }

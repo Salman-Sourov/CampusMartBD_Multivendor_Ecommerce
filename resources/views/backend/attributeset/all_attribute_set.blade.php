@@ -29,14 +29,14 @@
                                 <span id="title_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
 
-                            <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
+                            {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                                 <div class="form-check mb-2">
                                     <input type="checkbox" name="status" class="form-check-input" id="status">
                                     <label class="form-check-label" for="enableSubcat">
                                         Enable Status
                                     </label>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <button type="submit" class="btn btn-primary">Add Attribute Set</button>
                         </form>
@@ -130,7 +130,7 @@
                             <span id="edit_title_error" class="text-danger"></span>
                         </div>
 
-                        <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
+                        {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                             <div class="form-check mb-2">
                                 <input type="checkbox" name="status" class="form-check-input"
                                     id="edit_status">
@@ -138,7 +138,7 @@
                                   Enable Status
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>

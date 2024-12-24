@@ -13,7 +13,7 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Inactive Category  ({{count($inactive_category)}})</h6>
+                        <h6 class="card-title">All Inactive Category  ({{count($inactive_subcategory)}})</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
@@ -28,8 +28,8 @@
                                     </tr>
                                 </thead>
                                 <tbody id="brandTableBody">
-                                    @if ($inactive_category && count($inactive_category) > 0)
-                                        @foreach ($inactive_category as $key => $item)
+                                    @if ($inactive_subcategory && count($inactive_subcategory) > 0)
+                                        @foreach ($inactive_subcategory as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->name }}</td>
@@ -50,6 +50,7 @@
                                                          <i data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
                                                      </a>
                                                     
+
                                                     {{-- <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
                                                         id="{{ $item->id }}" onclick="brandEdit(this.id)">
@@ -59,6 +60,7 @@
                                                     {{-- <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
                                                     </a> --}}
+
 
                                                 </td>
                                             </tr>
@@ -93,17 +95,16 @@
             $('.toggle-class').click(function() {
                 var $this = $(this);
                 var status = $this.attr('data-status');
-                var category_id = $this.data('id');
+                var subcategory_id = $this.data('id');
                 console.log($('meta[name="csrf-token"]').attr('content'));
 
-    
                 $.ajax({
                     type: "POST",  // Use POST for status change
                     dataType: "json",
-                    url: '{{ route('category.change.status') }}',
+                    url: '{{ route('subcategory.change.status') }}',
                     data: {
                         'status': status,
-                        'category_id': category_id,
+                        'subcategory_id': subcategory_id,
                     },
                     success: function(data) {
                         const Toast = Swal.mixin({

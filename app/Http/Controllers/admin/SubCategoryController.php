@@ -15,9 +15,9 @@ class SubCategoryController extends Controller
     public function index()
     {
 
-        $categories = Product_category::with('translations')->whereNull('parent_id')->get();
+        $categories = Product_category::with('translations')->where('status', 'active')->whereNull('parent_id')->get();
 
-        $subcategories = Product_category::with(['translations', 'hasChild'])
+        $subcategories = Product_category::with(['translations', 'hasChild'])->where('status', 'active')
             ->whereNotNull('parent_id') // Filter categories that have child categories
             ->get();
         // dd($subcategories);
@@ -29,7 +29,8 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        //
+        $inactive_subcategory = Product_category::where('status', 'inactive')->whereNotNull('parent_id')->get();
+        return view("backend.subcategory.all_inactive_subcategory", compact('inactive_subcategory'));
     }
 
     /**
@@ -142,16 +143,16 @@ class SubCategoryController extends Controller
         }
 
         // Directly set 'is_featured' and 'enableSubcat' based on the request
-        $category->is_featured = $request->has('edit_is_featured') ? 1 : 0;
-       
+        // $category->is_featured = $request->has('edit_is_featured') ? 1 : 0;
+
 
         // Update the category's basic details including the toggled fields
         $category->update([
             'name' => $request->edit_name,
             'parent_id' => $request->edit_category_id,
             'description' => $request->edit_description,
-            'is_featured' => $category->is_featured, // Save the updated value of 'is_featured'
-            'enableSubcat' => $category->enableSubcat // Save the updated value of 'enableSubcat'
+            // 'is_featured' => $category->is_featured, // Save the updated value of 'is_featured'
+            // 'enableSubcat' => $category->enableSubcat // Save the updated value of 'enableSubcat'
         ]);
 
         // Update or create the translation for Bangla
@@ -177,11 +178,25 @@ class SubCategoryController extends Controller
         //     unlink(public_path($category->image)); // Delete the image from the server
         // }
         // $category->image = null;
-        
+
         $category->save();
         return response()->json([
             'success' => true,
             'message' => 'Category Successfully Deleted'
         ]);
+    }
+
+    public function subcategoryChangeStatus(Request $request){
+
+        $subcategory = Product_category::findOrFail($request->subcategory_id);
+        
+        if ($subcategory->status == 'inactive'){
+            $subcategory->status = 'active';
+            $subcategory->save();
+        }
+
+        // Return updated status
+        return response()->json(['success' => 'Status changed successfully']);
+        // dd($category);
     }
 }
