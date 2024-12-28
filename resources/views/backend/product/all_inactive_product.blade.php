@@ -8,34 +8,44 @@
         </nav>
 
 
-        {{-- ALL brand --}}
+        {{-- ALL Inactive Product --}}
         <div class="row col">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Inactive Category ({{ count($inactive_category) }})</h6>
+                        <h6 class="card-title">All Inactive Category ({{ count($inactive_product) }})</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Logo</th>
+                                        <th>Product Name</th>
+                                        <th>Image</th>
+                                        <th>Brand</th>
+                                        <th>Price</th>
+                                        <th>Sale Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="brandTableBody">
-                                    @if ($inactive_category && count($inactive_category) > 0)
-                                        @foreach ($inactive_category as $key => $item)
+                                    @if ($inactive_product && count($inactive_product) > 0)
+                                        @foreach ($inactive_product as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->description }}</td>
-                                                <td><img src="{{ !empty($item->logo) ? url($item->logo) : url('upload/no_image.jpg') }}"
-                                                        style="width:70px; height:40px;"> </td>
+                                                <td><img src="{{ asset($item->thumbnail) }}"
+                                                        style="width:70px; height:40px;">
+                                                </td>
+                                                @php
+                                                    $brand = App\Models\Brand::find($item->brand_id); // Corrected namespace and query
+                                                @endphp
+                                                <td>{{ $brand ? $brand->name : 'N/A' }}</td>
+                                                <!-- Check if brand exists and display its name, otherwise 'N/A' -->
+
+                                                <td>{{ $item->price }}</td>
+                                                <td>{{ $item->sale_price }}</td>
                                                 <td>
                                                     @if ($item->status == 'active')
                                                         <span class="badge rounded-pill bg-success">Active</span>
@@ -94,17 +104,16 @@
             $('.toggle-class').click(function() {
                 var $this = $(this);
                 var status = $this.attr('data-status');
-                var category_id = $this.data('id');
+                var product_id = $this.data('id');
                 console.log($('meta[name="csrf-token"]').attr('content'));
-
 
                 $.ajax({
                     type: "POST", // Use POST for status change
                     dataType: "json",
-                    url: '{{ route('category.change.status') }}',
+                    url: '{{ route('product.change.status') }}',
                     data: {
                         'status': status,
-                        'category_id': category_id,
+                        'product_id': product_id,
                     },
                     success: function(data) {
                         const Toast = Swal.mixin({

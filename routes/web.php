@@ -85,6 +85,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     //Attribute
     Route::resource('attribute', AttributeController::class);
+    Route::post('/attribute/changeStatus', [AttributeController::class, 'attributeChangeStatus'])->name('attribute.change.status');
 
     //Product
     Route::resource('product', ProductController::class);
@@ -99,6 +100,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
     Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
 
+    
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');

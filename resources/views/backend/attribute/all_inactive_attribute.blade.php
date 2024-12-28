@@ -2,18 +2,13 @@
 @section('admin')
 
     <div class="page-content">
-        <nav class="page-breadcrumb">
-            <ol class="breadcrumb">
-            </ol>
-        </nav>
 
-
-        {{-- ALL brand --}}
+        {{-- ALL Inactive Attribute --}}
         <div class="row col">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Inactive Sub-Category  ({{count($inactive_subcategory)}})</h6>
+                        <h6 class="card-title">All Inactive Attribute ({{ count($inactiveAttribute) }})</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
@@ -21,21 +16,16 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Logo</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="brandTableBody">
-                                    @if ($inactive_subcategory && count($inactive_subcategory) > 0)
-                                        @foreach ($inactive_subcategory as $key => $item)
+                                    @if ($inactiveAttribute && count($inactiveAttribute) > 0)
+                                        @foreach ($inactiveAttribute as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->description }}</td>
-                                                <td><img src="{{ !empty($item->logo) ? url($item->logo) : url('upload/no_image.jpg') }}"
-                                                        style="width:70px; height:40px;"> </td>
+                                                <td>{{ $item->title }}</td>
                                                 <td>
                                                     @if ($item->status == 'active')
                                                         <span class="badge rounded-pill bg-success">Active</span>
@@ -46,10 +36,11 @@
                                                 <td>
 
                                                     <a class="btn toggle-class {{ $item->status == 'active' ? 'btn-inverse-success' : 'btn-inverse-danger' }}"
-                                                        title="Status" data-id="{{ $item->id }}" data-status="{{ $item->status }}">
-                                                         <i data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
-                                                     </a>
-                                                    
+                                                        title="Status" data-id="{{ $item->id }}"
+                                                        data-status="{{ $item->status }}">
+                                                        <i
+                                                            data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
+                                                    </a>
 
                                                     {{-- <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
@@ -60,8 +51,6 @@
                                                     {{-- <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
                                                     </a> --}}
-
-
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -71,7 +60,6 @@
                                         </tr>
                                     @endif
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -90,21 +78,21 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-    
+
             // Toggle brand status on button click
             $('.toggle-class').click(function() {
                 var $this = $(this);
                 var status = $this.attr('data-status');
-                var subcategory_id = $this.data('id');
+                var inactive_attribute_id = $this.data('id');
                 console.log($('meta[name="csrf-token"]').attr('content'));
 
                 $.ajax({
-                    type: "POST",  // Use POST for status change
+                    type: "POST", // Use POST for status change
                     dataType: "json",
-                    url: '{{ route('subcategory.change.status') }}',
+                    url: '{{ route('attribute.change.status') }}',
                     data: {
                         'status': status,
-                        'subcategory_id': subcategory_id,
+                        'inactive_attribute_id': inactive_attribute_id,
                     },
                     success: function(data) {
                         const Toast = Swal.mixin({
@@ -114,24 +102,28 @@
                             showConfirmButton: false,
                             timer: 3000
                         });
-    
+
                         if (!data.error) {
                             Toast.fire({
                                 icon: 'success',
                                 title: 'Status Updated Successfully'
                             });
-    
+
                             var $statusSpan = $this.closest('tr').find('.status-span');
                             if (data.status === 'inactive') {
-                                $this.removeClass('btn-inverse-success').addClass('btn-inverse-danger');
+                                $this.removeClass('btn-inverse-success').addClass(
+                                    'btn-inverse-danger');
                                 $this.find('i').attr('data-feather', 'toggle-right');
-                                $statusSpan.removeClass('bg-success').addClass('bg-danger').text('Inactive');
+                                $statusSpan.removeClass('bg-success').addClass('bg-danger')
+                                    .text('Inactive');
                             } else {
-                                $this.removeClass('btn-inverse-danger').addClass('btn-inverse-success');
+                                $this.removeClass('btn-inverse-danger').addClass(
+                                    'btn-inverse-success');
                                 $this.find('i').attr('data-feather', 'toggle-left');
-                                $statusSpan.removeClass('bg-danger').addClass('bg-success').text('Active');
+                                $statusSpan.removeClass('bg-danger').addClass('bg-success')
+                                    .text('Active');
                             }
-    
+
                             $this.attr('data-status', data.status);
                             feather.replace(); // Re-initialize Feather icons
                             window.location.reload();
@@ -146,8 +138,5 @@
             });
         });
     </script>
-    
-    
-
 
 @endsection

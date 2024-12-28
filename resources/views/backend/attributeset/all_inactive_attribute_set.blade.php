@@ -13,7 +13,7 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">All Inactive Category  ({{count($inactive_attribute_set)}})</h6>
+                        <h6 class="card-title">All Inactive Attribute Set  ({{count($inactive_attribute_set)}})</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">

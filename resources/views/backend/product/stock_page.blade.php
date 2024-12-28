@@ -1,19 +1,18 @@
 @extends('admin.admin_dashboard')
 @section('admin')
-
     <div class="page-content">
 
         {{-- Variant --}}
-        <nav class="page-breadcrumb">
+        {{-- <nav class="page-breadcrumb">
             <ol class="breadcrumb">
                 <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
                     Add Variant
                 </button>
             </ol>
-        </nav>
+        </nav> --}}
 
         <!-- Add Variant-->
-        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -45,7 +44,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+
+
 
         {{-- ALL Variant --}}
         <div class="row">
@@ -54,23 +56,40 @@
                     <div class="card-body">
                         <h6 class="card-title">
                             {{ $product_id->name }}</h6>
-
                         <div class="table-responsive">
-                            <table id="dataTableExample" class="table">
-                                <thead>
+
+                            <form id="myForm" method="POST" action="{{ route('stock.store') }}" class="forms-sample" onsubmit="return validateForm()">
+                                @csrf
+
+                                <input type="hidden" name="product_id" value={{ $product_id->id }}>
+                                @foreach ($attributes as $attribute)
+                                    <div class="text-capitalize form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" name="attribute[]"
+                                            id="checkDefault{{ $attribute->id }}" value="{{ $attribute->id }}">
+                                        <label class="form-check-label" for="checkDefault{{ $attribute->id }}">
+                                            {{ $attribute->title }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            
+                                <button type="submit" class="btn btn-primary">Add Attribute</button>
+                            </form>
+
+                            {{-- <table id="dataTableExample" class="table"> --}}
+                            {{-- <thead>
                                     <tr>
                                         <th>Sl</th>
                                         <th>Attribute Set</th>
                                         <th>Action</th>
                                     </tr>
-                                </thead>
+                                </thead> --}}
 
-                                <tbody id="brandTableBody">
+                            {{-- <tbody id="brandTableBody">
                                     @if ($variants && count($variants) > 0)
-                                        @foreach ($variants as $key => $item)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>
+                                        @foreach ($variants as $key => $item) --}}
+                            {{-- <tr> --}}
+                            {{-- <td>{{ $key + 1 }}</td> --}}
+                            {{-- <td>
                                                     @php
                                                         $attribute = App\Models\Product_attribute_set::where(
                                                             'id',
@@ -78,24 +97,24 @@
                                                         )->first();
                                                     @endphp
                                                     {{ $attribute->title }}
-                                                </td>
+                                                </td> --}}
 
-                                               
-                                                <td>
-                                                    {{-- <button type="button" class="btn btn-inverse-warning"
+
+                            {{-- <td> --}}
+                            {{-- <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
                                                         id="{{ $item->id }}" onclick="stockEdit(this.id)">
                                                         Edit
                                                     </button> --}}
 
-                                                    <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btns"
+                            {{-- <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btns"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
-                                                    </a>
+                                                    </a> --}}
 
 
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                            {{-- </td> --}}
+                            {{-- </tr> --}}
+                            {{-- @endforeach
                                     @else
                                         <tr>
                                             <td colspan="6" class="text-center">No data available</td>
@@ -103,7 +122,7 @@
                                     @endif
                                 </tbody>
 
-                            </table>
+                            </table> --}}
                         </div>
                     </div>
                 </div>
@@ -120,8 +139,8 @@
             </ol>
         </nav> --}}
 
-       
-        {{-- ALL Variant Wise Stock--}}
+
+        {{-- ALL Variant Wise Stock --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -141,89 +160,40 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        // Step 1: Initialize the combinations array
-                                        $combinations = [];
-                                        $attributes = [];
+                                        // Step 1: Retrieve the Product_with_attribute record
+                                        $ids = App\Models\Product_with_attribute::where('product_id', $product_id->id)->first();
+                                        $attribute_ids = $ids ? explode(',', $ids->attribute_ids) : [];
                                 
-                                        // Step 2: Collect all active attribute options dynamically into a simple array
-                                        if ($product_id->attribute_set && $product_id->attribute_set->count() > 0) {
-                                            foreach ($product_id->attribute_set as $set) {
-                                                // Collect only active attribute options (titles and ids)
-                                                $attributes[] = $set->attributes
-                                                    ->where('status', 'active')  // Filter active attributes
-                                                    ->pluck('title', 'id')       // Get the title and id of each option
-                                                    ->toArray();                 // Convert to array
-                                            }
-                                        }
-                                    @endphp
+                                        // Step 2: Retrieve all the relevant attributes from Product_attribute
+                                        $attributes = App\Models\Product_attribute::whereIn('id', $attribute_ids)->get();
                                 
-                                    @php
-                                        // Step 3: Generate combinations dynamically using nested loops
-                                        if (!empty($attributes)) {
-                                            // Initialize combinations with an empty combination
-                                            $combinations[] = [];
-                                
-                                            // Loop through each attribute set
-                                            foreach ($attributes as $setKey => $attribute) {
-                                                $temp = [];
-                                
-                                                // For each existing combination, add the current attribute options to it
-                                                foreach ($combinations as $combination) {
-                                                    foreach ($attribute as $id => $option) {
-                                                        // Merge the current combination with the option from the current attribute set
-                                                        $temp[] = array_merge($combination, [$option, $id]); // Add attribute ID to each combination
-                                                    }
+                                        // Step 3: Group the attributes by attribute_set_id
+                                        $attribute_sets = $attributes->groupBy('attribute_set_id');
+                                        
+                                        // Step 4: Calculate the Cartesian Product of the attribute sets
+                                        $cartesian_combinations = [[]];
+                                        
+                                        foreach ($attribute_sets as $set_id => $set_attributes) {
+                                            $new_combinations = [];
+                                            foreach ($cartesian_combinations as $combination) {
+                                                foreach ($set_attributes as $attribute) {
+                                                    $new_combinations[] = array_merge($combination, [$attribute]);
                                                 }
-                                
-                                                // Update the combinations array with the new set of combinations
-                                                $combinations = $temp;
                                             }
+                                            $cartesian_combinations = $new_combinations;
                                         }
                                     @endphp
                                 
-                                    @if (!empty($combinations))
-                                        @foreach ($combinations as $key => $combination)
-                                            <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>
-                                                    <!-- Display the combination of attributes but hide IDs -->
-                                                    {{ implode(' × ', collect($combination)->map(fn($item, $index) => $index % 2 === 0 ? $item : null)->filter()->toArray()) }}
-                                                </td>
-
-                                                <td>
-                                                    @php
-                                                        // Extract only the IDs (every second element from the combination array)
-                                                        $attributeIds = collect($combination)->filter(fn($item, $index) => $index % 2 !== 0)->toArray();
-                                                        $attributeIdString = implode(',', $attributeIds);
-                                                        $stock = App\Models\Product_attribute_wise_stock::where('attribute_id', $attributeIdString)->first();
-                                                    @endphp
-                                                    {{ $stock ? $stock->stock : 0 }}
-                                                </td>
-
-
-                                                <td>
-                                                    <!-- Pass the attribute IDs and options through data-attributes (hidden IDs) -->
-                                                    <button type="button" class="btn btn-inverse-danger delete-btn"
-                                                       data-id="{{ $key }}"
-                                                       data-attributes="{{ json_encode(array_chunk($combination, 2)) }}" 
-                                                       title="Add" data-bs-toggle="modal" data-bs-target="#addStock"  onclick="setAttributeData(this)">Add</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
+                                    @foreach ($cartesian_combinations as $combination)
                                         <tr>
-                                            <td colspan="3" class="text-center">No combinations available</td>
+                                            @foreach ($combination as $attribute)
+                                                <td>{{ $attribute->title }}</td> <!-- Display the attribute title -->
+                                            @endforeach
                                         </tr>
-                                    @endif
+                                    @endforeach
                                 </tbody>
                                 
-                                
-                                
-                                
-                                
-                                
                             
-
                             </table>
                         </div>
                     </div>
@@ -233,8 +203,8 @@
 
 
 
-         <!-- Add Variant Wise Stock-->
-         <div class="modal fade" id="addStock" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <!-- Add Variant Wise Stock-->
+        <div class="modal fade" id="addStock" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -313,11 +283,11 @@
 
 
         function setAttributeData(button) {
-            var attributes = $(button).data('attributes');  // Get attributes from button
-            console.log(attributes);  // Debugging log
+            var attributes = $(button).data('attributes'); // Get attributes from button
+            console.log(attributes); // Debugging log
 
             var attributeIds = attributes.map(function(attr) {
-                return attr[1];  // Extract attribute IDs
+                return attr[1]; // Extract attribute IDs
             });
 
             // Set the hidden input value
@@ -442,4 +412,17 @@
         $('#edit_banglaInputText').bangla('on');
     </script>
 
+
+<script>
+    function validateForm() {
+        var checkboxes = document.querySelectorAll('input[name="attribute[]"]:checked');
+        if (checkboxes.length === 0) {
+            // Using Toastr to show the validation message
+            toastr.error('Please select at least one attribute.', 'Validation Error', {
+            });
+            return false;
+        }
+        return true;
+    }
+</script
 @endsection

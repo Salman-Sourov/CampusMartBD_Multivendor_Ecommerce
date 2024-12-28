@@ -25,9 +25,9 @@
                             @csrf
 
                             <div class="form-group mb-3">
-                                <label for="category" class="form-label">Attribute Set</label>
+                                <label for="category" class="form-label">Attribute Set *</label>
                                 <select name="attribute_set_id" class="form-control" id="attribute_set_id">
-                                    <option value="">Select a Category</option>
+                                    <option value="">Select a Attribute</option>
                                     <!-- Options will be dynamically populated here -->
                                     @foreach ($attribute_sets as $attribute_set)
                                         <option value="{{ $attribute_set->id }}">{{ $attribute_set->title }}</option>
@@ -36,26 +36,26 @@
                                 <span id="attribute_set_id_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
                             <div class="form-group mb-3">
-                                <label for="name" class="form-label">Title</label>
+                                <label for="name" class="form-label">Title *</label>
                                 <input type="text" name="title" class="form-control" id="title">
                                 <span id="title_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div>
 
-                            <div class="form-group mb-3">
+                            {{-- <div class="form-group mb-3">
                                 <label for="color" class="form-label">Color</label>
                                 <input type="color" name="color" class="form-control" id="color"> <!-- Default hex color value -->
                                 <span id="color_error" class="text-danger"></span> <!-- Error message placeholder -->
-                            </div>
+                            </div> --}}
                             
 
-                            <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
+                            {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                                 <div class="form-check mb-2">
                                     <input type="checkbox" name="status" class="form-check-input" id="status">
                                     <label class="form-check-label" for="enableSubcat">
                                         Enable Status
                                     </label>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <button type="submit" class="btn btn-primary">Add Attribute Set</button>
                         </form>
@@ -79,8 +79,8 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Title</th>
-                                        <th>color</th>
-                                        <th>oder</th>
+                                        {{-- <th>Color</th> --}}
+                                        <th>Order</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -91,7 +91,7 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->title ?? 'N/A' }}</td>
-                                                <td>{{ $item->color }}</td>
+                                                {{-- <td>{{ $item->color }}</td> --}}
                                                 <td>{{ $item->order }}</td>
                                                 <td>
                                                     @if ($item->status == 'active')
@@ -128,8 +128,7 @@
 
     </div>
 
-
-    <!-- Edit Attribute Set Modal -->
+    <!-- Edit Attribute Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -164,13 +163,13 @@
                             <span id="edit_title_error" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group mb-3">
+                        {{-- <div class="form-group mb-3">
                             <label for="color" class="form-label">Color</label>
                             <input type="color" name="edit_color" class="form-control" id="edit_color"> <!-- Default hex color value -->
                             <span id="color_error" class="text-danger"></span> <!-- Error message placeholder -->
-                        </div>
+                        </div> --}}
 
-                        <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
+                        {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                             <div class="form-check mb-2">
                                 <input type="checkbox" name="status" class="form-check-input"
                                     id="edit_status">
@@ -178,7 +177,7 @@
                                   Enable Status
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </form>
@@ -227,7 +226,6 @@
         }
     </script>
 
-
     {{-- Edit Attribute Set --}}
     <script type="text/javascript">
         function AttributeEdit(id) {
@@ -244,7 +242,7 @@
                         $('#edit_title').val(data.title);
                         $('#edit_status').prop('checked', data.status ==
                         'active'); // Check if 'enableSubcat' is true
-                        $('#edit_color').val( data.color);
+                        // $('#edit_color').val( data.color);
                         $('#edit_attribute_set_id').val(data.set_id);
                         $('#edit_attribute_set_id').trigger("change");
                         $('#editModal').modal('show'); // Open modal with data loaded
@@ -354,6 +352,5 @@
             });
         });
     </script>
-
 
 @endsection

@@ -98,9 +98,9 @@
                                                             @php
                                                                 $get_product_bangla = App\Models\product_translation::where(
                                                                     'products_id',
-                                                                    $product->products->id,
+                                                                    $product->id,
                                                                 )->first();
-                                                                // print_r ($get_product_bangla);
+                                                               
                                                             @endphp
                                                             <h5 class="name">
                                                                 {{ Str::limit($get_product_bangla->name, 20) }}</h5>

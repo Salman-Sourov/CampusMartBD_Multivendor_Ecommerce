@@ -110,7 +110,7 @@
                             <a href="{{ route('attribute.index') }}" class="nav-link">All Attribute</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('attribute.index') }}" class="nav-link">Inactive Attribute</a>
+                            <a href="{{ route('attribute.create') }}" class="nav-link">Inactive Attribute</a>
                         </li>
                     </ul>
                 </div>

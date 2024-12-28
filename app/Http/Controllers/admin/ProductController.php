@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::where('status','active')->get();
         return view("backend.product.all_product", compact("products"));
     }
 
@@ -154,9 +154,7 @@ class ProductController extends Controller
                     $product_video->video_id = $data->id;
                     $product_video->save();
                 }
-            }  
-            else if($request->has('video_type') && $request->has('video_link'))
-            {
+            } else if ($request->has('video_type') && $request->has('video_link')) {
                 $notification = [
                     'message' => 'Video Type or Link Missing',
                     'alert-type' => 'error',
@@ -189,10 +187,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource. 
      */
-    public function show(string $id)
-    {
-        
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -329,8 +324,7 @@ class ProductController extends Controller
                     $product_video->video_id = $data->id;
                     $product_video->save();
                 }
-            } else if($videoTypes ||  $videoLinks)
-            {
+            } else if ($videoTypes ||  $videoLinks) {
                 $notification = [
                     'message' => 'Video Type or Link Missing',
                     'alert-type' => 'error',
@@ -437,10 +431,22 @@ class ProductController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function inactive_product(): void{
-        
-        // $inactive_product = Product::where('status', 'active')->get();
-        // dd($inactive_product);
-       // return view('backend.product.all_inactive_product', compact('inactive_product'));
+    public function inactive_product()
+    {
+        $inactive_product = Product::where('status', 'inactive')->get();
+        return view('backend.product.all_inactive_product', compact('inactive_product'));
+    }
+
+    public function productChangeStatus(Request $request){
+
+        $inactiveProduct = Product::findOrFail($request->product_id);
+
+        if($inactiveProduct->status == 'inactive'){
+
+            $inactiveProduct->status = 'active';
+            $inactiveProduct->save();
+        }
+
+        return response()->json(['success' => 'Status changed successfully']);
     }
 }

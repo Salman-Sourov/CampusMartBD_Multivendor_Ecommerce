@@ -369,17 +369,17 @@
                                                             @if (App::getLocale() == 'en')
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('brand.details', $brand->id) }}">
-                                                                    {{ $brand->name }}
+                                                                    {{ $brand->name ?? 'Unnamed Brand' }}
                                                                 </a>
                                                             @else
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('brand.details', $brand->id) }}">
-                                                                    {{ $brand->translations->name }}
+                                                                    {{ $brand->translations->name ?? ($brand->name ?? 'Unnamed Brand') }}
                                                                 </a>
                                                             @endif
                                                         </li>
                                                     @empty
-                                                        <!-- Do nothing or display a message if needed -->
+                                                        <li class="dropdown-item text-muted">No brands available</li>
                                                     @endforelse
                                                 </ul>
                                             </li>
@@ -397,19 +397,19 @@
                                                         <li>
                                                             @if (App::getLocale() == 'en')
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('product.details',$product->id) }}">
+                                                                    href="{{ route('product.details', $product->id) }}">
                                                                     {{ Str::limit($product->name, 20) }}
                                                                 </a>
                                                             @else
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('product.details',$product->id) }}">
+                                                                    href="{{ route('product.details', $product->id) }}">
                                                                     {{ Str::limit($product->translations->name, 25) }}
                                                                 </a>
                                                             @endif
 
                                                         </li>
                                                     @empty
-                                                        <!-- Do nothing or display a message if needed -->
+                                                    <li class="dropdown-item text-muted">No Products available</li>
                                                     @endforelse
                                                 </ul>
 

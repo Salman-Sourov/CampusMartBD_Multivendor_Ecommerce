@@ -15,9 +15,9 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        $attribute_sets = Product_attribute_set::where('status','active')->get();
-        $attributes = Product_attribute::where('status','active')->get();
-        return view("backend.attribute.all_attribute", compact("attributes","attribute_sets"));
+        $attribute_sets = Product_attribute_set::where('status', 'active')->get();
+        $attributes = Product_attribute::where('status', 'active')->get();
+        return view("backend.attribute.all_attribute", compact("attributes", "attribute_sets"));
     }
 
     /**
@@ -25,7 +25,8 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        //
+        $inactiveAttribute = Product_attribute::where('status', 'inactive')->get();
+        return view('backend.attribute.all_inactive_attribute', compact('inactiveAttribute'));
     }
 
     /**
@@ -33,20 +34,20 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-         //dd($request->all());
+        //dd($request->all());
 
-         $request->validate([
+        $request->validate([
             'attribute_set_id' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'color' => 'nullable|string|max:255',
+            // 'color' => 'nullable|string|max:255',
         ]);
 
-        $AttributeSet = Product_attribute::create([
+        Product_attribute::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title), 
+            'slug' => Str::slug($request->title),
             'attribute_set_id' => $request->attribute_set_id,
-            'color' => $request->color,
-            'status' => $request->has('status') ? 'active' : 'inactive',
+            // 'color' => $request->color,
+            'status' => 'active',
         ]);
 
         return response()->json(['success' => true, 'message' => 'Attribute added successfully']);
@@ -65,7 +66,6 @@ class AttributeController extends Controller
      */
     public function edit(string $id)
     {
-        
         $Attribute = Product_attribute::findOrFail($id);
         //dd($Attribute);
         if ($Attribute) {
@@ -73,7 +73,7 @@ class AttributeController extends Controller
                 'id' => $Attribute->id ?? null,
                 'set_id' => $Attribute->attribute_set_id ?? null,
                 'title' => $Attribute->title ?? null,
-                'color' => $Attribute->color ?? null,
+                // 'color' => $Attribute->color ?? null,
                 'status' => $Attribute->status ?? null,
             ]);
         } else {
@@ -89,18 +89,18 @@ class AttributeController extends Controller
         $Attribute = Product_attribute::find($id);
 
         $request->validate([
-          'edit_title' => 'required|string|max:255',
-          'edit_color' => 'nullable|string|max:255',
-          'edit_attribute_set_id' => 'required|string|max:255',
+            'edit_title' => 'required|string|max:255',
+            //   'edit_color' => 'nullable|string|max:255',
+            'edit_attribute_set_id' => 'required|string|max:255',
         ]);
 
         $Attribute->update([
             'title' => $request->edit_title,
-            'slug' => Str::slug($request->edit_title), 
-            'color' => $request->edit_color,
+            'slug' => Str::slug($request->edit_title),
+            // 'color' => $request->edit_color,
             'attribute_set_id' => $request->edit_attribute_set_id,
 
-            'status' => $request->has('status') ? 'active' : 'inactive',
+            // 'status' => $request->has('status') ? 'active' : 'inactive',
         ]);
         return response()->json(['success' => true, 'message' => 'Attribute Set updated successfully']);
     }
@@ -122,5 +122,18 @@ class AttributeController extends Controller
             'success' => true,
             'message' => 'Attribute Set Successfully Deleted'
         ]);
+    }
+
+
+    public function attributeChangeStatus(Request $request)
+    {
+
+        $product_attribute = Product_attribute::findOrFail($request->inactive_attribute_id);
+
+        if ($product_attribute->status == 'inactive') {
+            $product_attribute->status = 'active';
+            $product_attribute->save();
+        }
+        return response()->json(['success' => 'Status changed successfully']);
     }
 }

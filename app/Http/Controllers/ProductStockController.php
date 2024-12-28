@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product_attribute_set;
 use App\Models\Product_attribute_wise_stock;
+use App\Models\product_with_attribute;
 use App\Models\Product_with_attribute_set;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -20,10 +21,11 @@ class ProductStockController extends Controller
     {
         $attributeSets = Product_attribute_set::where('status', 'active')->get();
         $product_id = Product::with('attribute_set')->where('id', $id)->where('status', 'active')->first();
+        $attributes = Product_attribute::where('status', 'active')->get();
 
         $variants = Product_with_attribute_set::where('product_id', $id)->get();
         //dd($product_id);
-        return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants'));
+        return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants','attributes'));
     }
 
     public function getAttribute(string $id)
@@ -55,14 +57,45 @@ class ProductStockController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->attribute_set);
-        $request->validate([
-            'attribute_set' => 'required',
-        ]);
+        //dd($request);
 
-        $check_attributeSet = Product_with_attribute_set::where('attribute_set_id', $request->attribute_set)->first();
 
-        if (!$check_attributeSet) {
+        // $request->validate([
+        //     'attribute' => 'required|array|min:1', 
+        //     'attribute.*' => 'exists:product_with_attributes,attribute_ids', 
+        // ]);
+
+
+        
+        $check_attribute = product_with_attribute::where('product_id', $request->product_id)->first();
+
+        if($check_attribute)
+        {
+            $check_attribute->attribute_ids = implode(',', $request->attribute);
+            $check_attribute->save(); 
+            $notification = [
+                'message' => 'Attribute Successfully Updated',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+        }
+        else{
+            $data = new product_with_attribute();
+            $data->product_id = $request->product_id;
+            $data->attribute_ids = implode(',', $request->attribute); 
+            $data->save(); 
+
+            $notification = [
+                'message' => 'Attribute Successfully Added',
+                'alert-type' => 'success',
+            ];
+
+            return redirect()->back()->with($notification);
+            
+        }
+
+       
             //     $data = new Product_attribute_wise_stock();
             //     $data->product_id  = $request->product_id;
             //     $data->attribute_id = $request->attribute;
@@ -72,15 +105,13 @@ class ProductStockController extends Controller
             //     $data->status = 1;
             //     $data->save();
             // dd('hello');
-            $data = new Product_with_attribute_set();
-            $data->product_id = $request->product_id;
-            $data->attribute_set_id  = $request->attribute_set;
-            $data->save();
+            // $data = new Product_with_attribute_set();
+            // $data->product_id = $request->product_id;
+            // $data->attribute_set_id  = $request->attribute_set;
+            // $data->save();
 
-            return response()->json(['success' => true, 'message' => 'Attribute Set added successfully']);
-        } else {
-            return response()->json(['success' => true, 'message' => 'Already Added This Attribute Set']);
-        }
+            // return response()->json(['success' => true, 'message' => 'Attribute Set added successfully']);
+       
     }
 
     /**

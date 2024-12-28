@@ -26,8 +26,8 @@
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
                                             <label for="banglaInputText" class="form-label">Name in Bangla *</label>
-                                            <input type="text" name="product_name_bangla" class="form-control"
-                                                id="banglaInputText">
+                                            <input type="text" name="product_name_bangla" class="form-control" 
+                                                id="banglaInputText" value="{{ old('product_name_bangla') }}">
                                             @error('product_name_bangla')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -52,7 +52,10 @@
                                                 <option value="">Select a Brand</option>
                                                 <!-- Options will be dynamically populated here -->
                                                 @foreach ($brands as $brand)
-                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    {{-- <option value="{{ $brand->id }}">{{ $brand->name }}</option> --}}
+                                                    <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                                        {{ $brand->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('brand_id')
@@ -70,6 +73,9 @@
 
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    {{-- <option value="{{ $category->id }}" {{ old('category_id') ==  $category->id ? 'selected' : ''}}> --}}
+                                                        {{ $category->name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('category_id')
@@ -93,7 +99,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Price *</label>
+                                            <label class="form-label">Price (Regular Price) *</label>
                                             <input type="text" name="price" class="form-control"
                                                 value="{{ old('price') }}">
                                             @error('price')
@@ -104,7 +110,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Sale Price</label>
+                                            <label class="form-label">Sale Price (Discount Price)</label>
                                             <input type="text" name="sale_price" class="form-control"
                                                 value="{{ old('sale_price') }}">
                                             @error('sale_price')
@@ -182,7 +188,7 @@
                                     <div class="col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label">Short Content</label>
-                                            <textarea name="short_content" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <textarea name="short_content" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ old('short_content') }}</textarea>
                                             @error('short_content')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
