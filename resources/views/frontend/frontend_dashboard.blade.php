@@ -44,6 +44,9 @@
 
     <!-- Template css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/style.css">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
 
 <body class="bg-effect">
@@ -273,6 +276,7 @@
     <!-- script js -->
     <script src="{{ asset('frontend') }}/assets/js/script.js"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     @yield('script')
 

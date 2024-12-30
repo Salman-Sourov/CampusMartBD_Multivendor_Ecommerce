@@ -93,11 +93,11 @@
                                 <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
 
                                 @if (App::getLocale() == 'en')
-                                <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
+                                    <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
                                 @else
-                                <h2 class="name">{{ Str::limit($selected_product->translations->name) }}</h2>
+                                    <h2 class="name">{{ Str::limit($selected_product->translations->name) }}</h2>
                                 @endif
-                                
+
                                 <div class="price-rating">
                                     <h3 class="theme-color price">৳ {{ $selected_product->sale_price }} <del
                                             class="text-content">৳ {{ $selected_product->price }}</del></h3>
@@ -106,198 +106,158 @@
                                 <div class="procuct-contain">
                                     <p>{{ $selected_product->content }}</p>
                                 </div>
-                            <form id="" method="POST" action="" class="forms-sample"
-                                onsubmit="event.preventDefault();">
-                                     @csrf
-                                @forelse($selected_product->attribute_set as $attributes)
-                                <div class="product-packege">
-                                    <div class="product-title">
-                                        @php 
-                                            $set = App\Models\Product_attribute_set::where('id', $attributes->attribute_set_id)->first();                   
+                                <form id="addToCart" method="POST" action="" class="forms-sample"
+                                    onsubmit="event.preventDefault();">
+                                    @csrf
+
+                                    @if ($attributes && $attributes->attribute_ids)
+                                        @php
+                                            // Assuming $attributes is an object with attribute_ids as a string
+                                            $attributes = explode(',', $attributes->attribute_ids);
+
+                                            // Fetch all attributes based on the IDs
+                                            $attributeModels = App\Models\Product_attribute::whereIn(
+                                                'id',
+                                                $attributes,
+                                            )->get();
+
+                                            // Group attributes by their attribute set ID
+                                            $groupedAttributes = $attributeModels->groupBy('attribute_set_id');
                                         @endphp
-                                        <h4 style="font-weight: bold">{{ $set ? $set->title : 'NA' }}</h4>
-                                    </div>
-                            
-                                    <ul class="select-packege">
-                                        @forelse($attributes->attributes as $attribute)
-                                            <li>
-                                                <input type="radio" 
-                                                       name="attribute_set_{{ $attributes->attribute_set_id }}" 
-                                                       value="{{ $attribute->id }}" 
-                                                       id="attr_{{ $attribute->id }}">
-                                                <label for="attr_{{ $attribute->id }}" class="attribute-label">{{ $attribute->title }}</label>
-                                            </li>
+                                        <input type="hidden" name="product_id" value="{{ $selected_product->id }}">
+                                        @forelse($groupedAttributes as $attributeSetId => $attributes)
+                                            <div class="product-packege">
+                                                <div class="product-title">
+                                                    @php
+                                                        // Fetch the attribute set title
+                                                        $set = App\Models\Product_attribute_set::find($attributeSetId);
+                                                    @endphp
+                                                    <h4 style="font-weight: bold">{{ $set->title ?? ' ' }}</h4>
+                                                </div>
+
+                                                <ul class="select-packege">
+                                                    @forelse($attributes as $index => $attribute)
+                                                        <li>
+                                                            <input type="radio"
+                                                                name="attribute_set_{{ $attributeSetId }}"
+                                                                value="{{ $attribute->id }}"
+                                                                id="attr_{{ $attribute->id }}"
+                                                                {{ $index === 0 ? 'checked' : '' }}>
+                                                            <!-- Auto-select the first attribute -->
+                                                            <label for="attr_{{ $attribute->id }}"
+                                                                class="attribute-label">{{ $attribute->title }}</label>
+                                                        </li>
+                                                    @empty
+                                                        <li>No attributes found.</li>
+                                                    @endforelse
+                                                </ul>
+                                            </div>
                                         @empty
                                             <li>No attributes found.</li>
                                         @endforelse
-                                    </ul>
-                                </div>
-                            @empty
-                                <p>No attribute sets found.</p>
-                            @endforelse
+                                    @else
+                                        <input type="hidden" name="product_id" value="{{ $selected_product->id }}">
+                                    @endif
 
-                                <div class="note-box product-packege">
-                                    <div class="cart_qty qty-box product-qty">
-                                        <div class="input-group">
-                                            <button id="max_value" type="button" class="qty-right-plus" data-type="plus"
-                                                data-field="">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                            </button>
-                                            <input id="cart_value" class="form-control input-number qty-input"
-                                                type="text" name="quantity" value="1">
-                                            <button type="button" class="qty-left-minus" data-type="minus" data-field="">
-                                                <i class="fa fa-minus" aria-hidden="true"></i>
-                                            </button>
+                                    <div class="note-box product-packege">
+                                        <div class="cart_qty qty-box product-qty">
+                                            <div class="input-group">
+                                                <button type="button" class="qty-left-minus" data-type="minus"
+                                                    data-field="">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                                <input id="cart_value" class="form-control input-number qty-input"
+                                                    type="text" name="quantity" value="1">
+                                                <button id="max_value" type="button" class="qty-right-plus"
+                                                    data-type="plus" data-field="">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <button type="button"
-                                    onclick="addTocart()"
-                                    class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
-                                
-                            </form>
-                                </div>
+                                        <button type="button" onclick="addTocart()"
+                                            class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
 
-                                <div class="buy-box">
-                                    <a href="wishlist.html">
-                                        <i data-feather="heart"></i>
-                                        <h4 style="font-weight: bold;">Add To Wishlist</h4>
-                                    </a>
-                                </div>
+                                </form>
+                            </div>
 
-                                <div class="pickup-box">
+                            <div class="buy-box">
+                                <a href="wishlist.html">
+                                    <i data-feather="heart"></i>
+                                    <h4 style="font-weight: bold;">Add To Wishlist</h4>
+                                </a>
+                            </div>
 
-                                    <div class="product-info">
-                                        <ul class="product-info-list product-info-list-2">
-                                            <li>Type : <a
-                                                    href="javascript:void(0)">{{ $category_product->category_detail->name }}</a>
-                                            </li>
-                                            <li>SKU : <a href="javascript:void(0)">{{ $selected_product->sku }}</a></li>
-                                            <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div class="pickup-box">
 
-                                <div class="paymnet-option">
-                                    <div class="product-title">
-                                        <h4>Guaranteed Safe Checkout</h4>
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <img src="{{ asset('frontend') }}/assets/images/product/payment/1.svg"
-                                                    class="blur-up lazyload" alt="">
-                                            </a>
+                                <div class="product-info">
+                                    <ul class="product-info-list product-info-list-2">
+                                        <li>Type : <a
+                                                href="javascript:void(0)">{{ $category_product->category_detail->name }}</a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <img src="{{ asset('frontend') }}/assets/images/product/payment/2.svg"
-                                                    class="blur-up lazyload" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <img src="{{ asset('frontend') }}/assets/images/product/payment/3.svg"
-                                                    class="blur-up lazyload" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <img src="{{ asset('frontend') }}/assets/images/product/payment/4.svg"
-                                                    class="blur-up lazyload" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)">
-                                                <img src="{{ asset('frontend') }}/assets/images/product/payment/5.svg"
-                                                    class="blur-up lazyload" alt="">
-                                            </a>
-                                        </li>
+                                        <li>SKU : <a href="javascript:void(0)">{{ $selected_product->sku }}</a></li>
+                                        <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-12">
-                            <div class="product-section-box">
-                                <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="description-tab" data-bs-toggle="tab"
-                                            data-bs-target="#description" type="button" role="tab"
-                                            aria-controls="description" aria-selected="true">Description</button>
+                            <div class="paymnet-option">
+                                <div class="product-title">
+                                    <h4>Guaranteed Safe Checkout</h4>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <img src="{{ asset('frontend') }}/assets/images/product/payment/1.svg"
+                                                class="blur-up lazyload" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <img src="{{ asset('frontend') }}/assets/images/product/payment/2.svg"
+                                                class="blur-up lazyload" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <img src="{{ asset('frontend') }}/assets/images/product/payment/3.svg"
+                                                class="blur-up lazyload" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <img src="{{ asset('frontend') }}/assets/images/product/payment/4.svg"
+                                                class="blur-up lazyload" alt="">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <img src="{{ asset('frontend') }}/assets/images/product/payment/5.svg"
+                                                class="blur-up lazyload" alt="">
+                                        </a>
                                     </li>
                                 </ul>
-
-                                <div class="tab-content custom-tab" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="description" role="tabpanel"
-                                        aria-labelledby="description-tab">
-                                        <div class="product-description">
-                                            <div class="nav-desh">
-                                                <h5>{!! nl2br(e($selected_product->description)) !!}</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
-                    <div class="right-sidebar-box">
-                        <!-- Trending Product -->
-                        <div class="pt-25">
-                            <div class="category-menu">
-                                <h3>Trending Products</h3>
+                    <div class="col-12">
+                        <div class="product-section-box">
+                            <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="description-tab" data-bs-toggle="tab"
+                                        data-bs-target="#description" type="button" role="tab"
+                                        aria-controls="description" aria-selected="true">Description</button>
+                                </li>
+                            </ul>
 
-                                <ul class="product-list product-right-sidebar border-0 p-0">
-                                    @forelse ($trending_products->take(5) as $product)
-                                        <li>
-                                            <div class="offer-product">
-                                                <a href="{{ route('product.details', $product->id) }}"
-                                                    class="offer-image">
-                                                    <img src="{{ asset($product->thumbnail) }}"
-                                                        class="img-fluid blur-up lazyload" alt="">
-                                                </a>
-
-                                                <div class="offer-detail">
-                                                    <div>
-                                                        <a href="{{ route('product.details', $product->id) }}">
-                                                            @if (App::getLocale() == 'en')
-                                                                <h6 class="name">{{ Str::limit($product->name, 25) }}
-                                                                </h6>
-                                                            @else
-                                                                <h6 class="name">
-                                                                    {{ Str::limit($product->translations->name, 20) }}</h6>
-                                                            @endif
-                                                        </a>
-                                                        {{-- <span>450 G</span> --}}
-                                                        <h6 class="price theme-color">৳ {{ $product->sale_price }}</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @empty
-                                        <!-- Do nothing or display a message if needed -->
-                                    @endforelse
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Banner Section -->
-                        <div class="ratio_156 pt-25">
-                            <div class="home-contain">
-                                <img src="{{ asset('frontend') }}/assets/images/veg-2/banner/empotech_bd_banner_3.jpg"
-                                    class="bg-img blur-up lazyload" alt="">
-                                <div class="home-detail p-top-left home-p-medium">
-                                    <div>
-                                        <h6 class="text-yellow home-banner">Seafood</h6>
-                                        <h3 class="text-uppercase fw-normal"><span
-                                                class="theme-color fw-bold">Freshes</span> Products</h3>
-                                        <h3 class="fw-light">every hour</h3>
-                                        <button onclick="location.href = 'shop-left-sidebar.html';"
-                                            class="btn btn-animation btn-md fw-bold mend-auto">Shop Now <i
-                                                class="fa-solid fa-arrow-right icon"></i></button>
+                            <div class="tab-content custom-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                    aria-labelledby="description-tab">
+                                    <div class="product-description">
+                                        <div class="nav-desh">
+                                            <h5>{!! nl2br(e($selected_product->description)) !!}</h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -305,6 +265,68 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
+                <div class="right-sidebar-box">
+                    <!-- Trending Product -->
+                    <div class="pt-25">
+                        <div class="category-menu">
+                            <h3>Trending Products</h3>
+
+                            <ul class="product-list product-right-sidebar border-0 p-0">
+                                @forelse ($trending_products->take(5) as $product)
+                                    <li>
+                                        <div class="offer-product">
+                                            <a href="{{ route('product.details', $product->id) }}" class="offer-image">
+                                                <img src="{{ asset($product->thumbnail) }}"
+                                                    class="img-fluid blur-up lazyload" alt="">
+                                            </a>
+
+                                            <div class="offer-detail">
+                                                <div>
+                                                    <a href="{{ route('product.details', $product->id) }}">
+                                                        @if (App::getLocale() == 'en')
+                                                            <h6 class="name">{{ Str::limit($product->name, 25) }}
+                                                            </h6>
+                                                        @else
+                                                            <h6 class="name">
+                                                                {{ Str::limit($product->translations->name, 20) }}</h6>
+                                                        @endif
+                                                    </a>
+                                                    {{-- <span>450 G</span> --}}
+                                                    <h6 class="price theme-color">৳ {{ $product->sale_price }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <!-- Do nothing or display a message if needed -->
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Banner Section -->
+                    <div class="ratio_156 pt-25">
+                        <div class="home-contain">
+                            <img src="{{ asset('frontend') }}/assets/images/veg-2/banner/empotech_bd_banner_3.jpg"
+                                class="bg-img blur-up lazyload" alt="">
+                            <div class="home-detail p-top-left home-p-medium">
+                                <div>
+                                    <h6 class="text-yellow home-banner">Seafood</h6>
+                                    <h3 class="text-uppercase fw-normal"><span class="theme-color fw-bold">Freshes</span>
+                                        Products</h3>
+                                    <h3 class="fw-light">every hour</h3>
+                                    <button onclick="location.href = 'shop-left-sidebar.html';"
+                                        class="btn btn-animation btn-md fw-bold mend-auto">Shop Now <i
+                                            class="fa-solid fa-arrow-right icon"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </section>
     <!-- Product Left Sidebar End -->
@@ -393,11 +415,43 @@
         });
         console.log(num);
 
-        function addTocart(){
-            
+        function addTocart() {
+            // Gather form data
+            const formData = new FormData(document.getElementById('addToCart'));
+
+            // Send AJAX request
+            // fetch('/cart/add', {
+            //     method: 'POST',
+            //     body: formData,
+            //     headers: {
+            //         'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
+            //     }
+            // })
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('cart.add') }}', // Use the Laravel route
+                data: formData,
+                contentType: false, // Prevent jQuery from setting the content type
+                processData: false, // Prevent jQuery from processing the data
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
+                },
+                success: function(data) {
+                    console.log('hello'); // Check the success response in the console
+
+                    if (data.success) {
+                        toastr.success(data.message); // Show success message
+                        setTimeout(function() {
+                            window.location.reload(); // Reload the page after 1500 milliseconds
+                        }, 1500);
+                    } else {
+                        toastr.error('Failed to add to cart.'); // Show error message if needed
+                    }
+                },
+
+            });
+
         }
     </script>
-
-   
 @endsection
-

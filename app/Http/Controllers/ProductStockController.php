@@ -19,12 +19,12 @@ class ProductStockController extends Controller
 
     public function getStock(string $id)
     {
-        $attributeSets = Product_attribute_set::where('status', 'active')->get();
+        $attributeSets = Product_attribute_set::with('attributes')->where('status', 'active')->get();
         $product_id = Product::with('attribute_set')->where('id', $id)->where('status', 'active')->first();
         $attributes = Product_attribute::where('status', 'active')->get();
 
         $variants = Product_with_attribute_set::where('product_id', $id)->get();
-        //dd($product_id);
+        //dd($attributeSets);
         return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants','attributes'));
     }
 
@@ -219,11 +219,14 @@ class ProductStockController extends Controller
 
     public function addAttributeWiseStock(Request $request)
     {
+       
         $request->validate([
             'quantity' => 'required',
         ]);
 
         $attributeIds = json_decode($request->input('attribute_ids'), true);
+        $attributeIds = explode(',', $attributeIds);
+        //dd($attributeIds);
         $quantity = $request->input('quantity');
 
         // Perform the logic with the data
@@ -236,7 +239,7 @@ class ProductStockController extends Controller
         $attributeString = implode(',', $attributeIds);
 
         // Check if the attribute combination already exists
-        $exist_attribute = Product_attribute_wise_stock::where('attribute_id', $attributeString)->first();
+        $exist_attribute = Product_attribute_wise_stock::where('product_id',$request->product_id)->where('attribute_id', $attributeString)->first();
         if($exist_attribute)
         {
             $update_exist_attribute = Product_attribute_wise_stock::where('id', $exist_attribute->id)->first();

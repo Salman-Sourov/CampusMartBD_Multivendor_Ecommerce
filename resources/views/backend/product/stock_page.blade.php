@@ -58,20 +58,27 @@
                             {{ $product_id->name }}</h6>
                         <div class="table-responsive">
 
-                            <form id="myForm" method="POST" action="{{ route('stock.store') }}" class="forms-sample" onsubmit="return validateForm()">
+                            <form id="myForm" method="POST" action="{{ route('stock.store') }}" class="forms-sample"
+                                onsubmit="return validateForm()">
                                 @csrf
 
                                 <input type="hidden" name="product_id" value={{ $product_id->id }}>
-                                @foreach ($attributes as $attribute)
-                                    <div class="text-capitalize form-check mb-2">
-                                        <input type="checkbox" class="form-check-input" name="attribute[]"
-                                            id="checkDefault{{ $attribute->id }}" value="{{ $attribute->id }}">
-                                        <label class="form-check-label" for="checkDefault{{ $attribute->id }}">
-                                            {{ $attribute->title }}
-                                        </label>
-                                    </div>
+
+                                @foreach($attributeSets as $attributeSet)
+                                    <h4>{{$attributeSet->title}}</h4>
+                                    <br>
+                                    @foreach ($attributeSet->attributes as $attribute)
+                                        <div class="text-capitalize form-check mb-2" style="margin-left: 40px;">
+                                            <input type="checkbox" class="form-check-input" name="attribute[]"
+                                                id="checkDefault{{ $attribute->id }}" value="{{ $attribute->id }}">
+                                            <label class="form-check-label" for="checkDefault{{ $attribute->id }}">
+                                                {{ $attribute->title }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                    <br>
                                 @endforeach
-                            
+
                                 <button type="submit" class="btn btn-primary">Add Attribute</button>
                             </form>
 
@@ -149,7 +156,7 @@
                             Add variant wise stock of - {{ $product_id->name }}</h6>
 
                         <div class="table-responsive">
-                            <table id="dataTableExample" class="table">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
@@ -161,18 +168,24 @@
                                 <tbody>
                                     @php
                                         // Step 1: Retrieve the Product_with_attribute record
-                                        $ids = App\Models\Product_with_attribute::where('product_id', $product_id->id)->first();
+                                        $ids = App\Models\Product_with_attribute::where(
+                                            'product_id',
+                                            $product_id->id,
+                                        )->first();
                                         $attribute_ids = $ids ? explode(',', $ids->attribute_ids) : [];
-                                
+
                                         // Step 2: Retrieve all the relevant attributes from Product_attribute
-                                        $attributes = App\Models\Product_attribute::whereIn('id', $attribute_ids)->get();
-                                
+                                        $attributes = App\Models\Product_attribute::whereIn(
+                                            'id',
+                                            $attribute_ids,
+                                        )->get();
+
                                         // Step 3: Group the attributes by attribute_set_id
                                         $attribute_sets = $attributes->groupBy('attribute_set_id');
-                                        
+
                                         // Step 4: Calculate the Cartesian Product of the attribute sets
                                         $cartesian_combinations = [[]];
-                                        
+
                                         foreach ($attribute_sets as $set_id => $set_attributes) {
                                             $new_combinations = [];
                                             foreach ($cartesian_combinations as $combination) {
@@ -183,17 +196,56 @@
                                             $cartesian_combinations = $new_combinations;
                                         }
                                     @endphp
-                                
-                                    @foreach ($cartesian_combinations as $combination)
+
+                                    {{-- {{ count($cartesian_combinations) }} --}}
+                                    @foreach ($cartesian_combinations as $key => $combination)
                                         <tr>
-                                            @foreach ($combination as $attribute)
-                                                <td>{{ $attribute->title }}</td> <!-- Display the attribute title -->
-                                            @endforeach
+                                            <td>{{ $key + 1 }}</td>
+
+                                            <td>
+                                                @foreach ($combination as $index => $attribute)
+                                                    {{ $attribute->title }}{{ $loop->last ? '' : ' - ' }}
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @php
+                                                    // Map the attribute IDs to strings
+                                                    $attributeIds = array_map(
+                                                        fn($attribute) => (string) $attribute->id, // Cast to string explicitly
+                                                        $combination,
+                                                    );
+                                                    
+                                                  
+                                                    
+                                                    $attributeIdString = implode(',', $attributeIds);
+                                                    $stock = App\Models\Product_attribute_wise_stock::where('product_id', $product_id->id)->where('attribute_id', $attributeIdString)->first();
+                                                    $quantity = $stock ? $stock->stock : 0 ;
+                                              
+                                                @endphp
+                                            
+                                                <!-- Display the stock quantity -->
+                                                {{ $quantity }}
+                                            </td>
+                                            
+                                            
+                                            
+
+                                            <td>
+
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#addStock"
+                                                    data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
+                                                    onclick="setAttributeData(this)">
+                                                    Add
+                                                </button>
+
+                                            </td>
                                         </tr>
                                     @endforeach
+
                                 </tbody>
-                                
-                            
+
+
                             </table>
                         </div>
                     </div>
@@ -208,7 +260,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Add Variant</h5>
+                        <h5 class="modal-title" id="addModalLabel">Add Stock</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                     </div>
                     <div class="modal-body">
@@ -283,12 +335,10 @@
 
 
         function setAttributeData(button) {
-            var attributes = $(button).data('attributes'); // Get attributes from button
-            console.log(attributes); // Debugging log
+            const attributeIds = button.getAttribute('data-attribute-ids');
+            console.log('Attribute IDs:', attributeIds); // Get attributes from button
 
-            var attributeIds = attributes.map(function(attr) {
-                return attr[1]; // Extract attribute IDs
-            });
+
 
             // Set the hidden input value
             $('#attribute_ids').val(JSON.stringify(attributeIds));
@@ -413,16 +463,15 @@
     </script>
 
 
-<script>
-    function validateForm() {
-        var checkboxes = document.querySelectorAll('input[name="attribute[]"]:checked');
-        if (checkboxes.length === 0) {
-            // Using Toastr to show the validation message
-            toastr.error('Please select at least one attribute.', 'Validation Error', {
-            });
-            return false;
+    <script>
+        function validateForm() {
+            var checkboxes = document.querySelectorAll('input[name="attribute[]"]:checked');
+            if (checkboxes.length === 0) {
+                // Using Toastr to show the validation message
+                toastr.error('Please select at least one attribute.', 'Validation Error', {});
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
-</script
+    </script>
 @endsection
