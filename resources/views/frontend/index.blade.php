@@ -202,8 +202,9 @@
                                                 <br> <br>
                                             </h5>
                                             <div class="add-to-cart-box">
-                                                <button onclick="location.href = 'shop-left-sidebar.html';"
-                                                    class="btn btn-sm btn-animation">Buy Now</button>
+                                                <a href="{{ route('product.details', $product->id) }}">
+                                                    <button class="btn btn-sm btn-animation">Buy Now</button>
+                                                </a>                                                
                                             </div>
                                         </div>
                                     </div>

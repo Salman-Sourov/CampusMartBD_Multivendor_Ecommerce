@@ -162,8 +162,8 @@
                                     <div class="note-box product-packege">
                                         <div class="cart_qty qty-box product-qty">
                                             <div class="input-group">
-                                                <button type="button" class="qty-left-minus" data-type="minus"
-                                                    data-field="">
+                                                <button id="min_value" type="button" class="qty-left-minus"
+                                                    data-type="minus" data-field="">
                                                     <i class="fa fa-minus" aria-hidden="true"></i>
                                                 </button>
                                                 <input id="cart_value" class="form-control input-number qty-input"
@@ -174,10 +174,11 @@
                                                 </button>
                                             </div>
                                         </div>
-
                                         <button type="button" onclick="addTocart()"
-                                            class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                            class="btn btn-md bg-dark cart-button text-white w-90">Add To Cart</button>
 
+                                        <button type="button" onclick="checkOut()"
+                                            class="btn btn-md bg-dark cart-button text-white w-90">Buy Now</button>
                                 </form>
                             </div>
 
@@ -413,20 +414,17 @@
             num++;
             $('#cart_value').val(num);
         });
-        console.log(num);
+        $('#min_value').on('click', function() {
+            // console.log(num);
+            if(num > 1) {
+                num--;
+            }
+            $('#cart_value').val(num);
+        });
 
         function addTocart() {
             // Gather form data
             const formData = new FormData(document.getElementById('addToCart'));
-
-            // Send AJAX request
-            // fetch('/cart/add', {
-            //     method: 'POST',
-            //     body: formData,
-            //     headers: {
-            //         'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
-            //     }
-            // })
 
             $.ajax({
                 type: 'POST',
@@ -452,6 +450,10 @@
 
             });
 
+        }
+
+        function checkOut(){
+            alert('Hello');
         }
     </script>
 @endsection

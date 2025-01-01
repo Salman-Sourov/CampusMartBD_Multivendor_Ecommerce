@@ -20,10 +20,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        $categories = Product_category::with('translations')->where('status','active')->get();
-        $brands = Brand::with('translations')->where('status','active')->get();
-        $products = Product::with('translations','inventory_stocks')->where('status','active')->get();
-        return view('auth.login',compact('categories','brands','products'));
+        $categories = Product_category::with('translations')->where('status', 'active')->get();
+        $brands = Brand::with('translations')->where('status', 'active')->get();
+        $products = Product::with('translations', 'inventory_stocks')->where('status', 'active')->get();
+        return view('auth.login', compact('categories', 'brands', 'products'));
     }
 
     /**
@@ -31,25 +31,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+
         $request->authenticate();
-
         $request->session()->regenerate();
-
-        // $notification = array(
-        //     'message' => ''.$username.' Login Successfully',
-        //     'alert-type' => 'success'
-        // );
 
         $notification = '';
 
         $url = '';
-        if($request->user()->role === 'admin'){
+        if ($request->user()->role === 'admin') {
             $url = 'admin/dashboard';
-        }
-        elseif($request->user()->role === 'user'){
+        } elseif ($request->user()->role === 'user') {
             $url = 'user';
         }
-       
+
         return redirect()->intended($url)->with($notification);
     }
 
@@ -59,11 +53,8 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }

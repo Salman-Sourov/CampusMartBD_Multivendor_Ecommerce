@@ -155,7 +155,10 @@
                                         <div class="onhover-dropdown header-badge">
                                             <button type="button" class="btn p-0 position-relative header-wishlist">
                                                 <i data-feather="shopping-cart"></i>
-                                                <span
+                                                <span id="cart-quantity"
+                                                @php
+                                                    $carts = $carts ?? [];
+                                                @endphp
                                                     class="position-absolute top-0 start-100 translate-middle badge">{{ count($carts) }}
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
@@ -163,26 +166,25 @@
 
                                             <div class="onhover-div">
                                                 <ul class="cart-list">
-
                                                     @php
                                                         $total_price = 0;
                                                     @endphp
-                                                    @forelse($carts as $cart)
+                                                    @forelse($carts as $key=>$cart)
                                                         <li class="product-box-contain">
                                                             <div class="drop-cart">
-                                                                <a href=""
+                                                                <a href="{{ route('product.details', $key) }}"
                                                                     class="drop-image">
                                                                     <img src="{{ asset($cart['image']) }}"
                                                                         class="blur-up lazyload" alt="">
                                                                 </a>
 
                                                                 <div class="drop-contain">
-                                                                    <a href="product-left-thumbnail.html">
+                                                                    <a href="{{ route('product.details', $key) }}">
                                                                         <h5>{{ $cart['name'] }}</h5>
                                                                     </a>
                                                                     <h6><span>{{ $cart['quantity'] }} x</span>
                                                                         {{ $cart['price'] }}</h6>
-                                                                    <button class="close-button close_button">
+                                                                    <button class="close-button close_button" data-id={{ $key }} onclick="closeCart()">
                                                                         <i class="fa-solid fa-xmark"></i>
                                                                     </button>
                                                                 </div>
@@ -200,12 +202,12 @@
 
                                                 <div class="price-box">
                                                     <h5>Total :</h5>
-                                                    <h4 class="theme-color fw-bold">৳ {{ $total_price }}</h4>
+                                                    <h4 class="theme-color fw-bold" id="total_price">৳ {{ $total_price }}</h4>
                                                 </div>
 
                                                 <div class="button-group">
-                                                    <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
-                                                    <a href="checkout.html"
+                                                    <a href="" class=""></a>
+                                                    <a href="{{ route('checkout') }}"
                                                         class="btn btn-sm cart-button theme-bg-color
                                                     text-white">Checkout</a>
                                                 </div>
@@ -432,3 +434,5 @@
         </div>
     </header>
     <!-- Header End -->
+    
+

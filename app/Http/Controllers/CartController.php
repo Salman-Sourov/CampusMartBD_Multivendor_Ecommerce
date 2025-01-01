@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Product_attribute_wise_stock;
+use App\Models\Brand;
+use App\Models\Product_category;
 
 class CartController extends Controller
 {
@@ -54,7 +56,7 @@ class CartController extends Controller
                 $cart = session()->get('cart', []);
                 if (isset($cart[$product->id])) {
                     $cart[$product->id] = [
-                        "id" => $product->id,
+                        // "id" => $product->id,
                         "name" => $product->name,
                         "quantity" => $request->quantity,
                         "price" => $product->sale_price,
@@ -63,7 +65,7 @@ class CartController extends Controller
                     ];
                 } else {
                     $cart[$product->id] = [
-                        "id" => $product->id,
+                        // "id" => $product->id,
                         "name" => $product->name,
                         "quantity" => $request->quantity,
                         "price" => $product->sale_price,
@@ -85,7 +87,7 @@ class CartController extends Controller
                 $cart = session()->get('cart', []);
                 if (isset($cart[$product->id])) {
                     $cart[$product->id] = [
-                        "id" => $product->id,
+                        // "id" => $product->id,
                         "name" => $product->name,
                         "quantity" => $request->quantity,
                         "price" => $product->sale_price,
@@ -93,7 +95,7 @@ class CartController extends Controller
                     ];
                 } else {
                     $cart[$product->id] = [
-                        "id" => $product->id,
+                        // "id" => $product->id,
                         "name" => $product->name,
                         "quantity" => $request->quantity,
                         "price" => $product->sale_price,
@@ -105,7 +107,6 @@ class CartController extends Controller
                 return response()->json(['success' => true, 'message' => 'Successfully added to cart']);
             }
         }
-
     }
 
     // Update cart
@@ -121,21 +122,45 @@ class CartController extends Controller
     }
 
     // Remove item from cart
-    public function remove(Request $request)
+    public function remove(string $id)
     {
-        $cartId = $request->input('id');
+        $cartId = $id;
 
         // Logic to remove the item from the session cart
         // Assuming you have a session cart array
-        $carts = session()->get('carts', []);
+        $carts = session()->get('cart');
+        // dd($carts);
 
         if (isset($carts[$cartId])) {
             unset($carts[$cartId]);
-            session()->put('carts', $carts);
-
-            return response()->json(['success' => true, 'message' => 'Item removed from cart.']);
+            session()->put('cart', $carts);
         }
 
-        return response()->json(['success' => false, 'message' => 'Item not found in cart.']);
+        $update_cart_quantity = count($carts);
+
+        $total_price = 0;
+
+        // Calculate total price for remaining items
+        foreach ($carts as $cart) {
+            $total_price += $cart['price'] * $cart['quantity'];
+        }
+
+        return response()->json([
+
+            'update_cart_quantity' => $update_cart_quantity ?? 0,
+            'total_price' => $total_price ?? 0,
+        ]);
+
+        //dd($carts);
+    }
+
+
+    public function checkout(){
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
+        $brands = Brand::with('translations')->where('status', 'active')->get();
+        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
+        $carts = session()->get('cart');
+
+        return view('frontend.checkout',compact('categories', 'brands', 'products', 'carts'));
     }
 }

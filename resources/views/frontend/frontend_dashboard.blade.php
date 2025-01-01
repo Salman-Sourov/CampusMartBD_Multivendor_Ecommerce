@@ -8,7 +8,8 @@
     <meta name="description" content="Fastkart">
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
-    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/ElhaamBD_logo_Fav_icon.png" type="image/x-icon">
+    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/ElhaamBD_logo_Fav_icon.png"
+        type="image/x-icon">
     <title>Elhaam BD</title>
 
     <!-- Google font -->
@@ -24,7 +25,7 @@
     <link id="rtl-link" rel="stylesheet" type="text/css"
         href="{{ asset('frontend') }}/assets/css/vendors/bootstrap.css">
 
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- wow css -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/animate.min.css" />
@@ -105,12 +106,12 @@
     <!-- mobile fix menu end -->
 
 
-   @yield('main')
+    @yield('main')
 
 
     <!-- Quick View Modal Box Start -->
-    <div class="modal fade theme-modal view-modal" id="view" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade theme-modal view-modal" id="view" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
             <div class="modal-content">
                 <div class="modal-header p-0">
@@ -214,8 +215,8 @@
     <!-- Quick View Modal Box End -->
 
 
-@include('frontend.footer')
-   
+    @include('frontend.footer')
+
 
     <!-- Tap to top start -->
     <div class="theme-option">
@@ -278,9 +279,31 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    <script>
+        function closeCart() {
+            var id = event.currentTarget.getAttribute('data-id');
+            var url = "{{ route('cart.remove', ':id') }}".replace(':id', id);
+            // alert(id);
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: false,
+                processData: false,
+
+                success: function(data) {
+                    console.log(data);
+                    $('#cart-quantity').text(data.update_cart_quantity);
+                    $('#total_price').text(data.total_price);
+
+                }
+            });
+        }
+    </script>
+
     @yield('script')
 
-    
+
 
 </body>
 

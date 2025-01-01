@@ -7,16 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Models\Product_category;
+use App\Models\Brand;
+use App\Models\product;
 
 class UserController extends Controller
 {
-      public function home()
+    public function home()
     {
-        return view('frontend.index');
+        $categories = Product_category::with('translations')->where('status', 'active')->get();
+        $brands = Brand::with('translations')->where('status', 'active')->get();
+        $products = Product::with('translations', 'inventory_stocks')->where('status', 'active')->get();
+        return view('frontend.index', compact('categories', 'brands', 'products'));
     }
     public function index()
     {
-        return view('index');
+        $categories = Product_category::with('translations')->where('status', 'active')->get();
+        $brands = Brand::with('translations')->where('status', 'active')->get();
+        $products = Product::with('translations', 'inventory_stocks')->where('status', 'active')->get();
+        return view('index', compact('categories', 'brands', 'products'));
     }
 
     public function userLogout(Request $request): RedirectResponse
