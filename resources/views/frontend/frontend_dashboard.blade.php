@@ -295,11 +295,54 @@
                     console.log(data);
                     $('#cart-quantity').text(data.update_cart_quantity);
                     $('#total_price').text(data.total_price);
-
+                    $('#sub_total').text(data.total_price);
+                    $('#total_order_amount').text(data.total_price);
                 }
             });
         }
     </script>
+
+<script>
+    function toggleTransactionField() {
+        var paymentOption = document.getElementById('payment-option').value;
+        var transactionField = document.getElementById('transaction-field');
+        if (paymentOption === 'full-amount') {
+            transactionField.style.display = 'block';
+        } else {
+            transactionField.style.display = 'none';
+        }
+    }
+    
+</script>
+
+<script>        
+    $(document).ready(function() {
+    // Trigger update when the area selection changes
+    $('#area').change(function() {
+        // Get the selected value from the dropdown
+        var areaValue = $(this).val();
+        console.log("Type of areaValue:", typeof areaValue);
+
+        // Default total price (replace with actual value)
+        var totalPrice = parseInt($('#sub_total').text()) || 0; // Replace with your dynamic total price
+        console.log("Type of totalPrice:", typeof totalPrice);  // Should log 'number' after parseInt
+
+        // Set the shipping amount based on the selected area
+        var shippingAmount = 0;
+        if (areaValue) {
+            shippingAmount = parseInt(areaValue);
+        }
+
+        // Update the shipping amount displayed
+        $('#shipping_amount').text('৳ ' + shippingAmount);
+
+        // Calculate and update the total order amount (including shipping)
+        var totalOrderAmount = totalPrice + shippingAmount;
+        $('#total_order_amount').text(totalOrderAmount);
+    });
+});
+
+</script>
 
     @yield('script')
 
