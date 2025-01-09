@@ -99,7 +99,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Price (Regular Price) *</label>
+                                            <label class="form-label">Price (Old Price)</label>
                                             <input type="text" name="price" class="form-control"
                                                 value="{{ old('price') }}">
                                             @error('price')
@@ -110,7 +110,7 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Sale Price (Discount Price)</label>
+                                            <label class="form-label">Sale Price (Sell/New Price) *</label>
                                             <input type="text" name="sale_price" class="form-control"
                                                 value="{{ old('sale_price') }}">
                                             @error('sale_price')
@@ -233,7 +233,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-4">
+                                    {{-- <div class="col-sm-4">
                                         <label class="form-label">Video Type</label>
                                         <select name="video_type[]" class="form-control">
                                             <option value="" disabled selected>Select Video Type</option>
@@ -250,13 +250,13 @@
                                                 id="">
 
                                         </div>
-                                    </div><!-- Col -->
+                                    </div><!-- Col --> --}}
 
                                 </div>
 
                                 <hr>
 
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group mb-3">
                                             <div class="form-check form-check-inline me-3">
@@ -276,7 +276,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <button type="submit" class="btn btn-primary">Save Changes </button>
 

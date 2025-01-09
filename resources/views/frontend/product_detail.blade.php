@@ -444,7 +444,7 @@
                             window.location.reload(); // Reload the page after 1500 milliseconds
                         }, 1500);
                     } else {
-                        toastr.error('Failed to add to cart.'); // Show error message if needed
+                        toastr.error(data.message || 'Failed.'); // Show error message if needed
                     }
                 },
 
@@ -453,7 +453,30 @@
         }
 
         function checkOut(){
-            alert('Hello');
+            const formData = new FormData(document.getElementById('addToCart'));
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('buy.now') }}', // Use the Laravel route
+                data: formData,
+                contentType: false, // Prevent jQuery from setting the content type
+                processData: false, // Prevent jQuery from processing the data
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
+                },
+                success: function(data) {
+                    console.log('hello'); // Check the success response in the console
+
+                    if (data.success) {
+                        window.location.href = '{{ route('checkout') }}';
+                    } else {
+                        toastr.error(data.message || 'Failed to purchase.'); // Show error message if needed
+                    }
+                },
+                
+
+            });
+
         }
     </script>
 @endsection

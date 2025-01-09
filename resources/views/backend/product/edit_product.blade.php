@@ -223,7 +223,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    {{-- <div class="col-sm-3">
                                         <label class="form-label">Video Type</label>
                                         <select name="video_type" class="form-control">
                                             <option value="" disabled selected>Select Video Type</option>
@@ -246,12 +246,12 @@
                                                 value="{{ $product->videos->first()->video_detail->video_link ?? '' }}"
                                                 placeholder="Submit Video Link Here: ">
                                         </div>
-                                    </div><!-- Col -->
+                                    </div><!-- Col --> --}}
 
                                 </div>
                                 <hr>
 
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group mb-3">
                                             <div class="form-check form-check-inline me-3">
@@ -274,7 +274,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <button type="submit" class="btn btn-primary">Save Changes </button>
                             </form>

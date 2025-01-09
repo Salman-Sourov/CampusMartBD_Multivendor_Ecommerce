@@ -23,15 +23,16 @@ class ProductStockController extends Controller
         $product_id = Product::with('attribute_set')->where('id', $id)->where('status', 'active')->first();
         $attributes = Product_attribute::where('status', 'active')->get();
 
-        $variants = Product_with_attribute_set::where('product_id', $id)->get();
-        //dd($attributeSets);
-        return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants','attributes'));
+        $variants = Product_with_attribute::where('product_id', $id)->get();
+
+        //dd($variants);
+        return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants', 'attributes'));
     }
 
     public function getAttribute(string $id)
     {
         $attributes = Product_attribute::where('attribute_set_id', $id)->get();
-        //dd($attributes);
+        dd($attributes);
         return response()->json($attributes);
     }
 
@@ -66,25 +67,23 @@ class ProductStockController extends Controller
         // ]);
 
 
-        
+
         $check_attribute = product_with_attribute::where('product_id', $request->product_id)->first();
 
-        if($check_attribute)
-        {
+        if ($check_attribute) {
             $check_attribute->attribute_ids = implode(',', $request->attribute);
-            $check_attribute->save(); 
+            $check_attribute->save();
             $notification = [
                 'message' => 'Attribute Successfully Updated',
                 'alert-type' => 'success',
             ];
 
             return redirect()->back()->with($notification);
-        }
-        else{
+        } else {
             $data = new product_with_attribute();
             $data->product_id = $request->product_id;
-            $data->attribute_ids = implode(',', $request->attribute); 
-            $data->save(); 
+            $data->attribute_ids = implode(',', $request->attribute);
+            $data->save();
 
             $notification = [
                 'message' => 'Attribute Successfully Added',
@@ -92,26 +91,25 @@ class ProductStockController extends Controller
             ];
 
             return redirect()->back()->with($notification);
-            
         }
 
-       
-            //     $data = new Product_attribute_wise_stock();
-            //     $data->product_id  = $request->product_id;
-            //     $data->attribute_id = $request->attribute;
-            //     $data->price = $request->price;
-            //     $data->sale_price = $request->sale_price;
-            //     $data->stock = $request->stock;
-            //     $data->status = 1;
-            //     $data->save();
-            // dd('hello');
-            // $data = new Product_with_attribute_set();
-            // $data->product_id = $request->product_id;
-            // $data->attribute_set_id  = $request->attribute_set;
-            // $data->save();
 
-            // return response()->json(['success' => true, 'message' => 'Attribute Set added successfully']);
-       
+        //     $data = new Product_attribute_wise_stock();
+        //     $data->product_id  = $request->product_id;
+        //     $data->attribute_id = $request->attribute;
+        //     $data->price = $request->price;
+        //     $data->sale_price = $request->sale_price;
+        //     $data->stock = $request->stock;
+        //     $data->status = 1;
+        //     $data->save();
+        // dd('hello');
+        // $data = new Product_with_attribute_set();
+        // $data->product_id = $request->product_id;
+        // $data->attribute_set_id  = $request->attribute_set;
+        // $data->save();
+
+        // return response()->json(['success' => true, 'message' => 'Attribute Set added successfully']);
+
     }
 
     /**
@@ -219,7 +217,7 @@ class ProductStockController extends Controller
 
     public function addAttributeWiseStock(Request $request)
     {
-       
+
         $request->validate([
             'quantity' => 'required',
         ]);
@@ -239,9 +237,8 @@ class ProductStockController extends Controller
         $attributeString = implode(',', $attributeIds);
 
         // Check if the attribute combination already exists
-        $exist_attribute = Product_attribute_wise_stock::where('product_id',$request->product_id)->where('attribute_id', $attributeString)->first();
-        if($exist_attribute)
-        {
+        $exist_attribute = Product_attribute_wise_stock::where('product_id', $request->product_id)->where('attribute_id', $attributeString)->first();
+        if ($exist_attribute) {
             $update_exist_attribute = Product_attribute_wise_stock::where('id', $exist_attribute->id)->first();
 
             $update_exist_attribute->stock = $request->quantity;
@@ -257,10 +254,31 @@ class ProductStockController extends Controller
             $data->attribute_id = rtrim($attributeString, ',');  // Remove trailing comma
             $data->save();
             return response()->json(['success' => true, 'message' => 'Product stock added successfully']);
-        }
-
-        else{
+        } else {
             return response()->json(['success' => true, 'message' => 'Error']);
         }
+    }
+
+    public function deleteStock(string $id)
+    {
+         //dd($id);
+        // Assuming the 'id' is the stock record ID, find and delete it
+        $stock = Product_with_attribute::where('product_id', $id)->first();
+        $attribute_stock = Product_attribute_wise_stock::where('product_id', $id)->get();
+        
+        if ($stock || $attribute_stock->isNotEmpty()) {
+            if ($stock) {
+                $stock->delete();
+            }
+            
+            foreach ($attribute_stock as $item) {
+                $item->delete();
+            }
+        
+            return response()->json(['success' => true, 'message' => 'Stock deleted successfully.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Stock not found.']);
+        }
+        
     }
 }

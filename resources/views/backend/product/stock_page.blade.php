@@ -46,90 +46,57 @@
             </div>
         </div> --}}
 
-
-
-
         {{-- ALL Variant --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">
-                            {{ $product_id->name }}</h6>
-                        <div class="table-responsive">
-
+                            {{ $product_id->name }}
+                        </h6>
+                        <div class="">
                             <form id="myForm" method="POST" action="{{ route('stock.store') }}" class="forms-sample"
                                 onsubmit="return validateForm()">
                                 @csrf
-
                                 <input type="hidden" name="product_id" value={{ $product_id->id }}>
 
-                                @foreach($attributeSets as $attributeSet)
-                                    <h4>{{$attributeSet->title}}</h4>
-                                    <br>
-                                    @foreach ($attributeSet->attributes as $attribute)
-                                        <div class="text-capitalize form-check mb-2" style="margin-left: 40px;">
-                                            <input type="checkbox" class="form-check-input" name="attribute[]"
-                                                id="checkDefault{{ $attribute->id }}" value="{{ $attribute->id }}">
-                                            <label class="form-check-label" for="checkDefault{{ $attribute->id }}">
-                                                {{ $attribute->title }}
-                                            </label>
+                                <div class="row">
+                                    @forelse ($attributeSets as $attributeSet)
+                                        <div class="col-md-3 grid-margin stretch-card">
+                                            <div class="card shadow-sm border-0">
+                                                <div
+                                                    class="card-header bg-primary text-white d-flex align-items-center justify-content-center">
+                                                    <h5 class="mb-0 text-center w-100">{{ $attributeSet->title }}</h5>
+                                                </div>
+                                                <div class="card-body" style="border: 1px solid #6571FF;">
+                                                    <div class="d-flex flex-wrap">
+
+                                                        @forelse($attributeSet->attributes as $attribute)
+                                                            <div class="col-4 text-capitalize form-check mb-2"
+                                                                style="">
+                                                                <input type="checkbox" class="form-check-input"
+                                                                    name="attribute[]" id="checkDefault{{ $attribute->id }}"
+                                                                    value="{{ $attribute->id }}">
+                                                                <label class="form-check-label"
+                                                                    for="checkDefault{{ $attribute->id }}">
+                                                                    {{ $attribute->title }}
+                                                                </label>
+                                                            </div>
+                                                        @empty
+                                                            <h3>No data</h3>
+                                                        @endforelse
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    @endforeach
-                                    <br>
-                                @endforeach
+                                    @empty
+                                        <h3>No Data</h3>
+                                    @endforelse
+                                </div>
 
-                                <button type="submit" class="btn btn-primary">Add Attribute</button>
+                                <button type="submit" class="btn btn-primary mt-3">Add Attribute</button>
                             </form>
-
-                            {{-- <table id="dataTableExample" class="table"> --}}
-                            {{-- <thead>
-                                    <tr>
-                                        <th>Sl</th>
-                                        <th>Attribute Set</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead> --}}
-
-                            {{-- <tbody id="brandTableBody">
-                                    @if ($variants && count($variants) > 0)
-                                        @foreach ($variants as $key => $item) --}}
-                            {{-- <tr> --}}
-                            {{-- <td>{{ $key + 1 }}</td> --}}
-                            {{-- <td>
-                                                    @php
-                                                        $attribute = App\Models\Product_attribute_set::where(
-                                                            'id',
-                                                            $item->attribute_set_id,
-                                                        )->first();
-                                                    @endphp
-                                                    {{ $attribute->title }}
-                                                </td> --}}
-
-
-                            {{-- <td> --}}
-                            {{-- <button type="button" class="btn btn-inverse-warning"
-                                                        data-bs-toggle="modal" data-bs-target="#editModal"
-                                                        id="{{ $item->id }}" onclick="stockEdit(this.id)">
-                                                        Edit
-                                                    </button> --}}
-
-                            {{-- <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btns"
-                                                        data-id="{{ $item->id }}" title="Delete">Delete
-                                                    </a> --}}
-
-
-                            {{-- </td> --}}
-                            {{-- </tr> --}}
-                            {{-- @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="6" class="text-center">No data available</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-
-                            </table> --}}
                         </div>
                     </div>
                 </div>
@@ -146,7 +113,6 @@
             </ol>
         </nav> --}}
 
-
         {{-- ALL Variant Wise Stock --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
@@ -154,6 +120,9 @@
                     <div class="card-body">
                         <h6 class="card-title">
                             Add variant wise stock of - {{ $product_id->name }}</h6>
+                        <button type="button" class="btn btn-danger delete-btns" data-id="{{ $product_id->id ?? '' }}">
+                            Delete All Variant
+                        </button>
 
                         <div class="table-responsive">
                             <table class="table">
@@ -198,49 +167,54 @@
                                     @endphp
 
                                     {{-- {{ count($cartesian_combinations) }} --}}
+
                                     @foreach ($cartesian_combinations as $key => $combination)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
+                                        @if (!empty(array_filter($combination)))
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
 
-                                            <td>
-                                                @foreach ($combination as $index => $attribute)
-                                                    {{ $attribute->title }}{{ $loop->last ? '' : ' - ' }}
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                @php
-                                                    // Map the attribute IDs to strings
-                                                    $attributeIds = array_map(
-                                                        fn($attribute) => (string) $attribute->id, // Cast to string explicitly
-                                                        $combination,
-                                                    );
-                                                    
-                                                  
-                                                    
-                                                    $attributeIdString = implode(',', $attributeIds);
-                                                    $stock = App\Models\Product_attribute_wise_stock::where('product_id', $product_id->id)->where('attribute_id', $attributeIdString)->first();
-                                                    $quantity = $stock ? $stock->stock : 0 ;
-                                              
-                                                @endphp
-                                            
-                                                <!-- Display the stock quantity -->
-                                                {{ $quantity }}
-                                            </td>
-                                            
-                                            
-                                            
+                                                <td>
+                                                    @foreach ($combination as $index => $attribute)
+                                                        {{ $attribute->title }}{{ $loop->last ? '' : ' - ' }}
+                                                    @endforeach
+                                                </td>
 
-                                            <td>
+                                                <td>
+                                                    @php
+                                                        // Map the attribute IDs to strings
+                                                        $attributeIds = array_map(
+                                                            fn($attribute) => (string) $attribute->id, // Cast to string explicitly
+                                                            $combination,
+                                                        );
 
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                    data-bs-target="#addStock"
-                                                    data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
-                                                    onclick="setAttributeData(this)">
-                                                    Add
-                                                </button>
+                                                        $attributeIdString = implode(',', $attributeIds);
+                                                        $stock = App\Models\Product_attribute_wise_stock::where(
+                                                            'product_id',
+                                                            $product_id->id,
+                                                        )
+                                                            ->where('attribute_id', $attributeIdString)
+                                                            ->first();
+                                                        $quantity = $stock ? $stock->stock : 0;
 
-                                            </td>
-                                        </tr>
+                                                    @endphp
+
+                                                    <!-- Display the stock quantity -->
+                                                    {{ $quantity }}
+                                                </td>
+
+
+                                                <td>
+
+                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                        data-bs-target="#addStock"
+                                                        data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
+                                                        onclick="setAttributeData(this)">
+                                                        Add
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
 
                                 </tbody>
@@ -252,8 +226,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <!-- Add Variant Wise Stock-->
         <div class="modal fade" id="addStock" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -291,8 +263,6 @@
                 </div>
             </div>
         </div>
-
-
 
     </div>
 
@@ -381,27 +351,13 @@
         }
     </script>
 
-    {{-- Preview Image --}}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#image').change(function(e) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#showImage').attr('src', e.target.result).css('display',
-                        'block'); // Ensure it displays
-                }
-                reader.readAsDataURL(e.target.files[0]);
-            });
-        });
-    </script>
-
     {{-- Delete Stock  --}}
     <script type="text/javascript">
         $(document).on('click', '.delete-btns', function(e) {
             e.preventDefault();
             var id = $(this).data('id'); // Get the data-id from the button
             var url = '{{ route('stock.destroy', ':id') }}';
-            url = url.replace(":id", id); // Replace placeholder with actual ID
+            url = url.replace(':id', id); // Ensure id is correctly replaced
 
             // SweetAlert confirmation popup
             Swal.fire({
@@ -423,16 +379,11 @@
                         },
                         success: function(response) {
                             if (response.success) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    response.message,
-                                    'success'
-                                );
-
+                                Swal.fire('Deleted!', response.message, 'success');
                                 toastr.success('Deleted Successfully.');
                                 setTimeout(function() {
                                     window.location
-                                        .reload(); // Reload the page to see the new brand
+                                        .reload(); // Reload the page to see the changes
                                 }, 1500);
                             } else {
                                 toastr.error('Failed to delete the Stock.');
@@ -448,27 +399,13 @@
         });
     </script>
 
-    {{-- Bangla Language --}}
-    <script src="{{ asset('backend/assets/js/bangla.js') }}"></script>
-    <script>
-        $('#edit_banglaInputText').bangla({
-            enable: true
-        });
-        $('#edit_banglaInputText').bangla('on');
-
-        $('#edit_banglaInputText').bangla({
-            enable: true
-        });
-        $('#edit_banglaInputText').bangla('on');
-    </script>
-
 
     <script>
         function validateForm() {
             var checkboxes = document.querySelectorAll('input[name="attribute[]"]:checked');
             if (checkboxes.length === 0) {
                 // Using Toastr to show the validation message
-                toastr.error('Please select at least one attribute.', 'Validation Error', {});
+                toastr.error('Please select at least one attribute.', {});
                 return false;
             }
             return true;

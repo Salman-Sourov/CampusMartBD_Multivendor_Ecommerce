@@ -89,4 +89,9 @@ class indexController extends Controller
 
         return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products','attributes', 'carts'));
     }
+
+    public function confirmOrder(Request $request){
+
+        dd( $request);
+    }
 }

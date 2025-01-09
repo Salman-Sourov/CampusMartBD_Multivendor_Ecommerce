@@ -199,4 +199,24 @@ class SubCategoryController extends Controller
         return response()->json(['success' => 'Status changed successfully']);
         // dd($category);
     }
+
+    public function subCategoryDelete(Request $request, string $id){
+        $category = Product_category::find($id);
+
+        if (file_exists(public_path($category->image)) && !empty($category->image)) {
+            unlink(public_path($category->image));
+
+            $category->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Category deleted successfully.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Category not found.'
+        ]);
+    }
 }

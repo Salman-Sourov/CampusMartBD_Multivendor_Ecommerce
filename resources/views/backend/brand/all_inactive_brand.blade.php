@@ -30,7 +30,7 @@
                                 <tbody id="brandTableBody">
                                     @if ($inactive_brands && count($inactive_brands) > 0)
                                         @foreach ($inactive_brands as $key => $item)
-                                            <tr>
+                                            <tr data-id="{{ $item->id }}">
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->description }}</td>
@@ -52,17 +52,10 @@
                                                             data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
                                                     </a>
 
-
-                                                    {{-- <button type="button" class="btn btn-inverse-warning"
-                                                        data-bs-toggle="modal" data-bs-target="#editModal"
-                                                        id="{{ $item->id }}" onclick="brandEdit(this.id)">
-                                                        Edit
-                                                    </button> --}}
-
-                                                    {{-- <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
-                                                        data-id="{{ $item->id }}" title="Delete">Delete
-                                                    </a> --}}
-
+                                                    <a class="btn btn-danger" title="Delete" href="javascript:void(0);"
+                                                        data-id="{{ $item->id }}" data-action="delete">
+                                                        <i data-feather="trash"></i>
+                                                    </a>
 
                                                 </td>
                                             </tr>
@@ -154,7 +147,66 @@
         });
     </script>
 
+    {{-- Delete Brand --}}
+    <script type="text/javascript">
+        $(document).on('click', '.btn-danger', function(e) {
+            e.preventDefault(); // Prevent the default behavior
+            var id = $(this).data('id'); // Get the data-id from the button
+            var url = '{{ route('brand.delete', ':id') }}';
+            url = url.replace(":id", id); // Replace placeholder with actual ID
 
+            // SweetAlert confirmation popup
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with AJAX request if the user confirms
+                    $.ajax({
+                        type: 'DELETE',
+                        url: url,
+                        data: {
+                            "_token": "{{ csrf_token() }}" // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // SweetAlert for success
+                                Swal.fire(
+                                    'Deleted!',
+                                    response.message,
+                                    'success'
+                                );
 
+                                // Find the specific row (tr) and fade it out, then remove it
+                                $('#brandTableBody tr').each(function() {
+                                    var rowId = $(this).data(
+                                    'id'); // Get the row's data-id
+                                    if (rowId == id) {
+                                        $(this).fadeOut(500, function() {
+                                            $(this)
+                                        .remove(); // Remove the item after fading out
+                                        });
+                                    }
+                                });
+
+                                toastr.success('Deleted Successfully.');
+                            } else {
+                                toastr.error('Failed to delete the item.');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('An error occurred while deleting the item.');
+                            console.log(xhr); // Log the error for debugging
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
 @endsection

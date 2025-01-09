@@ -18,7 +18,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::where("status",'active')->get();
+        $brands = Brand::where("status", 'active')->get();
         return view("backend.brand.all_brand", compact("brands"));
     }
 
@@ -133,7 +133,7 @@ class BrandController extends Controller
         $request->validate([
             'edit_name' => 'required|string|max:255',
             'edit_banglaInputText' => 'required|string|max:255',
-            'edit_description' => 'required|string|max:255',
+            // 'edit_description' => 'required|string|max:255',
             // 'edit_website' => 'required|string|max:255',
             'edit_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -192,15 +192,35 @@ class BrandController extends Controller
     public function brandChangeStatus(Request $request)
     {
         $brand = Brand::find($request->brand_id);
-        
-        if ($brand->status == 'inactive'){
+
+        if ($brand->status == 'inactive') {
             $brand->status = 'active';
             $brand->save();
         }
 
         // Return updated status
         return response()->json(['success' => 'Status changed successfully']);
-        
     } // End Method
 
+    public function brandDelete(Request $request, $id)
+    {
+
+        $brand = Brand::find($id);
+
+        if (file_exists(public_path($brand->logo)) && !empty($brand->logo)) {
+            unlink(public_path($brand->logo));
+
+            $brand->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Brand deleted successfully.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Brand not found.'
+        ]);
+    }
 }

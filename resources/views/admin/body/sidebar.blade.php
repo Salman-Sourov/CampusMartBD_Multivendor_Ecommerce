@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ route('admin.home') }}" class="sidebar-brand">
-            Bazar<span>BD</span>
+            Elhaam<span>BD</span>
         </a>
     </div>
 
@@ -139,6 +139,22 @@
                 </div>
             </li>
 
+            {{-- Order --}}
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#order" role="button" aria-expanded="false"
+                    aria-controls="order">
+                    <i class="link-icon" data-feather="home"></i>
+                    <span class="link-title">Order</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="order"> <!-- Single collapse div -->
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">All Order</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

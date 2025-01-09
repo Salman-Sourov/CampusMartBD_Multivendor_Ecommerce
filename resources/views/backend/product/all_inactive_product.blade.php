@@ -32,7 +32,7 @@
                                 <tbody id="brandTableBody">
                                     @if ($inactive_product && count($inactive_product) > 0)
                                         @foreach ($inactive_product as $key => $item)
-                                            <tr>
+                                            <tr data-id="{{ $item->id }}">
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td><img src="{{ asset($item->thumbnail) }}"
@@ -62,15 +62,10 @@
                                                             data-feather="{{ $item->status == 'active' ? 'toggle-left' : 'toggle-right' }}"></i>
                                                     </a>
 
-                                                    {{-- <button type="button" class="btn btn-inverse-warning"
-                                                        data-bs-toggle="modal" data-bs-target="#editModal"
-                                                        id="{{ $item->id }}" onclick="brandEdit(this.id)">
-                                                        Edit
-                                                    </button> --}}
-
-                                                    {{-- <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
-                                                        data-id="{{ $item->id }}" title="Delete">Delete
-                                                    </a> --}}
+                                                    <a class="btn btn-danger" title="Delete" href="javascript:void(0);"
+                                                        data-id="{{ $item->id }}" data-action="delete">
+                                                        <i data-feather="trash"></i>
+                                                    </a>
 
                                                 </td>
                                             </tr>
@@ -159,5 +154,64 @@
             });
         });
     </script>
+
+    {{-- Delete Product --}}
+    <script type="text/javascript">
+        $(document).on('click', '.btn-danger', function(e) {
+            e.preventDefault(); // Prevent the default behavior
+            var id = $(this).data('id'); // Get the data-id from the button\
+            console.log(id);
+            var url = '{{ route('product.delete', ':id') }}';
+            url = url.replace(":id", id); // Replace placeholder with actual ID
+
+            // SweetAlert confirmation popup
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed with AJAX request if the user confirms
+                    $.ajax({
+                        type: 'POST', // Using POST method with _method for DELETE simulation
+                        url: url, // Ensure the URL is correct (dynamically passed)
+                        success: function(response) {
+                            console.log('Response received:',
+                                response); // For debugging, check the response
+
+                            if (response.success) {
+                                // SweetAlert for success
+                                Swal.fire(
+                                    'Deleted!',
+                                    response.message,
+                                    'success'
+                                );
+                                $('#brandTableBody tr[data-id="' + id + '"]').fadeOut(500,
+                                    function() {
+                                        $(this)
+                                    .remove(); // Remove the item after fading out
+                                    });
+
+                                toastr.success('Deleted Successfully.');
+                            } else {
+                                toastr.error(response.message || 'Failed to delete the item.');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error details:', xhr, status,
+                                error); // Log the error for debugging
+                            toastr.error('An error occurred while deleting the item.');
+                        }
+                    });
+
+                }
+            });
+        });
+    </script>
+
 
 @endsection

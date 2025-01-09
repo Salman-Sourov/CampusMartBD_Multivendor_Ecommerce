@@ -136,4 +136,24 @@ class AttributeController extends Controller
         }
         return response()->json(['success' => 'Status changed successfully']);
     }
+
+    public function attributeDelete(Request $request, string $id)
+    {
+        $Attribute = Product_attribute::find($id);
+
+        if ($Attribute) {
+
+            $Attribute->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Attribute-Set deleted successfully.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Attribute-Set not found.'
+        ]);
+    }
 }

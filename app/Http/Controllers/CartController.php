@@ -155,6 +155,7 @@ class CartController extends Controller
     }
 
 
+
     public function checkout()
     {
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
@@ -164,5 +165,96 @@ class CartController extends Controller
         // dd($carts);
 
         return view('frontend.checkout', compact('categories', 'brands', 'products', 'carts'));
+    }
+
+    public function buyNow(Request $request)
+    {
+        $attributeIds = [];
+
+        foreach ($request->all() as $key => $value) {
+            if (strpos($key, 'attribute_set_') === 0) {
+                // Convert the value to an integer and add it to the array
+                $attributeIds[] = (int) $value;
+            }
+        }
+
+        // dd($attributeIds);
+        if ($attributeIds) {
+
+            sort($attributeIds);
+
+            $stocks = Product_attribute_wise_stock::where('product_id', $request->product_id)->whereIn('attribute_id', $attributeIds)->get();
+            //dd($stocks);
+
+            $check_stock = 0;
+            foreach ($stocks as $stock) {
+                $check_attribute = explode(',', $stock->attribute_id);
+
+                sort($check_attribute);
+
+                //dd($attributeIds);
+                if ($check_attribute == $attributeIds) {
+                    $check_stock = $stock->stock;
+                }
+            }
+
+            if ($request->quantity > $check_stock) {
+                return response()->json(['error' => true, 'message' => 'Big Quantity']);
+            } else {
+                $product = Product::findOrFail($request->product_id);
+                $cart = session()->get('cart', []);
+                if (isset($cart[$product->id])) {
+                    $cart[$product->id] = [
+                        // "id" => $product->id,
+                        "name" => $product->name,
+                        "quantity" => $request->quantity,
+                        "price" => $product->sale_price,
+                        "image" => $product->thumbnail,
+                        "attributes" => implode(',', $attributeIds),
+                    ];
+                } else {
+                    $cart[$product->id] = [
+                        // "id" => $product->id,
+                        "name" => $product->name,
+                        "quantity" => $request->quantity,
+                        "price" => $product->sale_price,
+                        "image" => $product->thumbnail,
+                        "attributes" => implode(',', $attributeIds),
+                    ];
+                }
+                session()->put('cart', $cart);
+                // dd($cart);
+                return response()->json(['success' => true, 'message' => 'Succcesfully add to cart']);
+            }
+        } else {
+            $product = Product::where('id', $request->product_id)->first();
+            $check_stock = $product->quantity;
+            // dd($check_stock);
+            if ($request->quantity > $check_stock) {
+                return response()->json(['error' => true, 'message' => 'Big Quantity']);
+            } else {
+                $cart = session()->get('cart', []);
+                if (isset($cart[$product->id])) {
+                    $cart[$product->id] = [
+                        // "id" => $product->id,
+                        "name" => $product->name,
+                        "quantity" => $request->quantity,
+                        "price" => $product->sale_price,
+                        "image" => $product->thumbnail,
+                    ];
+                } else {
+                    $cart[$product->id] = [
+                        // "id" => $product->id,
+                        "name" => $product->name,
+                        "quantity" => $request->quantity,
+                        "price" => $product->sale_price,
+                        "image" => $product->thumbnail,
+                    ];
+                }
+                session()->put('cart', $cart);
+                //    dd($cart);
+                return response()->json(['success' => true, 'message' => 'Successfully added to cart']);
+            }
+        }
     }
 }

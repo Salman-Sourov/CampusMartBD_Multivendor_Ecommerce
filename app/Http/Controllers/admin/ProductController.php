@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('status','active')->get();
+        $products = Product::where('status', 'active')->get();
         return view("backend.product.all_product", compact("products"));
     }
 
@@ -53,8 +53,8 @@ class ProductController extends Controller
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-            'sale_price' => 'nullable|numeric',
+            'price' => 'nullable|numeric',
+            'sale_price' => 'required|numeric',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'length' => 'nullable|numeric',
@@ -437,16 +437,51 @@ class ProductController extends Controller
         return view('backend.product.all_inactive_product', compact('inactive_product'));
     }
 
-    public function productChangeStatus(Request $request){
+    public function productChangeStatus(Request $request)
+    {
 
         $inactiveProduct = Product::findOrFail($request->product_id);
 
-        if($inactiveProduct->status == 'inactive'){
+        if ($inactiveProduct->status == 'inactive') {
 
             $inactiveProduct->status = 'active';
             $inactiveProduct->save();
         }
 
         return response()->json(['success' => 'Status changed successfully']);
+    }
+
+    public function productDelete(Request $request, $id)
+    {
+        //dd('hello');
+        $product = Product::findOrFail($id);
+        //dd($product);
+
+        if($product) {
+ 
+            if (!empty($product->thumbnail) && file_exists(public_path($product->thumbnail))) {
+                unlink(public_path($product->thumbnail));
+            }
+
+            $multiImages = Multi_image::where('product_id', $id)->get();
+
+            if ($multiImages->count() > 0) {
+                foreach ($multiImages as $multiImage) {
+                    if (!empty($multiImage->image) && file_exists(public_path($multiImage->image))) {
+                        unlink(public_path($multiImage->image));
+                    }
+                    $multiImage->delete();
+                }
+            }
+
+            $product->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product deleted successfully.'
+            ]);
+        }
+
+        
     }
 }

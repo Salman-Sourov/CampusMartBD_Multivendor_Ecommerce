@@ -24,6 +24,7 @@ class CategoryController extends Controller
     public function create()
     {
         $inactive_category = Product_category::where('status', 'inactive')->whereNull('parent_id')->get();
+        // dd($inactive_category);
         return view("backend.category.all_inactive_category", compact('inactive_category'));
     }
 
@@ -189,5 +190,26 @@ class CategoryController extends Controller
         // Return updated status
         return response()->json(['success' => 'Status changed successfully']);
         // dd($category);
+    }
+
+    public function categoryDelete(Request $request, $id)
+    {
+        $category = Product_category::find($id);
+
+        if (file_exists(public_path($category->image)) && !empty($category->image)) {
+            unlink(public_path($category->image));
+
+            $category->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Category deleted successfully.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Category not found.'
+        ]);
     }
 }

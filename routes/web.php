@@ -41,7 +41,12 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
+//buy now
+Route::post('/buy/now', [CartController::class, 'buyNow'])->name('buy.now');
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+
+//Confirm Order
+Route::post('/confirm/order', [indexController::class, 'confirmOrder'])->name('confirm.order');
 
 
 
@@ -72,27 +77,34 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     //Brand
     Route::resource('brand', BrandController::class);
     Route::post('/brand/changeStatus', [BrandController::class, 'brandChangeStatus'])->name('brand.change.status');
+    Route::delete('/delte-brand/{id}', [BrandController::class, 'brandDelete'])->name('brand.delete');
 
     //Category
     Route::resource('category', CategoryController::class);
     Route::post('/category/changeStatus', [CategoryController::class, 'categoryChangeStatus'])->name('category.change.status');
+    Route::delete('/delte-category/{id}', [CategoryController::class, 'categoryDelete'])->name('category.delete');
 
     //Sub Category
     Route::resource('sub-category', SubCategoryController::class);
     Route::post('/subcategory/changeStatus', [SubCategoryController::class, 'subcategoryChangeStatus'])->name('subcategory.change.status');
+    Route::delete('/delte-subcategory/{id}', [SubCategoryController::class, 'subCategoryDelete'])->name('subcategory.delete');
 
     //Attribute Set
     Route::resource('attribute-set', AttributeSetController::class);
     Route::post('/attribute-set/changeStatus', [AttributeSetController::class, 'attributesetChangeStatus'])->name('attribute-set.change.status');
+    Route::delete('/delte-attribute-set/{id}', [AttributeSetController::class, 'attributesetDelete'])->name('attributeset.delete');
 
     //Attribute
     Route::resource('attribute', AttributeController::class);
     Route::post('/attribute/changeStatus', [AttributeController::class, 'attributeChangeStatus'])->name('attribute.change.status');
+    Route::delete('/delte-attribute/{id}', [AttributeController::class, 'attributeDelete'])->name('attribute.delete');
 
     //Product
     Route::resource('product', ProductController::class);
     Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
     Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
+    Route::post('/product/{id}', [ProductController::class, 'productDelete'])->name('product.delete');
+
 
     //Stock
     Route::resource('stock', ProductStockController::class);
@@ -101,6 +113,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
     Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
+    Route::delete('/delete-stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stock.destroy');
 
     
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
