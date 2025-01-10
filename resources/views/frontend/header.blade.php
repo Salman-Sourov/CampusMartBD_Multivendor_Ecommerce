@@ -100,16 +100,19 @@
 
                             <div class="middle-box">
                                 <div class="search-box">
-                                    <div class="input-group">
-                                        <input type="search" class="form-control"
-                                            placeholder="{{ __('content.search') }}" aria-label="Recipient's username"
-                                            aria-describedby="button-addon2">
-                                        <button class="btn" type="button" id="button-addon2">
-                                            <i data-feather="search"></i>
-                                        </button>
-                                    </div>
+                                    <form action="{{ route('product.search') }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="search" name="search" class="form-control" placeholder="{{ __('content.search') }}" 
+                                                aria-label="Search" aria-describedby="button-addon2">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i data-feather="search"></i>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
+                            
 
                             <div class="rightside-box">
                                 <div class="search-full">
@@ -155,10 +158,8 @@
                                         <div class="onhover-dropdown header-badge">
                                             <button type="button" class="btn p-0 position-relative header-wishlist">
                                                 <i data-feather="shopping-cart"></i>
-                                                <span id="cart-quantity"
-                                                @php
-                                                    $carts = $carts ?? [];
-                                                @endphp
+                                                <span id="cart-quantity" @php
+$carts = $carts ?? []; @endphp
                                                     class="position-absolute top-0 start-100 translate-middle badge">{{ count($carts) }}
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>
@@ -184,7 +185,9 @@
                                                                     </a>
                                                                     <h6><span>{{ $cart['quantity'] }} x</span>
                                                                         {{ $cart['price'] }}</h6>
-                                                                    <button class="close-button close_button" data-id={{ $key }} onclick="closeCart()">
+                                                                    <button class="close-button close_button"
+                                                                        data-id={{ $key }}
+                                                                        onclick="closeCart()">
                                                                         <i class="fa-solid fa-xmark"></i>
                                                                     </button>
                                                                 </div>
@@ -202,7 +205,8 @@
 
                                                 <div class="price-box">
                                                     <h5>Total :</h5>
-                                                    <h4 class="theme-color fw-bold" id="total_price">৳ {{ $total_price }}</h4>
+                                                    <h4 class="theme-color fw-bold" id="total_price">৳
+                                                        {{ $total_price }}</h4>
                                                 </div>
 
                                                 <div class="button-group">
@@ -434,5 +438,3 @@
         </div>
     </header>
     <!-- Header End -->
-    
-

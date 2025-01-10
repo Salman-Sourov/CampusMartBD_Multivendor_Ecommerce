@@ -48,6 +48,9 @@ Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
 //Confirm Order
 Route::post('/confirm/order', [indexController::class, 'confirmOrder'])->name('confirm.order');
 
+//SearchProduct
+Route::post('/product/search', [indexController::class, 'productSearch'])->name('product.search');
+
 
 
 // Route::get('/dashboard', function () {

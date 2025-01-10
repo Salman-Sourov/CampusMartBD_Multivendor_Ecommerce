@@ -67,8 +67,8 @@ class indexController extends Controller
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
         $carts = session()->get('cart');
 
-        $selected_product = Product::with('multi_images','attribute_set',)->findOrFail($id);
-        $attributes = Product_with_attribute::where('product_id',$id)->first();
+        $selected_product = Product::with('multi_images', 'attribute_set',)->findOrFail($id);
+        $attributes = Product_with_attribute::where('product_id', $id)->first();
 
         $category_product = Product_category_product::with('products', 'category_detail')
             ->where('product_id', $id)           // Filter by the specific id
@@ -85,13 +85,55 @@ class indexController extends Controller
             ->where('id',  $category_product->category_id) // Exclude the current product
             ->first();
 
-         //dd($attributes);
+        //dd($attributes);
 
-        return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products','attributes', 'carts'));
+        return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts'));
     }
 
-    public function confirmOrder(Request $request){
+    public function confirmOrder(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'area' => 'required',
+            'payment-option' => 'required',
+        ]);
 
-        dd( $request);
+        $carts = session()->get('cart');
+        
+        dd($carts);
+    }
+
+    public function productSearch(Request $request)
+    {
+        $request->validate([
+            'search' => 'required|string|max:255',
+        ]);
+
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
+        $brands = Brand::with('translations')->where('status', 'active')->get();
+        // $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
+        $carts = session()->get('cart'); // Default to an empty array if no cart exists
+
+        $query = $request->input('search');
+        // dd($query);
+
+        // Check if query exists, else return with no results
+    if (!$query) {
+        return view('frontend.product_search', compact('categories', 'brands', 'carts'))->with('error', 'No search query provided.');
+    }
+
+    // Fetch products based on the search query
+    $products = Product::with(['translations', 'inventory_stocks', 'brands', 'categories'])
+        ->where('status', 'active')
+        ->where(function ($q) use ($query) {
+            $q->where('name', 'LIKE', "%{$query}%");
+        })
+        ->latest()
+        ->get();
+
+    // Return the view with the search results
+    return view('frontend.product_search', compact('categories', 'brands', 'products', 'carts', 'query'));
     }
 }

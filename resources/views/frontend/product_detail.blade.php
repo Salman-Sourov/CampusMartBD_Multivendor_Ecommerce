@@ -196,13 +196,13 @@
                                         <li>Type : <a
                                                 href="javascript:void(0)">{{ $category_product->category_detail->name }}</a>
                                         </li>
-                                        <li>SKU : <a href="javascript:void(0)">{{ $selected_product->sku }}</a></li>
-                                        <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li>
+                                        {{-- <li>SKU : <a href="javascript:void(0)">{{ $selected_product->sku }}</a></li>
+                                        <li>Stock : <a href="javascript:void(0)">{{ $selected_product->quantity }}</a></li> --}}
                                     </ul>
                                 </div>
                             </div>
 
-                            <div class="paymnet-option">
+                            {{-- <div class="paymnet-option">
                                 <div class="product-title">
                                     <h4>Guaranteed Safe Checkout</h4>
                                 </div>
@@ -238,7 +238,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 

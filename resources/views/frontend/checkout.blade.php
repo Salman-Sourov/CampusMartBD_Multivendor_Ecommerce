@@ -41,7 +41,7 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
                                                 <input type="number" name="phone" class="form-control" id="phone"
                                                     placeholder="phone">
@@ -50,7 +50,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
                                                 <input type="address" name="address" class="form-control" id="address"
                                                     placeholder="Address">
@@ -59,7 +59,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
                                                 <select class="form-select" id="area" name="area">
                                                     <option value="">Select Area</option>
@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
                                                 <select class="form-select" id="payment-option"
                                                     onchange="toggleTransactionField()" name="payment-option">
@@ -86,7 +86,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12" id="transaction-field" style="display: none;">
+                                        <div class="col-12 mb-2" id="transaction-field" style="display: none;">
                                             <div class="form-floating theme-form-floating">
                                                 <input type="text" name="bkash" class="form-control" id="transaction"
                                                     placeholder="Bkash No or Transaction No">
@@ -277,8 +277,6 @@
 
 @section('script')
     <script>
-        var carts = @json($carts); // Embed the PHP array into JavaScript
-
         function confirmOrder() {
             // Gather form data
             const formData = new FormData(document.getElementById('confirmOrder'));
@@ -286,11 +284,6 @@
             // Add the subtotal value to the formData
             var subTotal = $('#sub_total').text();
             formData.append('sub_total', subTotal);
-
-            // Add the carts array to the formData
-            for (let i = 0; i < carts.length; i++) {
-                formData.append('carts[' + i + ']', JSON.stringify(carts[i])); // Add each cart item
-            }
 
             // Get the CSRF token value
             const csrfToken = $('input[name="_token"]').val();
@@ -318,7 +311,10 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    toastr.error('An error occurred: ' + error); // Handle errors
+                    const errors = xhr.responseJSON.errors;
+                    for (let field in errors) {
+                        $('#' + field + '_error').text(errors[field][0]); // Show validation errors
+                    }
                 }
             });
         }

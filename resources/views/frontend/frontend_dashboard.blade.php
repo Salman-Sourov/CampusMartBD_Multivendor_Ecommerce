@@ -340,11 +340,9 @@
         $('#total_order_amount').text(totalOrderAmount);
     });
 });
-
 </script>
 
     @yield('script')
-
 
 
 </body>
