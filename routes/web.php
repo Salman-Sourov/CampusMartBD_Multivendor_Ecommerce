@@ -9,26 +9,13 @@ use App\Http\Controllers\admin\AttributeController;
 use App\Http\Controllers\admin\AttributeSetController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\ProductStockController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\CartController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('frontend.index');
-// });
 
 Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -50,20 +37,6 @@ Route::post('/confirm/order', [indexController::class, 'confirmOrder'])->name('c
 
 //SearchProduct
 Route::post('/product/search', [indexController::class, 'productSearch'])->name('product.search');
-
-
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// Route::get('/admin/dashboard', [AdminController::class, 'adminHome'])->name('admin.home');
 
 Route::get('/user', [Usercontroller::class, 'home'])->name('home');
 Route::get('/user/logout', [Usercontroller::class, 'userLogout'])->name('user.logout');
@@ -117,13 +90,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
     Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
     Route::delete('/delete-stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stock.destroy');
+    Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
+    Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
 
     
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
     Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
- 
+
+
+    // Order
+    Route::get('/all/order', [OrderController::class, 'allOrder'])->name('all.order');
+
 }); //End Group Admin Middleware
 
 

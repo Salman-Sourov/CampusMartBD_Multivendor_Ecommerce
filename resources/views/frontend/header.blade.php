@@ -104,7 +104,10 @@
                                         @csrf
                                         <div class="input-group">
                                             <input type="search" name="search" class="form-control" placeholder="{{ __('content.search') }}" 
-                                                aria-label="Search" aria-describedby="button-addon2">
+                                                aria-label="Search" aria-describedby="button-addon2" requireds>
+                                                {{-- @error('search')
+                                                <span class="text-danger">{{ $message }}</span>s
+                                                @enderror --}}
                                             <button class="btn btn-primary" type="submit">
                                                 <i data-feather="search"></i>
                                             </button>

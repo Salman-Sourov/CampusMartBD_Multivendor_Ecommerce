@@ -281,4 +281,24 @@ class ProductStockController extends Controller
         }
         
     }
+
+    public function stockOut(string $id){
+        // dd('Helo');
+        $data = Product::findOrFail($id);
+
+        $data->stock_status = 'stock_out';
+        $data->save();
+
+        return back()->with('success', 'Product stock Out');
+    }
+
+    public function stockIn(string $id){
+        // dd('Helo');
+        $data = Product::findOrFail($id);
+
+        $data->stock_status = NULL;
+        $data->save();
+
+        return back()->with('success', 'Product In stock');
+    }
 }

@@ -9,6 +9,7 @@
                     <i data-feather="search"></i>
                 </div>
                 <input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
+                
             </div>
         </form>
 

@@ -14,10 +14,14 @@
                     <div class="col-xxl-6">
                         <div class="log-in-box">
                             <div class="log-in-title">
+
+                                @guest
                                 <div class="sign-up-box-cart">
                                     <h4 class="inline-text">Already have an account?</h4>
                                     <a href="{{ route('login') }}" class="inline-text login-link">Log In</a>
                                 </div>
+                                @endguest
+
                                 <h4>Confirm Your Order</h4>
                                 <p>
                                     Please enter your <strong>Name</strong>, <strong>Address</strong>, and <strong>Phone
@@ -35,24 +39,25 @@
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating">
                                             <input type="text" name="name" class="form-control" id="fullname"
-                                                placeholder="Full Name">
+                                                placeholder="Full Name" value="{{ Auth::check() ? Auth::user()->name : '' }}" 
+                                                {{ Auth::check()}}>
                                             <label for="fullname">Full Name (আপনার নাম)</label>
                                             <span id="name_error" class="text-danger"></span>
                                         </div>
 
-
                                         <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
-                                                <input type="number" name="phone" class="form-control" id="phone"
-                                                    placeholder="phone">
-                                                <label for="email">Phone Number (ফোন নাম্বার)</label>
+                                                <input type="text" name="phone" class="form-control" id="phone"
+                                                    placeholder="phone" value="{{ Auth::check() ? Auth::user()->phone : '' }}" 
+                                                    {{ Auth::check() }}>
+                                                <label for="phone">Phone Number (ফোন নাম্বার)</label>
                                                 <span id="phone_error" class="text-danger"></span>
                                             </div>
                                         </div>
 
                                         <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
-                                                <input type="address" name="address" class="form-control" id="address"
+                                                <input type="text" name="address" class="form-control" id="address"
                                                     placeholder="Address">
                                                 <label for="email">Address (ঠিকানা)</label>
                                                 <span id="address_error" class="text-danger"></span>
@@ -76,7 +81,7 @@
                                         <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
                                                 <select class="form-select" id="payment-option"
-                                                    onchange="toggleTransactionField()" name="payment-option">
+                                                    onchange="toggleTransactionField()" name="payment_option">
                                                     <option value="">Select Payment Option</option>
                                                     <option value="cash-on-delivery">Cash on Delivery</option>
                                                     <option value="full-amount">Payable Amount</option>
@@ -299,7 +304,7 @@
                     'X-CSRF-TOKEN': csrfToken // Add CSRF token to headers
                 },
                 success: function(data) {
-                    console.log('Response:', data); // Check the response in the console
+                     // Check the response in the console
 
                     if (data.success) {
                         toastr.success(data.message); // Show success message

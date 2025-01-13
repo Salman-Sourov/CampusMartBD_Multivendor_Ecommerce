@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name', 191);
             $table->string('phone')->nullable();
-            $table->longText('address')->nullable();
-            $table->longText('area')->nullable();
-            $table->longText('payment-option')->nullable();
-            $table->longText('bkash')->nullable();
-            $table->integer('product_id');
-            $table->string('attributes');
+            $table->string('address')->nullable();
+            $table->string('area_charge')->nullable();
+            $table->string('payment_option')->nullable();
+            $table->string('bkash')->nullable();
+            $table->unsignedBigInteger('total_cost');
             $table->string('status', 60)->nullable();
             $table->timestamps();
         });

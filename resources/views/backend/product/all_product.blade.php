@@ -62,6 +62,16 @@
                                                 <a href="{{ route('get.stock', $item->id)}}" class="btn btn-inverse-info"
                                                     title="Viariant">Variant & Stock
                                                 </a>
+
+                                                @if($item->stock_status == 'stock_out')
+                                                <a href="{{ route('stock.in', $item->id)}}" class="btn btn-inverse-info"
+                                                    title="Viariant">stock in
+                                                </a>
+                                                @else
+                                                <a href="{{ route('stock.out', $item->id)}}" class="btn btn-inverse-danger"
+                                                    title="Viariant">stock Out
+                                                </a>
+                                                @endif
                                               
                                             </td>
                                         </tr>

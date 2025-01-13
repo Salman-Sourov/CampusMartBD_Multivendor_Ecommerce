@@ -14,7 +14,7 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">Bazar BD</li>
+            <li class="nav-item nav-category">Elhaam BD</li>
 
             {{-- Brands --}}
             <li class="nav-item">
@@ -147,11 +147,17 @@
                     <span class="link-title">Order</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse" id="order"> <!-- Single collapse div -->
+                <div class="collapse" id="order"> <!-- Corrected 'id' to match the 'href' and 'aria-controls' -->
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="" class="nav-link">All Order</a>
                         </li>
+                        {{-- <li class="nav-item">
+                            <a href="" class="nav-link">Complete Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">Cancel Order</a>
+                        </li> --}}
                     </ul>
                 </div>
             </li>

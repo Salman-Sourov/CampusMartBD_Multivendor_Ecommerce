@@ -174,11 +174,19 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <button type="button" onclick="addTocart()"
-                                            class="btn btn-md bg-dark cart-button text-white w-90">Add To Cart</button>
+                                        @if ($selected_product->stock_status == 'stock_out')
+                                            <button type="button" onclick="addTocart()"
+                                                class="btn btn-md bg-danger cart-button text-white w-90 disabled">Add To Cart</button>
 
-                                        <button type="button" onclick="checkOut()"
-                                            class="btn btn-md bg-dark cart-button text-white w-90">Buy Now</button>
+                                            <button type="button" onclick="checkOut()"
+                                                class="btn btn-md bg-danger cart-button text-white w-90 disabled">Buy Now</button>
+                                        @else
+                                            <button type="button" onclick="addTocart()"
+                                                class="btn btn-md bg-dark cart-button text-white w-90">Add To Cart</button>
+
+                                            <button type="button" onclick="checkOut()"
+                                                class="btn btn-md bg-dark cart-button text-white w-90">Buy Now</button>
+                                        @endif
                                 </form>
                             </div>
 
@@ -416,7 +424,7 @@
         });
         $('#min_value').on('click', function() {
             // console.log(num);
-            if(num > 1) {
+            if (num > 1) {
                 num--;
             }
             $('#cart_value').val(num);
@@ -452,7 +460,7 @@
 
         }
 
-        function checkOut(){
+        function checkOut() {
             const formData = new FormData(document.getElementById('addToCart'));
 
             $.ajax({
@@ -473,7 +481,7 @@
                         toastr.error(data.message || 'Failed to purchase.'); // Show error message if needed
                     }
                 },
-                
+
 
             });
 
