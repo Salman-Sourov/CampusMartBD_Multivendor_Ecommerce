@@ -100,12 +100,14 @@
 
                             <div class="middle-box">
                                 <div class="search-box">
-                                    <form action="{{ route('product.search') }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('product.search') }}" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="input-group">
-                                            <input type="search" name="search" class="form-control" placeholder="{{ __('content.search') }}" 
-                                                aria-label="Search" aria-describedby="button-addon2" requireds>
-                                                {{-- @error('search')
+                                            <input type="search" name="search" class="form-control"
+                                                placeholder="{{ __('content.search') }}" aria-label="Search"
+                                                aria-describedby="button-addon2" requireds>
+                                            {{-- @error('search')
                                                 <span class="text-danger">{{ $message }}</span>s
                                                 @enderror --}}
                                             <button class="btn btn-primary" type="submit">
@@ -115,7 +117,7 @@
                                     </form>
                                 </div>
                             </div>
-                            
+
 
                             <div class="rightside-box">
                                 <div class="search-full">
@@ -161,8 +163,7 @@
                                         <div class="onhover-dropdown header-badge">
                                             <button type="button" class="btn p-0 position-relative header-wishlist">
                                                 <i data-feather="shopping-cart"></i>
-                                                <span id="cart-quantity" @php
-$carts = $carts ?? []; @endphp
+                                                <span id="cart-quantity" @php $carts = $carts ?? []; @endphp
                                                     class="position-absolute top-0 start-100 translate-middle badge">{{ count($carts) }}
                                                     <span class="visually-hidden">unread messages</span>
                                                 </span>

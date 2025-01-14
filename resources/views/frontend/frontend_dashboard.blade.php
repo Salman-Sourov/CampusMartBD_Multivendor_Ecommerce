@@ -68,7 +68,7 @@
     <div class="mobile-menu d-md-none d-block mobile-cart">
         <ul>
             <li class="active">
-                <a href="index.html">
+                <a href="/">
                     <i class="iconly-Home icli"></i>
                     <span>Home</span>
                 </a>
@@ -81,12 +81,12 @@
                 </a>
             </li>
 
-            <li>
-                <a href="search.html" class="search-box">
+            {{-- <li>
+                <a href="{{ route('product.search') }}" class="search-box">
                     <i class="iconly-Search icli"></i>
                     <span>Search</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li>
                 <a href="wishlist.html" class="notifi-wishlist">
@@ -96,7 +96,7 @@
             </li>
 
             <li>
-                <a href="cart.html">
+                <a href="{{ route('checkout') }}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>
@@ -302,45 +302,44 @@
         }
     </script>
 
-<script>
-    function toggleTransactionField() {
-        var paymentOption = document.getElementById('payment-option').value;
-        var transactionField = document.getElementById('transaction-field');
-        if (paymentOption === 'full-amount') {
-            transactionField.style.display = 'block';
-        } else {
-            transactionField.style.display = 'none';
+    <script>
+        function toggleTransactionField() {
+            var paymentOption = document.getElementById('payment-option').value;
+            var transactionField = document.getElementById('transaction-field');
+            if (paymentOption === 'full-amount') {
+                transactionField.style.display = 'block';
+            } else {
+                transactionField.style.display = 'none';
+            }
         }
-    }
-    
-</script>
+    </script>
 
-<script>        
-    $(document).ready(function() {
-    // Trigger update when the area selection changes
-    $('#area').change(function() {
-        // Get the selected value from the dropdown
-        var areaValue = $(this).val();
-        // Default total price (replace with actual value)
-        var totalPrice = parseInt($('#sub_total').text()); // Replace with your dynamic total price
-        
-        
-        var shippingAmount = 0;
-        if (areaValue) {
-            shippingAmount = parseInt(areaValue);
-        }
-        
+    <script>
+        $(document).ready(function() {
+            // Trigger update when the area selection changes
+            $('#area').change(function() {
+                // Get the selected value from the dropdown
+                var areaValue = $(this).val();
+                // Default total price (replace with actual value)
+                var totalPrice = parseInt($('#sub_total').text()); // Replace with your dynamic total price
 
-        // Update the shipping amount displayed
-        $('#shipping_amount').text(shippingAmount);
 
-        // Calculate and update the total order amount (including shipping)
-        var totalOrderAmount = totalPrice + shippingAmount;
-        
-        $('#total_order_amount').text(totalOrderAmount);
-    });
-});
-</script>
+                var shippingAmount = 0;
+                if (areaValue) {
+                    shippingAmount = parseInt(areaValue);
+                }
+
+
+                // Update the shipping amount displayed
+                $('#shipping_amount').text(shippingAmount);
+
+                // Calculate and update the total order amount (including shipping)
+                var totalOrderAmount = totalPrice + shippingAmount;
+
+                $('#total_order_amount').text(totalOrderAmount);
+            });
+        });
+    </script>
 
     @yield('script')
 

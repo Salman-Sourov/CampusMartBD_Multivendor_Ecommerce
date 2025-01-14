@@ -33,7 +33,8 @@
                                         <option value="{{ $attribute_set->id }}">{{ $attribute_set->title }}</option>
                                     @endforeach
                                 </select>
-                                <span id="attribute_set_id_error" class="text-danger"></span> <!-- Error message placeholder -->
+                                <span id="attribute_set_id_error" class="text-danger"></span>
+                                <!-- Error message placeholder -->
                             </div>
                             <div class="form-group mb-3">
                                 <label for="name" class="form-label">Title *</label>
@@ -46,7 +47,7 @@
                                 <input type="color" name="color" class="form-control" id="color"> <!-- Default hex color value -->
                                 <span id="color_error" class="text-danger"></span> <!-- Error message placeholder -->
                             </div> --}}
-                            
+
 
                             {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
                                 <div class="form-check mb-2">
@@ -68,62 +69,58 @@
 
         {{-- ALL Attribute Set --}}
         <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">All Attribute Set</h6>
-
-                        <div class="table-responsive">
-                            <table id="dataTableExample" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Sl</th>
-                                        <th>Title</th>
-                                        {{-- <th>Color</th> --}}
-                                        <th>Order</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="brandTableBody">
-                                    @if ($attributes && count($attributes) > 0)
-                                        @foreach ($attributes as $key => $item)
+            <!-- Loop through each Attribute Set -->
+            @foreach ($attribute_sets as $attribute_set)
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="mdi mdi-folder-outline me-2"></i>{{ $attribute_set->title }}
+                            </h5>
+                            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $attribute_set->id }}">
+                                View Attributes
+                            </button>
+                        </div>
+                        <div id="collapse-{{ $attribute_set->id }}" class="collapse">
+                            <div class="card-body">
+                                @if ($attribute_set->attributes->isNotEmpty())
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->title ?? 'N/A' }}</td>
-                                                {{-- <td>{{ $item->color }}</td> --}}
-                                                <td>{{ $item->order }}</td>
-                                                <td>
-                                                    @if ($item->status == 'active')
-                                                        <span class="badge rounded-pill bg-success">Active</span>
-                                                    @else
-                                                        <span class="badge rounded-pill bg-danger">InActive</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-inverse-warning"
-                                                        data-bs-toggle="modal" data-bs-target="#editModal"
-                                                        id="{{ $item->id }}" onclick="AttributeEdit(this.id)">
-                                                        Edit
-                                                    </button>
-
-                                                    <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
-                                                        data-id="{{ $item->id }}" title="Delete">Delete
-                                                    </a>
-                                                </td>
+                                                <th>Sl</th>
+                                                <th>Title</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
                                             </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="6" class="text-center">No data available</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($attribute_set->attributes as $key => $attribute)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $attribute->title }}</td>
+                                                    <td>
+                                                        @if ($attribute->status == 'active')
+                                                            <span class="badge bg-success">Active</span>
+                                                        @else
+                                                            <span class="badge bg-danger">Inactive</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-warning" onclick="AttributeEdit({{ $attribute->id }})">Edit</button>
+                                                        <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $attribute->id }}">Delete</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p class="text-muted">No attributes available for this set.</p>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
 
     </div>
@@ -154,7 +151,8 @@
                                     <option value="{{ $attribute_set->id }}">{{ $attribute_set->title }}</option>
                                 @endforeach
                             </select>
-                            <span id="edit_attribute_set_id_error" class="text-danger"></span> <!-- Error message placeholder -->
+                            <span id="edit_attribute_set_id_error" class="text-danger"></span>
+                            <!-- Error message placeholder -->
                         </div>
 
                         <div class="form-group mb-3">
@@ -241,7 +239,7 @@
                         $('#set_id').val(data.set_id);
                         $('#edit_title').val(data.title);
                         $('#edit_status').prop('checked', data.status ==
-                        'active'); // Check if 'enableSubcat' is true
+                            'active'); // Check if 'enableSubcat' is true
                         // $('#edit_color').val( data.color);
                         $('#edit_attribute_set_id').val(data.set_id);
                         $('#edit_attribute_set_id').trigger("change");
@@ -337,7 +335,7 @@
                                 toastr.success('Deleted Successfully.');
                                 setTimeout(function() {
                                     window.location
-                                .reload(); // Reload the page to see the new brand
+                                        .reload(); // Reload the page to see the new brand
                                 }, 1500);
                             } else {
                                 toastr.error('Failed to delete the brand.');

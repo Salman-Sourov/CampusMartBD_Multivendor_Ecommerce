@@ -102,6 +102,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Order
     Route::get('/all/order', [OrderController::class, 'allOrder'])->name('all.order');
+    Route::get('/order/details/{id}', [OrderController::class, 'orderDetails'])->name('order.details');
 
 }); //End Group Admin Middleware
 

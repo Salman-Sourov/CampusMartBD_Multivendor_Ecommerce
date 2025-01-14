@@ -1,6 +1,20 @@
 @extends('admin.admin_dashboard')
 @section('admin')
     <div class="page-content">
+        
+        <div class="d-flex justify-content-start mb-3">
+            <!-- All Products Button -->
+            <a href="{{ route('product.index') }}" class="btn btn-primary btn-sm d-flex align-items-center me-3" title="View All Products">
+                <i data-feather="box" class="me-2" style="width: 18px; height: 18px;"></i> All Products
+            </a>
+            
+            <!-- View Product Button -->
+            <a href="{{ route('product.details', $product->id) }}" class="btn btn-success btn-sm d-flex align-items-center" title="View Product on Website" target="_blank">
+                <i data-feather="eye" class="me-2" style="width: 18px; height: 18px;"></i> View Product on Website
+            </a>
+        </div>        
+                
+
         <div class="row profile-body">
             <!-- middle wrapper start -->
             <div class="col-md-12 col-xl-12 middle-wrapper">
@@ -282,7 +296,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-7 d-flex justify-content-center align-items-center">
+                <div class="col-sm-12 d-flex justify-content-center align-items-center">
                     <div class="page-content" style="margin-top: 10px;">
                         <div class="row profile-body">
                             <div class="col-md-12 col-xl-12 middle-wrapper">
@@ -290,88 +304,50 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h6 class="card-title">Edit Multi Image</h6>
-
-                                            <form method="post" action="" id="myForm"
-                                                enctype="multipart/form-data">
+                
+                                            <form method="post" action="" id="myForm" enctype="multipart/form-data">
                                                 @csrf
-
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Sl</th>
-                                                                <th>Image</th>
-                                                                {{-- <th>Change Image</th> --}}
-                                                                <th>Delete</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($product->multi_images as $multi_image => $img)
-                                                                <tr>
-                                                                    <td>{{ $multi_image + 1 }}</td>
-                                                                    <td class="py-1">
-                                                                        <img src="{{ asset($img->image_detail->image) }}"
-                                                                            alt="image"
-                                                                            style="width: 80px";
-                                                                            height="190px">
-                                                                    </td>
-
-                                                                    {{-- <td><input type="file" 
-                                                                            class="form-control"
-                                                                            name="multi_img[{{ $img->id }}]"
-                                                                            value="{{ $img->image_detail->id }}">
-
-                                                                    </td> --}}
-                                                                    {{-- multiimage id --}}
-                                                                    <td>
-                                                                        {{-- <input type="submit"
-                                                                            class="btn btn-primary px-4"
-                                                                            value="Update Image"> --}}
-                                                                        <a href="{{ route('deleteMultiImg.delete', $img->image_detail->id) }}"
-                                                                            class="btn btn-danger"
-                                                                            id="delete">Delete</a>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-
-                                                        </tbody>
-                                                    </table>
+                
+                                                <div class="row">
+                                                    @foreach ($product->multi_images as $multi_image => $img)
+                                                        <!-- Each image is in a column and occupies 4 columns out of 12 -->
+                                                        <div class="col-sm-1 mb-3">
+                                                            <div class="card">
+                                                                <img src="{{ asset($img->image_detail->image) }}" alt="image" class="card-img-top" style="height: 190px; object-fit: cover;">
+                                                                <div class="card-body text-center">
+                                                                    <a href="{{ route('deleteMultiImg.delete', $img->image_detail->id) }}" class="btn btn-danger btn-sm" id="delete">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
-
-                                                <br><br>
-
+                
+                                                
                                             </form>
-
-                                            <form method="post"
-                                                action="{{ route('uploadMultiImg.add') }}"
-                                                id="myForm" enctype="multipart/form-data">
+                
+                                            <!-- Upload New Images -->
+                                            <form method="post" action="{{ route('uploadMultiImg.add') }}" id="myForm" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="imageid" value="">
-                                                <input type="hidden" value="{{ $product->id }}"
-                                                    name="upload_product_id">
+                                                <input type="hidden" value="{{ $product->id }}" name="upload_product_id">
                                                 <table class="table table-striped">
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="file"
-                                                                    class="form-control"
-                                                                    name="multi_img">
+                                                                <input type="file" class="form-control" name="multi_img">
                                                                 @error('multi_img')
-                                                                    <span
-                                                                        class="text-danger">{{ $message }}</span>
+                                                                    <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
                                                             </td>
-
+                
                                                             <td>
-                                                                <input type="submit"
-                                                                    class="btn btn-info px-4"
-                                                                    value="Add Image">
+                                                                <input type="submit" class="btn btn-info px-4" value="Add Image">
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </form>
-
+                
                                         </div>
                                     </div>
                                 </div>
@@ -379,6 +355,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
 
@@ -559,5 +536,5 @@
         });
         $('#banglaInputText').bangla('on');
     </script>
-    
+
 @endsection

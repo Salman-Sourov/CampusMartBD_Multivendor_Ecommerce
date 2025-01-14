@@ -150,7 +150,7 @@
                 <div class="collapse" id="order"> <!-- Corrected 'id' to match the 'href' and 'aria-controls' -->
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="" class="nav-link">All Order</a>
+                            <a href="{{ route('all.order') }}" class="nav-link">All Order</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a href="" class="nav-link">Complete Order</a>

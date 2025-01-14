@@ -15,9 +15,13 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        $attribute_sets = Product_attribute_set::where('status', 'active')->get();
-        $attributes = Product_attribute::where('status', 'active')->get();
-        return view("backend.attribute.all_attribute", compact("attributes", "attribute_sets"));
+        $attribute_sets = Product_attribute_set::where('status', 'active')
+            ->with(['attributes' => function ($active_attributes) {
+                $active_attributes->where('status', 'active');
+            }])->get();
+
+        // dd($attributes);
+        return view("backend.attribute.all_attribute", compact("attribute_sets"));
     }
 
     /**

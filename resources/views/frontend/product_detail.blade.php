@@ -176,10 +176,12 @@
                                         </div>
                                         @if ($selected_product->stock_status == 'stock_out')
                                             <button type="button" onclick="addTocart()"
-                                                class="btn btn-md bg-danger cart-button text-white w-90 disabled">Add To Cart</button>
+                                                class="btn btn-md bg-danger cart-button text-white w-90 disabled">Add To
+                                                Cart</button>
 
                                             <button type="button" onclick="checkOut()"
-                                                class="btn btn-md bg-danger cart-button text-white w-90 disabled">Buy Now</button>
+                                                class="btn btn-md bg-danger cart-button text-white w-90 disabled">Buy
+                                                Now</button>
                                         @else
                                             <button type="button" onclick="addTocart()"
                                                 class="btn btn-md bg-dark cart-button text-white w-90">Add To Cart</button>

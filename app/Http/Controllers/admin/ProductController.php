@@ -253,7 +253,7 @@ class ProductController extends Controller
             $product->quantity = $request->quantity;
             $product->price = $request->price;
             $product->sale_price = $request->sale_price;
-            $product->status = $request->has('status') ? 'active' : 'inactive';
+            // $product->status = $request->has('status') ? 'active' : 'inactive';
             $product->is_featured = $request->has('is_featured') ? 1 : 0;
             $product->is_variation = $request->has('is_variation') ? 1 : 0;
             $product->brand_id = $request->brand_id ?? null;

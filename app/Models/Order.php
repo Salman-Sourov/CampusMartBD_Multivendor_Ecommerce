@@ -12,9 +12,12 @@ class Order extends Model
 
     protected $table = 'orders';
 
-    // public function product()
-    // {
-    //     return $this->hasOne(Product::class, 'products_id');
-    // }
+    public function product()
+    {
+        return $this->hasMany(Order_product::class,'order_id', 'id')->with('product_details');
+    }
+
+    
+    
 
 }

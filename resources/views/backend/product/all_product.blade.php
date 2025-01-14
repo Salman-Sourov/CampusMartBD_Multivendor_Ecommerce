@@ -22,8 +22,9 @@
                                         <th>Product Name</th>
                                         <th>Image</th>
                                         <th>Brand</th>
-                                        <th>Price</th>
+                                        <th>Old Price</th>
                                         <th>Sale Price</th>
+                                        <th>Stock</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -41,8 +42,9 @@
                                             <td>{{ $brand ? $brand->name : 'N/A' }}</td>
                                             <!-- Check if brand exists and display its name, otherwise 'N/A' -->
 
-                                            <td>{{ $item->price }}</td>
-                                            <td>{{ $item->sale_price }}</td>
+                                            <td>৳ {{ $item->price }}</td>
+                                            <td>৳ {{ $item->sale_price }}</td>
+                                            <td>{{ $item->quantity }}</td>
                                             <td>
                                                 @if ($item->status == 'active')
                                                     <span class="badge rounded-pill bg-success">Active</span>
@@ -50,30 +52,40 @@
                                                     <span class="badge rounded-pill bg-danger">InActive</span>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a href="{{ route('product.edit', $item->id) }}"
-                                                    class="btn btn-inverse-warning" title="Edit"> <i
-                                                        data-feather="edit"></i> </a>
 
-                                                <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn" data-id="{{ $item->id }}" title="Delete">
+                                            <td>
+                                                <a href="{{ route('product.details', $item->id) }}"
+                                                    class="btn btn-outline-info btn-sm" title="View" target="_blank">
+                                                    <i data-feather="eye"></i>
+                                                </a>
+
+                                                <a href="{{ route('product.edit', $item->id) }}"
+                                                    class="btn btn-outline-warning btn-sm mx-2" title="Edit">
+                                                    <i data-feather="edit"></i>
+                                                </a>
+
+                                                <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm"
+                                                    data-id="{{ $item->id }}" title="Delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
 
-                                                <a href="{{ route('get.stock', $item->id)}}" class="btn btn-inverse-info"
-                                                    title="Viariant">Variant & Stock
+                                                <a href="{{ route('get.stock', $item->id) }}"
+                                                    class="btn btn-outline-primary btn-sm mx-2" title="Variant & Stock">Variant & Stock
                                                 </a>
 
-                                                @if($item->stock_status == 'stock_out')
-                                                <a href="{{ route('stock.in', $item->id)}}" class="btn btn-inverse-info"
-                                                    title="Viariant">stock in
-                                                </a>
+                                                @if ($item->stock_status == 'stock_out')
+                                                    <a href="{{ route('stock.in', $item->id) }}"
+                                                        class="btn btn-outline-success btn-sm" title="Stock In">
+                                                        <i data-feather="arrow-up" class="me-1"></i>Stock In
+                                                    </a>
                                                 @else
-                                                <a href="{{ route('stock.out', $item->id)}}" class="btn btn-inverse-danger"
-                                                    title="Viariant">stock Out
-                                                </a>
+                                                    <a href="{{ route('stock.out', $item->id) }}"
+                                                        class="btn btn-outline-danger btn-sm" title="Stock Out">
+                                                        <i data-feather="arrow-down" class="me-1"></i>Stock Out
+                                                    </a>
                                                 @endif
-                                              
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -122,7 +134,7 @@
                                 toastr.success('Deleted Successfully.');
                                 setTimeout(function() {
                                     window.location
-                                .reload(); // Reload the page to see the new brand
+                                        .reload(); // Reload the page to see the new brand
                                 }, 1500);
                             } else {
                                 toastr.error('Failed to delete Product.');
