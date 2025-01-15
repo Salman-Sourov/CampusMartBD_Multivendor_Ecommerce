@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Left Column for Table Data -->
             <div class="col-md-4">
                 <div class="card">
@@ -146,12 +146,18 @@
                                 <tbody>
                                     @php
                                         // Existing logic to calculate combinations
-                                        $ids = App\Models\Product_with_attribute::where('product_id', $product_id->id)->first();
+                                        $ids = App\Models\Product_with_attribute::where(
+                                            'product_id',
+                                            $product_id->id,
+                                        )->first();
                                         $attribute_ids = $ids ? explode(',', $ids->attribute_ids) : [];
-                                        $attributes = App\Models\Product_attribute::whereIn('id', $attribute_ids)->get();
+                                        $attributes = App\Models\Product_attribute::whereIn(
+                                            'id',
+                                            $attribute_ids,
+                                        )->get();
                                         $attribute_sets = $attributes->groupBy('attribute_set_id');
                                         $cartesian_combinations = [[]];
-                                        
+
                                         foreach ($attribute_sets as $set_id => $set_attributes) {
                                             $new_combinations = [];
                                             foreach ($cartesian_combinations as $combination) {
@@ -161,17 +167,27 @@
                                             }
                                             $cartesian_combinations = $new_combinations;
                                         }
-                                        
+
                                         // Split data into two halves
-                                        $left_combinations = array_slice($cartesian_combinations, 0, ceil(count($cartesian_combinations) / 3));
+                                        $left_combinations = array_slice(
+                                            $cartesian_combinations,
+                                            0,
+                                            ceil(count($cartesian_combinations) / 3),
+                                        );
                                     @endphp
-        
+
                                     @foreach ($left_combinations as $key => $combination)
                                         @if (!empty(array_filter($combination)))
                                             @php
-                                                $attributeIds = array_map(fn($attribute) => (string) $attribute->id, $combination);
+                                                $attributeIds = array_map(
+                                                    fn($attribute) => (string) $attribute->id,
+                                                    $combination,
+                                                );
                                                 $attributeIdString = implode(',', $attributeIds);
-                                                $stock = App\Models\Product_attribute_wise_stock::where('product_id', $product_id->id)
+                                                $stock = App\Models\Product_attribute_wise_stock::where(
+                                                    'product_id',
+                                                    $product_id->id,
+                                                )
                                                     ->where('attribute_id', $attributeIdString)
                                                     ->first();
                                                 $quantity = $stock ? $stock->stock : 0;
@@ -185,8 +201,9 @@
                                                 </td>
                                                 <td>{{ $quantity }}</td>
                                                 <td>
-                                                    <button type="button" class="btn 
-                                                        {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}" 
+                                                    <button type="button"
+                                                        class="btn 
+                                                        {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}"
                                                         data-bs-toggle="modal" data-bs-target="#addStock"
                                                         data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
                                                         onclick="setAttributeData(this)">
@@ -202,7 +219,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Center Column for Table Data -->
             <div class="col-md-4">
                 <div class="card">
@@ -220,15 +237,25 @@
                                 <tbody>
                                     @php
                                         // Get the remaining items for the center table
-                                        $center_combinations = array_slice($cartesian_combinations, ceil(count($cartesian_combinations) / 3), ceil(count($cartesian_combinations) / 3));
+                                        $center_combinations = array_slice(
+                                            $cartesian_combinations,
+                                            ceil(count($cartesian_combinations) / 3),
+                                            ceil(count($cartesian_combinations) / 3),
+                                        );
                                     @endphp
-        
+
                                     @foreach ($center_combinations as $key => $combination)
                                         @if (!empty(array_filter($combination)))
                                             @php
-                                                $attributeIds = array_map(fn($attribute) => (string) $attribute->id, $combination);
+                                                $attributeIds = array_map(
+                                                    fn($attribute) => (string) $attribute->id,
+                                                    $combination,
+                                                );
                                                 $attributeIdString = implode(',', $attributeIds);
-                                                $stock = App\Models\Product_attribute_wise_stock::where('product_id', $product_id->id)
+                                                $stock = App\Models\Product_attribute_wise_stock::where(
+                                                    'product_id',
+                                                    $product_id->id,
+                                                )
                                                     ->where('attribute_id', $attributeIdString)
                                                     ->first();
                                                 $quantity = $stock ? $stock->stock : 0;
@@ -242,8 +269,9 @@
                                                 </td>
                                                 <td>{{ $quantity }}</td>
                                                 <td>
-                                                    <button type="button" class="btn 
-                                                        {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}" 
+                                                    <button type="button"
+                                                        class="btn 
+                                                        {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}"
                                                         data-bs-toggle="modal" data-bs-target="#addStock"
                                                         data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
                                                         onclick="setAttributeData(this)">
@@ -259,7 +287,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Right Column for Table Data -->
             <div class="col-md-4">
                 <div class="card">
@@ -277,15 +305,24 @@
                                 <tbody>
                                     @php
                                         // Get the remaining items for the right table
-                                        $right_combinations = array_slice($cartesian_combinations, 2 * ceil(count($cartesian_combinations) / 3));
+                                        $right_combinations = array_slice(
+                                            $cartesian_combinations,
+                                            2 * ceil(count($cartesian_combinations) / 3),
+                                        );
                                     @endphp
-        
+
                                     @foreach ($right_combinations as $key => $combination)
                                         @if (!empty(array_filter($combination)))
                                             @php
-                                                $attributeIds = array_map(fn($attribute) => (string) $attribute->id, $combination);
+                                                $attributeIds = array_map(
+                                                    fn($attribute) => (string) $attribute->id,
+                                                    $combination,
+                                                );
                                                 $attributeIdString = implode(',', $attributeIds);
-                                                $stock = App\Models\Product_attribute_wise_stock::where('product_id', $product_id->id)
+                                                $stock = App\Models\Product_attribute_wise_stock::where(
+                                                    'product_id',
+                                                    $product_id->id,
+                                                )
                                                     ->where('attribute_id', $attributeIdString)
                                                     ->first();
                                                 $quantity = $stock ? $stock->stock : 0;
@@ -299,8 +336,9 @@
                                                 </td>
                                                 <td>{{ $quantity }}</td>
                                                 <td>
-                                                    <button type="button" class="btn 
-                                                        {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}" 
+                                                    <button type="button"
+                                                        class="btn 
+                                                        {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}"
                                                         data-bs-toggle="modal" data-bs-target="#addStock"
                                                         data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
                                                         onclick="setAttributeData(this)">
@@ -317,10 +355,6 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        
 
         <!-- Add Variant Wise Stock-->
         <div class="modal fade" id="addStock" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -493,7 +527,6 @@
             });
         });
     </script>
-
 
     <script>
         function validateForm() {

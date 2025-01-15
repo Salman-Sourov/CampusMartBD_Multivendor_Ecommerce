@@ -58,7 +58,7 @@
                     <div class="col-xl-3 col-lg-4 col-sm-6">
                         <div class="footer-logo">
                             <div class="theme-logo">
-                                <a href="index.html">
+                                <a href="{{ route('index') }}">
                                     <img src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
                                         class="blur-up lazyload" alt="">
                                 </a>
@@ -80,7 +80,7 @@
                                     </li>
                                     <li>
                                         <i data-feather="mail"></i>
-                                        <a href="javascript:void(0)">info@elhaambd.com </a>
+                                        <a href="javascript:void(0)">support@elhaambd.com </a>
                                     </li>
                                 </ul>
                             </div>
@@ -115,19 +115,19 @@
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="index.html" class="text-content">Home</a>
+                                    <a href="{{ route('index') }}" class="text-content">Home</a>
                                 </li>
                                 <li>
-                                    <a href="shop-left-sidebar.html" class="text-content">Shop</a>
+                                    <a href="#" class="text-content">Shop</a>
                                 </li>
                                 <li>
-                                    <a href="about-us.html" class="text-content">About Us</a>
+                                    <a href="#" class="text-content">About Us</a>
                                 </li>
                                 <li>
-                                    <a href="blog-list.html" class="text-content">Blog</a>
+                                    <a href="#" class="text-content">Blog</a>
                                 </li>
                                 <li>
-                                    <a href="contact-us.html" class="text-content">Contact Us</a>
+                                    <a href="#" class="text-content">Contact Us</a>
                                 </li>
                             </ul>
                         </div>
@@ -141,22 +141,22 @@
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="order-success.html" class="text-content">Your Order</a>
+                                    <a href="#" class="text-content">Your Order</a>
                                 </li>
                                 <li>
-                                    <a href="user-dashboard.html" class="text-content">Your Account</a>
+                                    <a href="#" class="text-content">Your Account</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="order-tracking.html" class="text-content">Track Order</a>
-                                </li>
+                                </li> --}}
                                 <li>
-                                    <a href="wishlist.html" class="text-content">Your Wishlist</a>
+                                    <a href="#" class="text-content">Your Wishlist</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="search.html" class="text-content">Search</a>
-                                </li>
+                                </li> --}}
                                 <li>
-                                    <a href="faq.html" class="text-content">FAQ</a>
+                                    <a href="#" class="text-content">FAQ</a>
                                 </li>
                             </ul>
                         </div>
@@ -174,10 +174,10 @@
                                         <i data-feather="phone"></i>
                                         <div class="contact-number">
                                             <h6 class="text-content">Hotline 24/7 :</h6>
-                                            <h5>01740401014</h5>
+                                            <h5><a href="tel:+8801791586242">01791586242</a></h5>
                                         </div>
                                     </div>
-                                </li>
+                                </li>                                
 
                                 <li>
                                     <div class="footer-number">

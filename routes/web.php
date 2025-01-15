@@ -15,6 +15,7 @@ use App\Http\Controllers\indexController;
 use App\Http\Controllers\ProductStockController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\admin\SettingController;
 
 
 Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
@@ -22,6 +23,7 @@ Route::get('/', [indexController::class, 'index'])->name('index');
 Route::get('/category-details/{id}',[indexController::class, 'categoryDetails'])->name('category.details');
 Route::get('/brand-details/{id}',[indexController::class, 'brandDetails'])->name('brand.details');
 Route::get('/product-details/{id}',[indexController::class, 'productDetails'])->name('product.details');
+Route::get('/user-dashboard',[indexController::class, 'userDashboard'])->name('user.dashboard');
 
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -103,6 +105,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // Order
     Route::get('/all/order', [OrderController::class, 'allOrder'])->name('all.order');
     Route::get('/order/details/{id}', [OrderController::class, 'orderDetails'])->name('order.details');
+    Route::get('/order/confirm/{id}', [OrderController::class, 'orderConfirm'])->name('order.confirm');
+
+    
+    // Site Setting All Route
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('/site/setting', 'SiteSetting')->name('site.setting');
+        Route::post('/update/site/setting', 'UpdateSiteSetting')->name('update.site.setting');
+    });
+
 
 }); //End Group Admin Middleware
 

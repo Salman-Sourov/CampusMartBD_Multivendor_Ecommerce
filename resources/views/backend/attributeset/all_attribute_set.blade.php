@@ -60,7 +60,7 @@
                                     <tr>
                                         <th>Sl</th>
                                         <th>Title</th>
-                                        <th>Order</th>
+                                        {{-- <th>Order</th> --}}
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -71,7 +71,7 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->title ?? 'N/A' }}</td>
-                                                <td>{{ $item->order }}</td>
+                                                {{-- <td>{{ $item->order }}</td> --}}
                                                 <td>
                                                     @if ($item->status == 'active')
                                                         <span class="badge rounded-pill bg-success">Active</span>

@@ -33,10 +33,10 @@
                                                 <td>{{ $item->address }}</td>
                                                 <td>৳ {{ $item->total_cost }}</td>
                                                 <td>
-                                                    @if($item->payment_option == 'full-amount')
-                                                    {{ $item->bkash ?? 'Empty' }}
+                                                    @if ($item->payment_option == 'full-amount')
+                                                        {{ $item->bkash ?? 'Empty' }}
                                                     @else
-                                                    {{ 'Cash On Delivery' }}
+                                                        {{ 'Cash On Delivery' }}
                                                     @endif
                                                 </td>
                                                 <td>
@@ -50,7 +50,14 @@
                                                     <a href="{{ route('order.details', $item->id) }}"
                                                         class="btn btn-inverse-warning">
                                                         <i data-feather="eye" style="margin-right: 5px;"></i> Order Details
-                                                    </a>                                                    
+                                                    </a>
+                                                </td>
+
+                                                <td>
+                                                    <a href="{{ route('order.confirm', $item->id) }}"
+                                                        class="btn btn-inverse-primary">
+                                                        <i data-feather="eye" style="margin-right: 5px;"></i>Confirm Order
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach

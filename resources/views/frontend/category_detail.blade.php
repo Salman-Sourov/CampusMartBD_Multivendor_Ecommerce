@@ -124,50 +124,52 @@
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                         @forelse ($category_product->totalProducts as $product)
-                            <div>
-                                <div class="product-box-3 h-100 wow fadeInUp">
-                                    <div class="product-header">
-                                        <div class="product-image">
-                                            <a href="{{ route('product.details',$product->products->id) }}">
-                                                <img src="{{ asset($product->products->thumbnail) }}"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                            </a>
+                           @if($category_product->parent_id!= null)
+                                <div>
+                                    <div class="product-box-3 h-100 wow fadeInUp">
+                                        <div class="product-header">
+                                            <div class="product-image">
+                                                <a href="{{ route('product.details',$product->products->id) }}">
+                                                    <img src="{{ asset($product->products->thumbnail) }}"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="product-footer">
-                                        <div class="product-detail">
-                                            <span
-                                                class="span-name">{{ $product->products->categories->category_detail->name }}</span>
-                                            <a href="{{ route('product.details',$product->products->id) }}">
-                                                @if (App::getLocale() == 'en')
-                                                    <h5 class="name">{{ Str::limit($product->products->name, 20) }}</h5>
-                                                @else
-                                                    @php
-                                                        $get_product_bangla = App\Models\product_translation::where(
-                                                            'products_id',
-                                                            $product->products->id,
-                                                        )->first();
-                                                        // print_r ($get_product_bangla);
-                                                    @endphp
-                                                    <h5 class="name">{{ Str::limit($get_product_bangla->name, 20) }}</h5>
-                                                @endif
-                                            </a>
-                                            <p class="text-content mt-1 mb-2 product-content">
-                                                {{ $product->products->description }}</p>
-                                            <h6 class="unit">{{ $product->products->brands->name }}</h6>
-                                            <h5 class="price">
-                                                <span class="theme-color">{{ $product->products->sale_price }}</span>
-                                                <del>{{ $product->products->price }}</del>
-                                                <br> <br>
-                                            </h5>
-                                            <div class="add-to-cart-box">
-                                                <button onclick="location.href = 'shop-left-sidebar.html';"
-                                                    class="btn btn-sm btn-animation">Buy Now</button>
+                                        <div class="product-footer">
+                                            <div class="product-detail">
+                                                <span
+                                                    class="span-name">{{ $product->products->categories->category_detail->name }}</span>
+                                                <a href="{{ route('product.details',$product->products->id) }}">
+                                                    @if (App::getLocale() == 'en')
+                                                        <h5 class="name">{{ Str::limit($product->products->name, 20) }}</h5>
+                                                    @else
+                                                        @php
+                                                            $get_product_bangla = App\Models\product_translation::where(
+                                                                'products_id',
+                                                                $product->products->id,
+                                                            )->first();
+                                                            // print_r ($get_product_bangla);
+                                                        @endphp
+                                                        <h5 class="name">{{ Str::limit($get_product_bangla->name, 20) }}</h5>
+                                                    @endif
+                                                </a>
+                                                <p class="text-content mt-1 mb-2 product-content">
+                                                    {{ $product->products->description }}</p>
+                                                <h6 class="unit">{{ $product->products->brands->name }}</h6>
+                                                <h5 class="price">
+                                                    <span class="theme-color">{{ $product->products->sale_price }}</span>
+                                                    <del>{{ $product->products->price }}</del>
+                                                    <br> <br>
+                                                </h5>
+                                                <div class="add-to-cart-box">
+                                                    <button onclick="location.href = 'shop-left-sidebar.html';"
+                                                        class="btn btn-sm btn-animation">Buy Now</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @empty
                             <!-- No products available -->
                         @endforelse

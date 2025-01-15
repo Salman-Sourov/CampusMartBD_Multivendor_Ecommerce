@@ -88,12 +88,12 @@
                 </a>
             </li> --}}
 
-            <li>
+            {{-- <li>
                 <a href="wishlist.html" class="notifi-wishlist">
                     <i class="iconly-Heart icli"></i>
                     <span>My Wish</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li>
                 <a href="{{ route('checkout') }}">

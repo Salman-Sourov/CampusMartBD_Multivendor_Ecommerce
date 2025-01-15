@@ -150,6 +150,12 @@ input[type="radio"]:checked + .attribute-label {
     }
 
 }
+@media (max-width: 768px) {
+    .product-detail .product-image img {
+        width: 40px !important; /* Adjust the width as needed */
+        height: auto !important; /* Maintain the aspect ratio */
+    }
+}
 
 
 

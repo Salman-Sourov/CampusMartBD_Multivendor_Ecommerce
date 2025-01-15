@@ -143,21 +143,21 @@
                                         </div>
                                     </li>
                                     <li class="right-side">
-                                        <a href="contact-us.html" class="delivery-login-box">
+                                        <a href="tel:+8801791586242" class="delivery-login-box">
                                             <div class="delivery-icon">
                                                 <i data-feather="phone-call"></i>
                                             </div>
                                             <div class="delivery-detail">
                                                 <h6>24/7 Delivery</h6>
-                                                <h5>+8801740401014</h5>
+                                                <h5>+8801791586242</h5>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="right-side">
+                                    {{-- <li class="right-side">
                                         <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
                                             <i data-feather="heart"></i>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                     <li class="right-side">
                                         <div class="onhover-dropdown header-badge">
@@ -241,9 +241,23 @@
                                             <ul class="user-box-name">
 
                                                 @auth
-                                                    <li class="product-box-contain">
-                                                        <a href="forgot.html">Forgot Password</a>
-                                                    </li>
+                                                    @if (auth()->user()->role == 'admin')
+                                                        <li class="product-box-contain">
+                                                            <a href="{{ route('admin.home') }}">Dashboard</a>
+                                                        </li>
+                                                    @else
+                                                        <li class="product-box-contain">
+                                                            <a href="{{ route('user.dashboard') }}">Dashboard</a>
+                                                        </li>
+                                                    @endif
+
+                                                    {{-- <li class="product-box-contain">
+                                                        <a href="#">Dashboard</a>
+                                                    </li> --}}
+
+                                                    {{-- <li class="product-box-contain">
+                                                        <a href="#">Change Password</a>
+                                                    </li> --}}
                                                     <li class="product-box-contain">
                                                         <a href="{{ route('user.logout') }}">logout</a>
                                                     </li>
@@ -255,6 +269,10 @@
 
                                                     <li class="product-box-contain">
                                                         <a href="{{ route('register') }}">Register</a>
+                                                    </li>
+
+                                                    <li class="product-box-contain">
+                                                        <a href="forgot.html">Forgot Password</a>
                                                     </li>
                                                 @endauth
 

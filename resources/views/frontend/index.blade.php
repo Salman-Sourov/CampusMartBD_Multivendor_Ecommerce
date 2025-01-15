@@ -154,14 +154,20 @@
                                 <div class="product-box-3 h-100 wow fadeInUp">
                                     <div class="product-header">
                                         <div class="product-image">
+                                           
+                                            
                                             <a href="{{ route('product.details',$product->id) }}">
                                                 <img src="{{ asset($product->thumbnail) }}"
                                                     class="img-fluid blur-up lazyload" alt="">
                                             </a>
                                         </div>
                                     </div>
+                                    @if($product->stock_status == "stock_out")
+                                        <h5 style="color: red;">Stock Out</h5>
+                                    @endif
                                     <div class="product-footer">
                                         <div class="product-detail">
+                                            
                                             <span class="span-name">{{ $product->categories->category_detail->name }}</span>
                                             <a href="{{ route('product.details',$product->id) }}">
                                                 @if (App::getLocale() == 'en')
