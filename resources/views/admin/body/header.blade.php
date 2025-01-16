@@ -14,7 +14,7 @@
         </form>
 
         <ul class="navbar-nav">
-            <li class="nav-item dropdown">
+            {{-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="bell"></i>
@@ -83,7 +83,7 @@
                         <a href="javascript:;">View all</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
 
             @php
                 $id = Auth::user()->id;
@@ -94,14 +94,14 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="wd-30 ht-30 rounded-circle" src="{{ url('upload/no_image.jpg') }}"
+                    <img class="wd-30 ht-30 rounded-circle" src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
                     alt="profile">
                 </a>
                 <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
                     <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                         <div class="mb-3">
                             <img class="wd-80 ht-80 rounded-circle"
-                                src="{{url('upload/no_image.jpg') }}"
+                                src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
                                 alt="profile">
                         </div>
                         <div class="text-center">
@@ -123,7 +123,7 @@
                             </a>
                         </li>
                         <li class="dropdown-item py-2">
-                            <a href="{{ route('user.logout') }} " class="text-body ms-0">
+                            <a href="{{ route('admin.logout') }} " class="text-body ms-0">
                                 <i class="me-2 icon-md" data-feather="log-out"></i>
                                 <span>Log Out</span>
                             </a>

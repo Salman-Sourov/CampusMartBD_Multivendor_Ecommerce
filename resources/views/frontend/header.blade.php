@@ -245,36 +245,33 @@
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('admin.home') }}">Dashboard</a>
                                                         </li>
+                                                        <li class="product-box-contain">
+                                                            <a href="{{ route('admin.logout') }}">Logout</a>
+                                                        </li>
                                                     @else
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('user.dashboard') }}">Dashboard</a>
                                                         </li>
+                                                        <li class="product-box-contain">
+                                                            <a href="{{ route('user.logout') }}">Logout</a>
+                                                        </li>
                                                     @endif
+                                                @endauth
 
-                                                    {{-- <li class="product-box-contain">
-                                                        <a href="#">Dashboard</a>
-                                                    </li> --}}
-
-                                                    {{-- <li class="product-box-contain">
-                                                        <a href="#">Change Password</a>
-                                                    </li> --}}
+                                                @guest
                                                     <li class="product-box-contain">
-                                                        <a href="{{ route('user.logout') }}">logout</a>
-                                                    </li>
-                                                @else
-                                                    <li class="product-box-contain">
-                                                        <i></i>
                                                         <a href="{{ route('login') }}">Log In</a>
                                                     </li>
-
                                                     <li class="product-box-contain">
                                                         <a href="{{ route('register') }}">Register</a>
                                                     </li>
+                                                @endguest
 
-                                                    <li class="product-box-contain">
+
+                                                {{-- <li class="product-box-contain">
                                                         <a href="forgot.html">Forgot Password</a>
-                                                    </li>
-                                                @endauth
+                                                    </li> --}}
+
 
 
                                             </ul>

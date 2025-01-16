@@ -1,3 +1,4 @@
+<title>Checkout - Elhaam BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
     <!-- Cart Section Start -->

@@ -118,9 +118,6 @@
                                     <a href="{{ route('index') }}" class="text-content">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="text-content">Shop</a>
-                                </li>
-                                <li>
                                     <a href="#" class="text-content">About Us</a>
                                 </li>
                                 <li>
@@ -141,17 +138,17 @@
                         <div class="footer-contain">
                             <ul>
                                 <li>
-                                    <a href="#" class="text-content">Your Order</a>
+                                    <a href="{{ route('user.dashboard') }}" class="text-content">Your Order</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="text-content">Your Account</a>
+                                    <a href="{{ route('user.dashboard') }}" class="text-content">Your Account</a>
                                 </li>
                                 {{-- <li>
                                     <a href="order-tracking.html" class="text-content">Track Order</a>
                                 </li> --}}
-                                <li>
+                                {{-- <li>
                                     <a href="#" class="text-content">Your Wishlist</a>
-                                </li>
+                                </li> --}}
                                 {{-- <li>
                                     <a href="search.html" class="text-content">Search</a>
                                 </li> --}}
@@ -226,23 +223,18 @@
                     <h6 class="text-content">Stay connected :</h6>
                     <ul>
                         <li>
-                            <a href="https://www.facebook.com/" target="_blank">
+                            <a href="https://www.facebook.com/elhaambd42" target="_blank">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/" target="_blank">
-                                <i class="fa-brands fa-twitter"></i>
+                            <a href="https://www.linkedin.com/company/elhaambd/?viewAsMember=true" target="_blank">
+                                <i class="fa-brands fa-linkedin"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com/" target="_blank">
+                            <a href="#" target="_blank">
                                 <i class="fa-brands fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://in.pinterest.com/" target="_blank">
-                                <i class="fa-brands fa-pinterest-p"></i>
                             </a>
                         </li>
                     </ul>

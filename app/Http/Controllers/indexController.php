@@ -202,14 +202,4 @@ class indexController extends Controller
         // Return the view with the search results
         return view('frontend.product_search', compact('categories', 'brands', 'products', 'carts', 'query'));
     }
-
-    public function userDashboard()
-    {
-        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
-        $brands = Brand::with('translations')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
-        $auth = Auth::user();
-
-        return view('frontend.user_dashboard',compact('categories','brands','products','auth'));
-    }
 }

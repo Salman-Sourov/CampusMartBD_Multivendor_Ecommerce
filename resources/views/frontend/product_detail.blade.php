@@ -1,3 +1,4 @@
+<title>{{ $selected_product->name }} - Elhaam BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
     <!-- Breadcrumb Section Start -->

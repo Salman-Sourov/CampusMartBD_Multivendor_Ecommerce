@@ -4,9 +4,9 @@
 
     <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
       <div>
-        <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
+        <h4 class="mb-3 mb-md-0">Welcome to ElhaamBD Admin Panel</h4>
       </div>
-      <div class="d-flex align-items-center flex-wrap text-nowrap">
+      {{-- <div class="d-flex align-items-center flex-wrap text-nowrap">
         <div class="input-group flatpickr wd-200 me-2 mb-2 mb-md-0" id="dashboardDate">
           <span class="input-group-text input-group-addon bg-transparent border-primary" data-toggle><i data-feather="calendar" class="text-primary"></i></span>
           <input type="text" class="form-control bg-transparent border-primary" placeholder="Select date" data-input>
@@ -32,7 +32,7 @@
                   <h6 class="card-title mb-0">New Customers</h6>
                   <div class="dropdown mb-2">
                     <a type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                      <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></iWelcome to Dashboard>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye" class="icon-sm me-2"></i> <span class="">View</span></a>
@@ -338,7 +338,7 @@
           </div>
         </div>
       </div>
-    </div> <!-- row -->
+    </div> <!-- row --> --}}
 
         </div>
 

@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminController extends Controller
 {
-       public function adminHome()
+    public function adminHome()
     {
         return view('admin.index');
     }
@@ -81,4 +82,14 @@ class AdminController extends Controller
         return back()->with($notification);
     }
 
+    public function adminLogout(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

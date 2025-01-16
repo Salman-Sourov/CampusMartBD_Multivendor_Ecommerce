@@ -1,3 +1,4 @@
+<title>{{ $category_name->name }} - Elhaam BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
     <section class="breadscrumb-section pt-0">

@@ -20,10 +20,9 @@ use App\Http\Controllers\admin\SettingController;
 
 Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
 Route::get('/', [indexController::class, 'index'])->name('index');
-Route::get('/category-details/{id}',[indexController::class, 'categoryDetails'])->name('category.details');
-Route::get('/brand-details/{id}',[indexController::class, 'brandDetails'])->name('brand.details');
-Route::get('/product-details/{id}',[indexController::class, 'productDetails'])->name('product.details');
-Route::get('/user-dashboard',[indexController::class, 'userDashboard'])->name('user.dashboard');
+Route::get('/category-details/{id}', [indexController::class, 'categoryDetails'])->name('category.details');
+Route::get('/brand-details/{id}', [indexController::class, 'brandDetails'])->name('brand.details');
+Route::get('/product-details/{id}', [indexController::class, 'productDetails'])->name('product.details');
 
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -40,8 +39,11 @@ Route::post('/confirm/order', [indexController::class, 'confirmOrder'])->name('c
 //SearchProduct
 Route::post('/product/search', [indexController::class, 'productSearch'])->name('product.search');
 
-Route::get('/user', [Usercontroller::class, 'home'])->name('home');
-Route::get('/user/logout', [Usercontroller::class, 'userLogout'])->name('user.logout');
+Route::middleware(['auth', 'role:user'])->group(function () {
+    // Route::get('/user', [Usercontroller::class, 'home'])->name('home');
+    Route::get('/user-dashboard', [UserController::class, 'userDashboard'])->name('user.dashboard');
+    Route::get('/user/logout', [Usercontroller::class, 'userLogout'])->name('user.logout');
+}); //End Group Admin Middleware
 
 //Admin Management Group Middleware
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -51,6 +53,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
     Route::get('/admin/change/passowrd', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
     Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatePassword'])->name('admin.update.password');
+    Route::get('/admin/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 
     //Brand
     Route::resource('brand', BrandController::class);
@@ -87,7 +90,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     //Stock
     Route::resource('stock', ProductStockController::class);
     Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
-    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']); 
+    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
     Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
     Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
@@ -95,7 +98,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
     Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
 
-    
+
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
@@ -107,17 +110,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/order/details/{id}', [OrderController::class, 'orderDetails'])->name('order.details');
     Route::get('/order/confirm/{id}', [OrderController::class, 'orderConfirm'])->name('order.confirm');
 
-    
+
     // Site Setting All Route
     Route::controller(SettingController::class)->group(function () {
         Route::get('/site/setting', 'SiteSetting')->name('site.setting');
         Route::post('/update/site/setting', 'UpdateSiteSetting')->name('update.site.setting');
     });
-
-
 }); //End Group Admin Middleware
 
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -19,6 +19,7 @@
                                         <th>Address</th>
                                         <th>Total</th>
                                         <th>Method</th>
+                                        <th>Time</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -39,26 +40,30 @@
                                                         {{ 'Cash On Delivery' }}
                                                     @endif
                                                 </td>
+                                                <td>{{ $item->created_at->timezone('Asia/Dhaka')->format('F d, Y h:i A') }}</td>
                                                 <td>
                                                     @if ($item->status == 'Processing')
                                                         <span class="badge rounded-pill bg-success">Processing</span>
                                                     @else
-                                                        <span class="badge rounded-pill bg-danger">Delevered</span>
+                                                        <span class="badge rounded-pill bg-danger">Confirm</span>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('order.details', $item->id) }}"
-                                                        class="btn btn-inverse-warning">
-                                                        <i data-feather="eye" style="margin-right: 5px;"></i> Order Details
+                                                        class="btn btn-sm btn-warning">
+                                                        <i data-feather="eye"></i>
                                                     </a>
+                                                    @if ($item->status == 'Processing')
+                                                    <a href="{{ route('order.confirm', $item->id) }}"
+                                                        class="btn btn-sm btn-success">
+                                                        <i data-feather="check-circle"></i>
+                                                    </a>
+                                                    @else
+                                                    {{-- Confirmed --}}
+                                                    @endif
+                                                    
                                                 </td>
 
-                                                <td>
-                                                    <a href="{{ route('order.confirm', $item->id) }}"
-                                                        class="btn btn-inverse-primary">
-                                                        <i data-feather="eye" style="margin-right: 5px;"></i>Confirm Order
-                                                    </a>
-                                                </td>
                                             </tr>
                                         @endforeach
                                     @else
