@@ -44,7 +44,6 @@
                                                     @endif
                                                 </td>
                                                 <td>
-
                                                     <a class="btn toggle-class {{ $item->status == 'active' ? 'btn-inverse-success' : 'btn-inverse-danger' }}"
                                                         title="Status" data-id="{{ $item->id }}"
                                                         data-status="{{ $item->status }}">
@@ -56,7 +55,6 @@
                                                         data-id="{{ $item->id }}" data-action="delete">
                                                         <i data-feather="trash"></i>
                                                     </a>
-
                                                 </td>
                                             </tr>
                                         @endforeach

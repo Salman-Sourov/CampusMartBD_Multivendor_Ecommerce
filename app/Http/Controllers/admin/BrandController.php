@@ -204,7 +204,6 @@ class BrandController extends Controller
 
     public function brandDelete(Request $request, $id)
     {
-
         $brand = Brand::find($id);
 
         if (file_exists(public_path($brand->logo)) && !empty($brand->logo)) {

@@ -178,11 +178,12 @@ class CategoryController extends Controller
         return response()->json($subcategories);
     }
 
-    public function categoryChangeStatus(Request $request){
+    public function categoryChangeStatus(Request $request)
+    {
 
         $category = Product_category::findOrFail($request->category_id);
-        
-        if ($category->status == 'inactive'){
+
+        if ($category->status == 'inactive') {
             $category->status = 'active';
             $category->save();
         }
@@ -196,9 +197,10 @@ class CategoryController extends Controller
     {
         $category = Product_category::find($id);
 
-        if (file_exists(public_path($category->image)) && !empty($category->image)) {
-            unlink(public_path($category->image));
-
+        if ($category) {
+            if (!empty($category->image) && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image));
+            }
             $category->delete();
 
             return response()->json([

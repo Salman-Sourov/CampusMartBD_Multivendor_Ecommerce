@@ -186,11 +186,12 @@ class SubCategoryController extends Controller
         ]);
     }
 
-    public function subcategoryChangeStatus(Request $request){
+    public function subcategoryChangeStatus(Request $request)
+    {
 
         $subcategory = Product_category::findOrFail($request->subcategory_id);
-        
-        if ($subcategory->status == 'inactive'){
+
+        if ($subcategory->status == 'inactive') {
             $subcategory->status = 'active';
             $subcategory->save();
         }
@@ -200,12 +201,14 @@ class SubCategoryController extends Controller
         // dd($category);
     }
 
-    public function subCategoryDelete(Request $request, string $id){
+    public function subCategoryDelete(Request $request, string $id)
+    {
         $category = Product_category::find($id);
 
-        if (file_exists(public_path($category->image)) && !empty($category->image)) {
-            unlink(public_path($category->image));
-
+        if ($category) {
+            if (!empty($category->image) && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image));
+            }
             $category->delete();
 
             return response()->json([

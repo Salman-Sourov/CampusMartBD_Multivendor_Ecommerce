@@ -14,7 +14,7 @@ class Product extends Model
 
     public function translations()
     {
-        return $this->hasOne(product_translation::class, 'products_id');
+        return $this->hasOne(Product_translation::class, 'products_id');
     }
     public function categories()
     {
