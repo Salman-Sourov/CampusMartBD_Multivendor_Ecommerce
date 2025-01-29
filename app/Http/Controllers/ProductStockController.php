@@ -32,7 +32,7 @@ class ProductStockController extends Controller
     public function getAttribute(string $id)
     {
         $attributes = Product_attribute::where('attribute_set_id', $id)->get();
-        dd($attributes);
+        // dd($attributes);
         return response()->json($attributes);
     }
 
@@ -60,13 +60,10 @@ class ProductStockController extends Controller
     {
         //dd($request);
 
-
         // $request->validate([
         //     'attribute' => 'required|array|min:1', 
         //     'attribute.*' => 'exists:product_with_attributes,attribute_ids', 
         // ]);
-
-
 
         $check_attribute = product_with_attribute::where('product_id', $request->product_id)->first();
 
@@ -92,23 +89,6 @@ class ProductStockController extends Controller
 
             return redirect()->back()->with($notification);
         }
-
-
-        //     $data = new Product_attribute_wise_stock();
-        //     $data->product_id  = $request->product_id;
-        //     $data->attribute_id = $request->attribute;
-        //     $data->price = $request->price;
-        //     $data->sale_price = $request->sale_price;
-        //     $data->stock = $request->stock;
-        //     $data->status = 1;
-        //     $data->save();
-        // dd('hello');
-        // $data = new Product_with_attribute_set();
-        // $data->product_id = $request->product_id;
-        // $data->attribute_set_id  = $request->attribute_set;
-        // $data->save();
-
-        // return response()->json(['success' => true, 'message' => 'Attribute Set added successfully']);
 
     }
 

@@ -8,7 +8,7 @@ return [
     'blog' => 'ব্লগ',
     'all_category' => 'সব ক্যাটেগরি',
     'browse_by_Categories' => 'বিভাগসমূহ',
-    'recently_added' => 'সম্প্রতি যোগ করা হয়েছে',
+    'recently_added' => 'ট্রেন্ডিং প্রোডাক্ট',
     'for_you' => 'শুধুমাত্র আপনার জন্য',
     'search' => 'অনুসন্ধান করুন....',
     'Subcat' => 'শ্রেণিবিন্যাস',

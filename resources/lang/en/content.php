@@ -8,7 +8,7 @@ return [
     'blog' => 'Blog',
     'all_category' => 'All Categories',
     'browse_by_Categories' => 'Browse by Categories',
-    'recently_added' => 'Recently & Added',
+    'recently_added' => 'Trending Products',
     'for_you' => 'For & You',
     'search' => 'I am searching for...',
     'Subcat' => 'Subcategories',

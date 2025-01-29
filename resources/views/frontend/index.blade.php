@@ -199,7 +199,6 @@
                         @empty
                             <!-- Do nothing or display a message if needed -->
                         @endforelse
-
                     </div>
 
 
@@ -226,6 +225,62 @@
                                 <use xlink:href="{{ asset('frontend') }}/assets/svg/leaf.svg#leaf"></use>
                             </svg>
                         </span>
+                    </div>
+
+                    <div
+                        class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                        @forelse ($products->take(5) as $product)
+                            <div>
+                                <div class="product-box-3 h-100 wow fadeInUp">
+                                    <div class="product-header">
+                                        <div class="product-image">
+                                           
+                                            
+                                            <a href="{{ route('product.details',$product->id) }}">
+                                                <img src="{{ asset($product->thumbnail) }}"
+                                                    class="img-fluid blur-up lazyload" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @if($product->stock_status == "stock_out")
+                                        <h5 style="color: red;">Stock Out</h5>
+                                    @endif
+                                    <div class="product-footer">
+                                        <div class="product-detail">
+                                            
+                                            <span class="span-name">{{ $product->categories->category_detail->name }}</span>
+                                            <a href="{{ route('product.details',$product->id) }}">
+                                                @if (App::getLocale() == 'en')
+                                                <h5 class="name">{{ Str::limit($product->name, 17) }}</h5>
+                                                @else
+                                                <h5 class="name">{{ Str::limit($product->translations->name, 20) }}</h5>
+                                                @endif
+                                            </a>
+                                            
+                                            <p class="text-content mt-1 mb-2 product-content">{{ $product->description }}
+                                            </p>
+                                            @php
+                                                $get_brand = App\Models\Brand::where('id',$product->brand_id)->first();
+                                            @endphp
+                                            <h6 class="unit">{{ $get_brand->name ?? 'No Brand' }}</h6>
+                                            <h5 class="price"><span class="theme-color">৳ {{ $product->sale_price }}</span>
+                                                <del>৳ {{ $product->price }}</del>
+                                                <br> <br>
+                                            </h5>
+                                            <div class="add-to-cart-box">
+                                                <a href="{{ route('product.details', $product->id) }}">
+                                                    <button class="btn btn-sm btn-animation">Buy Now</button>
+                                                </a>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        @empty
+                            <!-- Do nothing or display a message if needed -->
+                        @endforelse
                     </div>
                    
                 </div>
@@ -269,7 +324,7 @@
     <!-- Product Section End -->
 
     <!-- Newsletter Section Start -->
-    <section class="newsletter-section section-b-space">
+    {{-- <section class="newsletter-section section-b-space">
         <div class="container-fluid-lg">
             <div class="newsletter-box newsletter-box-2">
                 <div class="newsletter-contain py-5">
@@ -295,6 +350,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Newsletter Section End -->
 @endsection
