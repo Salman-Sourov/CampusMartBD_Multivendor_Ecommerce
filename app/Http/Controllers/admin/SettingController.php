@@ -29,6 +29,21 @@ class SettingController extends Controller
         }
     
         return redirect()->back()->with('success', 'Product updated successfully!');
+    }
 
+    public function deleteFeaturedProducts($id){
+
+        $featured = Product::find($id);
+        // dd($featured);
+        
+        if ($featured->is_featured == '1') {
+            $featured->is_featured = '0'; // Use '=' instead of '=='
+            $featured->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Featured Photo deleted successfully.'
+        ]);
     }
 }

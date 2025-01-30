@@ -147,7 +147,7 @@
                 <div class="col-xxl-9 col-xl-8">
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                        @forelse ($products->take(5) as $product)
+                        @forelse ($featured_products->take(5) as $product)
                             <div>
                                 <div class="product-box-3 h-100 wow fadeInUp">
                                     <div class="product-header">

@@ -115,6 +115,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(SettingController::class)->group(function () {
         Route::get('/site/setting', 'siteSetting')->name('site.setting');
         Route::post('/update/featured_products', 'updateFeaturedProducts')->name('update.featured.products');
+        Route::get('/delte/featured_products/{id}', 'deleteFeaturedProducts')->name('delete.featured.products');
     });
 }); //End Group Admin Middleware
 

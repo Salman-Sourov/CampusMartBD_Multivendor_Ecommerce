@@ -80,6 +80,35 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    {{-- Delete Feature Photo --}}
+    <script type="text/javascript">
+        $(document).on('click', '.btn-danger', function(e) {
+            e.preventDefault(); // Prevent default action
+            var id = $(this).data('id'); // Get ID from button
+            var url = '{{ route('delete.featured.products', ':id') }}'.replace(":id", id); // Corrected route name
+
+            $.ajax({
+                type: 'GET', // Consider changing to DELETE for better practice
+                url: url,
+                success: function(response) {
+                    if (response.success) {
+                        toastr.success(response.message || 'Deleted Successfully.');
+
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1000);
+
+                    } else {
+                        toastr.error(response.message || 'Failed to delete the item.');
+                    }
+                },
+                error: function(xhr) {
+                    toastr.error('An error occurred while deleting the item.');
+                    console.log(xhr);
+                }
+            });
+        });
+    </script>
 @endsection

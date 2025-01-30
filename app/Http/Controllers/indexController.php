@@ -22,10 +22,11 @@ class indexController extends Controller
 
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->inRandomOrder()->latest()->get();
+        $featured_products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '1')->latest()->get();
+        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '0')->inRandomOrder()->latest()->get();
         $carts = session()->get('cart'); // Default to an empty array if no cart exists
         // dd($products);
-        return view('frontend.index', compact('categories', 'brands', 'products', 'carts'));
+        return view('frontend.index', compact('categories', 'brands', 'products', 'carts', 'featured_products'));
     }
 
     public function categoryDetails($id)
@@ -98,7 +99,7 @@ class indexController extends Controller
 
     public function confirmOrder(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -123,49 +124,45 @@ class indexController extends Controller
             // $data->attributes = $request->bkash;
             // $data->order_quantity = $request->bkash;
             $data->bkash = $request->bkash ?? '';
-            $data->total_cost = $request->sub_total+(int)$request->area ?? '';
+            $data->total_cost = $request->sub_total + (int)$request->area ?? '';
             $data->status = 'Processing';
             $data->save();
-            
+
             foreach ($carts as $key => $cartItem) {
                 $data_1 = new Order_product();
-                $data_1->order_id = $data->id ?? ''; 
-                $data_1->product_id = $key ?? ''; 
+                $data_1->order_id = $data->id ?? '';
+                $data_1->product_id = $key ?? '';
                 $data_1->save();
             }
 
             foreach ($carts as $key => $cartItem) {
                 $data_1 = new Order_product_attribute();
-                $data_1->order_id = $data->id ?? ''; 
-                $data_1->product_id = $key ?? ''; 
-                $data_1->attributes = isset($cartItem['attributes']) ? $cartItem['attributes'] : ''; 
+                $data_1->order_id = $data->id ?? '';
+                $data_1->product_id = $key ?? '';
+                $data_1->attributes = isset($cartItem['attributes']) ? $cartItem['attributes'] : '';
                 $data_1->save();
             }
 
             foreach ($carts as $key => $cartItem) {
                 $data_1 = new Order_product_quantity();
-                $data_1->order_id = $data->id ?? ''; 
-                $data_1->product_id = $key ?? ''; 
-                $data_1->quantity = isset($cartItem['quantity']) && is_numeric($cartItem['quantity']) ? $cartItem['quantity'] : 0;; 
+                $data_1->order_id = $data->id ?? '';
+                $data_1->product_id = $key ?? '';
+                $data_1->quantity = isset($cartItem['quantity']) && is_numeric($cartItem['quantity']) ? $cartItem['quantity'] : 0;;
                 $data_1->save();
             }
 
-           
+
             DB::commit();
-             session()->flush();
+            session()->flush();
 
             return response()->json(['success' => true, 'message' => 'Order Confirm Successfully']);
-
-           
         } catch (\Exception $e) {
 
             DB::rollback();
 
-            
+
 
             return response()->json(['error' => true, 'message' => 'Failed to Order']);
-
-
         }
     }
 
