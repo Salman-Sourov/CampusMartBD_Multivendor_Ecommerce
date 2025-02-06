@@ -50,6 +50,7 @@
                                                         <del>৳ {{ $product->price }}</del>
                                                     @endif
                                                 </h5>
+                                                <br>
                                                 <div class="add-to-cart-box">
                                                     <a href="{{ route('product.details', $product->id) }}">
                                                         <button class="btn btn-sm btn-animation">Buy Now</button>

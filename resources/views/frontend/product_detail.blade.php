@@ -1,6 +1,7 @@
 <title>{{ $selected_product->name }} - Elhaam BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
+
     <!-- Breadcrumb Section Start -->
     <section class="breadscrumb-section pt-0">
         <div class="container-fluid-lg">
@@ -193,15 +194,14 @@
                                 </form>
                             </div>
 
-                            <div class="buy-box">
+                            {{-- <div class="buy-box">
                                 <a href="wishlist.html">
                                     <i data-feather="heart"></i>
                                     <h4 style="font-weight: bold;">Add To Wishlist</h4>
                                 </a>
-                            </div>
+                            </div> --}}
 
                             <div class="pickup-box">
-
                                 <div class="product-info">
                                     <ul class="product-info-list product-info-list-2">
                                         <li>Type : <a
@@ -286,7 +286,7 @@
                             <h3>Trending Products</h3>
 
                             <ul class="product-list product-right-sidebar border-0 p-0">
-                                @forelse ($trending_products->take(5) as $product)
+                                @forelse ($featured_products->take(5) as $product)
                                     <li>
                                         <div class="offer-product">
                                             <a href="{{ route('product.details', $product->id) }}" class="offer-image">
@@ -354,6 +354,7 @@
                     </svg>
                 </span>
             </div>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="slider-6_1 product-wrapper">

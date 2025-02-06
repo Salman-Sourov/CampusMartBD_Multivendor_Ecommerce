@@ -19,7 +19,6 @@ class indexController extends Controller
 {
     public function index()
     {
-
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
         $featured_products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '1')->latest()->get();
@@ -70,6 +69,7 @@ class indexController extends Controller
     {
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
+        $featured_products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '1')->latest()->get();
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
         $carts = session()->get('cart');
 
@@ -93,7 +93,7 @@ class indexController extends Controller
 
         // dd($category_product);
 
-        return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts'));
+        return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products'));
     }
 
     public function confirmOrder(Request $request)
@@ -167,11 +167,9 @@ class indexController extends Controller
 
     public function productSearch(Request $request)
     {
-
         $request->validate([
             'search' => 'required',
         ]);
-
 
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
@@ -197,5 +195,13 @@ class indexController extends Controller
 
         // Return the view with the search results
         return view('frontend.product_search', compact('categories', 'brands', 'products', 'carts', 'query'));
+    }
+    public function mobileProductSearch(){
+        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
+        $brands = Brand::with('translations')->where('status', 'active')->get();
+        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->inRandomOrder()->latest()->get();
+        $carts = session()->get('cart'); // Default to an empty array if no cart exists
+        // dd($products);
+        return view('frontend.mobile_search', compact('categories', 'brands', 'products', 'carts'));
     }
 }

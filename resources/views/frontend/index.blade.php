@@ -62,46 +62,49 @@
             </div>
 
             @if (App::getLocale() == 'en')
-            <div class="row">
-                <div class="col-12">
-                    <div class="slider-9">
-                        @forelse ($categories as $category)
-                            <div>
-                                <a href="{{ route('category.details', $category->id) }}" class="category-box wow fadeInUp">
-                                    <div>
-                                        <img src="{{ asset($category->image) }}" class="blur-up lazyload" alt="">
-                                        <h5>{{ $category->name }}</h5>
-                                    </div>
-                                </a>
-                            </div>
-                        @empty
-                            <!-- You can display a message if no categories are available -->
-                            <li>No categories available.</li>
-                        @endforelse
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider-9">
+                            @forelse ($categories as $category)
+                                <div>
+                                    <a href="{{ route('category.details', $category->id) }}"
+                                        class="category-box wow fadeInUp">
+                                        <div>
+                                            <img src="{{ asset($category->image) }}" class="blur-up lazyload"
+                                                alt="">
+                                            <h5>{{ $category->name }}</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            @empty
+                                <!-- You can display a message if no categories are available -->
+                                <li>No categories available.</li>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
-            </div>
-
             @else
-            <div class="row">
-                <div class="col-12">
-                    <div class="slider-9">
-                        @forelse ($categories as $category)
-                            <div>
-                                <a href="{{ route('category.details', $category->id) }}" class="category-box wow fadeInUp">
-                                    <div>
-                                        <img src="{{ asset($category->image) }}" class="blur-up lazyload" alt="">
-                                        <h5>{{ $category->translations->name }}</h5>
-                                    </div>
-                                </a>
-                            </div>
-                        @empty
-                            <!-- You can display a message if no categories are available -->
-                            <li>No categories available.</li>
-                        @endforelse
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider-9">
+                            @forelse ($categories as $category)
+                                <div>
+                                    <a href="{{ route('category.details', $category->id) }}"
+                                        class="category-box wow fadeInUp">
+                                        <div>
+                                            <img src="{{ asset($category->image) }}" class="blur-up lazyload"
+                                                alt="">
+                                            <h5>{{ $category->translations->name }}</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            @empty
+                                <!-- You can display a message if no categories are available -->
+                                <li>No categories available.</li>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
         </div>
     </section>
@@ -142,7 +145,7 @@
                     </svg>
                 </span>
             </div>
-            
+
             <div class="row">
                 <div class="col-xxl-9 col-xl-8">
                     <div
@@ -152,43 +155,48 @@
                                 <div class="product-box-3 h-100 wow fadeInUp">
                                     <div class="product-header">
                                         <div class="product-image">
-                                           
-                                            
-                                            <a href="{{ route('product.details',$product->id) }}">
+
+
+                                            <a href="{{ route('product.details', $product->id) }}">
                                                 <img src="{{ asset($product->thumbnail) }}"
                                                     class="img-fluid blur-up lazyload" alt="">
                                             </a>
                                         </div>
                                     </div>
-                                    @if($product->stock_status == "stock_out")
+                                    @if ($product->stock_status == 'stock_out')
                                         <h5 style="color: red;">Stock Out</h5>
                                     @endif
                                     <div class="product-footer">
                                         <div class="product-detail">
-                                            
-                                            <span class="span-name">{{ $product->categories->category_detail->name }}</span>
-                                            <a href="{{ route('product.details',$product->id) }}">
-                                                @if (App::getLocale() == 'en')
-                                                <h5 class="name">{{ Str::limit($product->name, 17) }}</h5>
-                                                @else
-                                                <h5 class="name">{{ Str::limit($product->translations->name, 20) }}</h5>
-                                                @endif
+
+                                            <span
+                                                class="span-name">{{ $product->categories->category_detail->name }}</span>
+
+                                            <a href="{{ route('product.details', $product->id) }}">
+                                                <h5 class="product_name">
+                                                    @if (App::getLocale() == 'en')
+                                                        {{ $product->name }}
+                                                    @else
+                                                        {{ $product->translations->name }}
+                                                    @endif
+                                                </h5>
                                             </a>
-                                            
+
                                             <p class="text-content mt-1 mb-2 product-content">{{ $product->description }}
                                             </p>
                                             @php
-                                                $get_brand = App\Models\Brand::where('id',$product->brand_id)->first();
+                                                $get_brand = App\Models\Brand::where('id', $product->brand_id)->first();
                                             @endphp
                                             <h6 class="unit">{{ $get_brand->name ?? 'No Brand' }}</h6>
-                                            <h5 class="price"><span class="theme-color">৳ {{ $product->sale_price }}</span>
+                                            <h5 class="price"><span class="theme-color">৳
+                                                    {{ $product->sale_price }}</span>
                                                 <del>৳ {{ $product->price }}</del>
                                                 <br> <br>
                                             </h5>
                                             <div class="add-to-cart-box">
                                                 <a href="{{ route('product.details', $product->id) }}">
                                                     <button class="btn btn-sm btn-animation">Buy Now</button>
-                                                </a>                                                
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -200,8 +208,6 @@
                             <!-- Do nothing or display a message if needed -->
                         @endforelse
                     </div>
-
-
                     <br>
                     <br>
                     <div class="offer-box hover-effect">
@@ -209,10 +215,11 @@
                             class="bg-img blur-up lazyload" alt="">
                         <div class="offer-contain p-4">
                             <div class="offer-detail" style="color: white; text-align: center;">
-                                <h2 class="text-dark" style="color: white !important;">Special Offers 
+                                <h2 class="text-dark" style="color: white !important;">Special Offers
                                     <span class="text-danger fw-bold" style="color: white !important;">of the week!</span>
                                 </h2>
-                                <p class="text-content" style="color: white !important;">Special offer on this week, Hurry Up!</p>
+                                <p class="text-content" style="color: white !important;">Special offer on this week, Hurry
+                                    Up!</p>
                             </div>
                         </div>
                     </div>
@@ -229,48 +236,49 @@
 
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                        @forelse ($products->take(5) as $product)
+                        @forelse ($products as $product)
                             <div>
                                 <div class="product-box-3 h-100 wow fadeInUp">
                                     <div class="product-header">
                                         <div class="product-image">
-                                           
-                                            
-                                            <a href="{{ route('product.details',$product->id) }}">
+                                            <a href="{{ route('product.details', $product->id) }}">
                                                 <img src="{{ asset($product->thumbnail) }}"
                                                     class="img-fluid blur-up lazyload" alt="">
                                             </a>
                                         </div>
                                     </div>
-                                    @if($product->stock_status == "stock_out")
+                                    @if ($product->stock_status == 'stock_out')
                                         <h5 style="color: red;">Stock Out</h5>
                                     @endif
                                     <div class="product-footer">
                                         <div class="product-detail">
-                                            
-                                            <span class="span-name">{{ $product->categories->category_detail->name }}</span>
-                                            <a href="{{ route('product.details',$product->id) }}">
-                                                @if (App::getLocale() == 'en')
-                                                <h5 class="name">{{ Str::limit($product->name, 17) }}</h5>
-                                                @else
-                                                <h5 class="name">{{ Str::limit($product->translations->name, 20) }}</h5>
-                                                @endif
+                                            <span
+                                                class="span-name">{{ $product->categories->category_detail->name }}</span>
+                                            <a href="{{ route('product.details', $product->id) }}">
+                                                <h5 class="product_name">
+                                                    @if (App::getLocale() == 'en')
+                                                        {{ $product->name }}
+                                                    @else
+                                                        {{ $product->translations->name }}
+                                                    @endif
+                                                </h5>
                                             </a>
-                                            
+
                                             <p class="text-content mt-1 mb-2 product-content">{{ $product->description }}
                                             </p>
                                             @php
-                                                $get_brand = App\Models\Brand::where('id',$product->brand_id)->first();
+                                                $get_brand = App\Models\Brand::where('id', $product->brand_id)->first();
                                             @endphp
                                             <h6 class="unit">{{ $get_brand->name ?? 'No Brand' }}</h6>
-                                            <h5 class="price"><span class="theme-color">৳ {{ $product->sale_price }}</span>
+                                            <h5 class="price"><span class="theme-color">৳
+                                                    {{ $product->sale_price }}</span>
                                                 <del>৳ {{ $product->price }}</del>
                                                 <br> <br>
                                             </h5>
                                             <div class="add-to-cart-box">
                                                 <a href="{{ route('product.details', $product->id) }}">
                                                     <button class="btn btn-sm btn-animation">Buy Now</button>
-                                                </a>                                                
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +290,7 @@
                             <!-- Do nothing or display a message if needed -->
                         @endforelse
                     </div>
-                   
+
                 </div>
 
                 <div class="col-xxl-3 col-xl-4 d-none d-xl-block">
@@ -305,7 +313,7 @@
                                             <h2 class="mt-2">50%</h2>
                                             <h3 class="text-uppercase">off</h3>
                                         </div>
-{{-- 
+                                        {{-- 
                                         <div>
                                             <button onclick="location.href = 'shop-left-sidebar.html';"
                                                 class="btn text-white btn-md mt-xxl-4 mt-2 home-button mend-auto theme-bg-color">Shop

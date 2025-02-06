@@ -81,12 +81,12 @@
                 </a>
             </li>
 
-            {{-- <li>
-                <a href="{{ route('product.search') }}" class="search-box">
+            <li>
+                <a href="{{ route('mobile.product.search') }}" class="search-box">
                     <i class="iconly-Search icli"></i>
                     <span>Search</span>
                 </a>
-            </li> --}}
+            </li>
 
             {{-- <li>
                 <a href="wishlist.html" class="notifi-wishlist">

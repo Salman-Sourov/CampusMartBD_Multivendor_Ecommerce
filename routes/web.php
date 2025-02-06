@@ -38,6 +38,7 @@ Route::post('/confirm/order', [indexController::class, 'confirmOrder'])->name('c
 
 //SearchProduct
 Route::post('/product/search', [indexController::class, 'productSearch'])->name('product.search');
+Route::get('/mobile/product/search', [indexController::class, 'mobileProductSearch'])->name('mobile.product.search');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     // Route::get('/user', [Usercontroller::class, 'home'])->name('home');
