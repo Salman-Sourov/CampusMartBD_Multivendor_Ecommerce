@@ -58,15 +58,15 @@
         <div class="row">
             <div class="col-12">
                 <div class="breadscrumb-contain">
-                    <h2>Sign In</h2>
+                    <h2>Register</h2>
                     <nav>
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item">
-                                <a href="index.html">
+                                <a href="">
                                     <i class="fa-solid fa-house"></i>
                                 </a>
                             </li>
-                            <li class="breadcrumb-item active">Sign In</li>
+                            <li class="breadcrumb-item active">Register</li>
                         </ol>
                     </nav>
                 </div>
@@ -87,7 +87,7 @@
             <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
                 <div class="log-in-box">
                     <div class="log-in-title">
-                        <h3>Welcome To Fastkart</h3>
+                        <h3>Welcome To Elhaam BD</h3>
                         <h4>Create New Account</h4>
                     </div>
 
@@ -152,29 +152,9 @@
                         <h6>or</h6>
                     </div>
 
-                    <div class="log-in-button">
-                        <ul>
-                            <li>
-                                <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" class="btn google-button w-100">
-                                    <img src="{{ asset('frontend') }}/assets/images/inner-page/google.png" class="blur-up lazyloaded" alt="">
-                                    Sign up with Google
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.facebook.com/" class="btn google-button w-100">
-                                    <img src="{{ asset('frontend') }}/assets/images/inner-page/facebook.png" class="blur-up lazyloaded" alt=""> Sign up with Facebook
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="other-log-in">
-                        <h6></h6>
-                    </div>
-
                     <div class="sign-up-box">
                         <h4>Already have an account?</h4>
-                        <a href="login.html">Log In</a>
+                        <a href="{{ route('login') }}">Log In</a>
                     </div>
                 </div>
             </div>

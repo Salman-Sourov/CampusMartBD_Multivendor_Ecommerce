@@ -1,6 +1,6 @@
 <nav class="sidebar">
     <div class="sidebar-header">
-        <a href="{{ route('admin.home') }}" class="sidebar-brand">
+        <a href="{{ url('/') }}" class="sidebar-brand" target="_blank">
             Elhaam<span>BD</span>
         </a>
     </div>
@@ -98,8 +98,8 @@
 
             {{-- Attribute --}}
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#attribute" role="button" aria-expanded="false"
-                    aria-controls="attribute">
+                <a class="nav-link" data-bs-toggle="collapse" href="#attribute" role="button"
+                    aria-expanded="false" aria-controls="attribute">
                     <i class="link-icon" data-feather="sliders"></i>
                     <span class="link-title">Attribute</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>

@@ -66,7 +66,6 @@ class indexController extends Controller
         return view('frontend.brand_detail', compact('categories', 'brands', 'products', 'brand_name', 'brand_product', 'carts'));
     }
 
-
     public function productDetails($id)
     {
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();

@@ -24,7 +24,11 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                @if (isset($featured_products) && $featured_products->count() < 5)
+                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                @else
+                                                    <button type="button" class="btn btn-secondary" disabled>Add</button>
+                                                @endif
                                             </div>
                                             @error('product_id')
                                                 <span class="text-danger">{{ $message }}</span>
