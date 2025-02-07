@@ -9,7 +9,8 @@
                         <div class="card-body">
                             <h6 class="card-title">Add Product</h6>
 
-                            <form method="post" action="{{ route('product.store') }}" id="myForm" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('product.store') }}" id="myForm"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -26,7 +27,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group mb-3">
                                             <label for="banglaInputText" class="form-label">Name in Bangla *</label>
-                                            <input type="text" name="product_name_bangla" class="form-control" 
+                                            <input type="text" name="product_name_bangla" class="form-control"
                                                 id="banglaInputText" value="{{ old('product_name_bangla') }}">
                                             @error('product_name_bangla')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -53,7 +54,8 @@
                                                 <!-- Options will be dynamically populated here -->
                                                 @foreach ($brands as $brand)
                                                     {{-- <option value="{{ $brand->id }}">{{ $brand->name }}</option> --}}
-                                                    <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                                    <option value="{{ $brand->id }}"
+                                                        {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
                                                         {{ $brand->name }}
                                                     </option>
                                                 @endforeach
@@ -74,7 +76,7 @@
                                                 @foreach ($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     {{-- <option value="{{ $category->id }}" {{ old('category_id') ==  $category->id ? 'selected' : ''}}> --}}
-                                                        {{ $category->name }}
+                                                    {{ $category->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -399,15 +401,12 @@
     {{-- Bangla Language --}}
     <script src="{{ asset('backend/assets/js/bangla.js') }}"></script>
     <script>
-        $('#banglaInputText').bangla({
-            enable: true
+        $(document).ready(function() {
+            // Initialize Bangla input plugin once
+            $('#banglaInputText').bangla({
+                enable: true
+            });
+            $('#banglaInputText').bangla('on');
         });
-        $('#banglaInputText').bangla('on');
-
-        $('#banglaInputText').bangla({
-            enable: true
-        });
-        $('#banglaInputText').bangla('on');
     </script>
-
 @endsection

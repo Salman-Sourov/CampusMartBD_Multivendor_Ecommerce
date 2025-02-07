@@ -14,6 +14,7 @@ use App\Models\Product_with_attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class indexController extends Controller
 {
@@ -74,6 +75,16 @@ class indexController extends Controller
         $carts = session()->get('cart');
 
         $selected_product = Product::with('multi_images', 'attribute_set',)->findOrFail($id);
+
+        // Generate the slug from the product's name
+        // $generatedSlug = Str::slug($selected_product->name);
+
+        // // Check if the slug in the URL matches the generated one
+        // if ($slug !== $generatedSlug) {
+        //     // Redirect to the correct URL with the correct slug
+        //     return redirect()->route('product.details', ['id' => $id, 'slug' => $generatedSlug]);
+        // }
+
         $attributes = Product_with_attribute::where('product_id', $id)->first();
 
         $category_product = Product_category_product::with('products', 'category_detail')
@@ -152,14 +163,12 @@ class indexController extends Controller
 
 
             DB::commit();
-            session()->flush();
+            session()->forget('cart'); // only clear the cart data
 
             return response()->json(['success' => true, 'message' => 'Order Confirm Successfully']);
         } catch (\Exception $e) {
 
             DB::rollback();
-
-
 
             return response()->json(['error' => true, 'message' => 'Failed to Order']);
         }
@@ -196,7 +205,8 @@ class indexController extends Controller
         // Return the view with the search results
         return view('frontend.product_search', compact('categories', 'brands', 'products', 'carts', 'query'));
     }
-    public function mobileProductSearch(){
+    public function mobileProductSearch()
+    {
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
         $brands = Brand::with('translations')->where('status', 'active')->get();
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->inRandomOrder()->latest()->get();

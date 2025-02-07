@@ -38,7 +38,7 @@
                             </div>
                             <div class="profile-box">
                                 <div class="cover-image">
-                                    <img src="{{ asset('frontend/assets/images/inner-page/cover-img.jpg') }}"
+                                    <img src="{{ asset('frontend/assets/images/banner/empotech_bd_banner_1.1.jpg') }}"
                                         class="img-fluid blur-up lazyload" alt="">
                                 </div>
 
@@ -264,14 +264,14 @@
                                                                                     @endphp
 
                                                                                     @if ($attributes->count() > 0)
-                                                                                        @foreach ($attributes as $attribute)
-                                                                                            <td class="font-primary">
+                                                                                        <td class="font-primary">
+                                                                                            @foreach ($attributes as $attribute)
                                                                                                 {{ $attribute->title }}
                                                                                                 @if (!$loop->last)
                                                                                                     -
                                                                                                 @endif
-                                                                                            </td>
-                                                                                        @endforeach
+                                                                                            @endforeach
+                                                                                        </td>
                                                                                     @else
                                                                                         <td>No Variation</td>
                                                                                     @endif
@@ -290,6 +290,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <hr>
                                             @endforeach
                                         @else
                                             <p>No order available</p>

@@ -526,15 +526,13 @@
     {{-- Bangla Language --}}
     <script src="{{ asset('backend/assets/js/bangla.js') }}"></script>
     <script>
-        $('#banglaInputText').bangla({
-            enable: true
+        $(document).ready(function() {
+            // Initialize Bangla input plugin once
+            $('#banglaInputText').bangla({
+                enable: true
+            });
+            $('#banglaInputText').bangla('on');
         });
-        $('#banglaInputText').bangla('on');
-
-        $('#banglaInputText').bangla({
-            enable: true
-        });
-        $('#banglaInputText').bangla('on');
     </script>
 
 @endsection

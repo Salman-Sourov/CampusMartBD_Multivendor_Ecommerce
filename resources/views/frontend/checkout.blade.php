@@ -122,11 +122,11 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
+                                        <th>Img</th>
                                         <th>Name</th>
                                         <th>Price</th>
                                         <th>Qty</th>
-                                        <th>Attribute</th>
+                                        <th>Att.</th>
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>

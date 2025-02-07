@@ -9,7 +9,7 @@
             <div class="row g-4">
                 <div class="col-xl-9 col-lg-8">
                     <div class="home-contain h-100">
-                        <img src="{{ asset('frontend') }}/assets/images/veg-2/banner/empotech_bd_banner_1.jpg"
+                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_1.jpg"
                             class="bg-img blur-up lazyload" alt="">
                         <div class="home-detail p-center-left w-75 position-relative mend-auto">
                             <div>
@@ -28,7 +28,7 @@
 
                 <div class="col-xl-3 col-lg-4 d-lg-inline-block d-none ratio_156">
                     <div class="home-contain h-100">
-                        <img src="{{ asset('frontend') }}/assets/images/veg-2/banner/empotech_bd_banner_3.jpg"
+                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_3.jpg"
                             class="bg-img blur-up lazyload" alt="">
                         <div class="home-detail p-top-left home-p-sm w-75">
                             <div>
@@ -118,7 +118,7 @@
                 <div class="col-12">
                     <div class="banner-contain">
                         <div class="banner-contain hover-effect">
-                            <img src="{{ asset('frontend') }}/assets/images/vegetable/empotech_bd_banner_4.jpg"
+                            <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_4.jpg"
                                 class="bg-img blur-up lazyload" alt="">
                             <div class="banner-details p-center p-sm-4 p-3 text-white text-center">
                                 <div>
@@ -211,7 +211,7 @@
                     <br>
                     <br>
                     <div class="offer-box hover-effect">
-                        <img src="{{ asset('frontend') }}/assets/images/vegetable/empotech_bd_banner_5.jpg"
+                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_5.jpg"
                             class="bg-img blur-up lazyload" alt="">
                         <div class="offer-contain p-4">
                             <div class="offer-detail" style="color: white; text-align: center;">
@@ -297,7 +297,7 @@
                     <div class="position-sticky top-0">
                         <div class="ratio_209 rounded wow fadeIn">
                             <div class="banner-contain-2 rounded hover-effect">
-                                <img src="{{ asset('frontend') }}/assets/images/vegetable/empotech_bd_banner_6.jpg"
+                                <img src="{{ asset('frontend') }}/assets/images/banner/right_banner.jpg"
                                     class="bg-img blur-up lazyload" alt="">
                                 <div class="banner-detail p-top-left">
                                     <div>
