@@ -149,6 +149,22 @@ input[type="radio"]:checked + .attribute-label {
     line-height: 1.5em; /* Adjust based on font size */
 }
 
+.fixed-size {
+    height: 600px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures images maintain a good aspect ratio */
+}
+
+.carousel-item {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.carousel-item.active {
+    transform: translateX(0);
+    opacity: 1;
+}
+
 
 @media print {
     .cart-table th, .cart-table td {

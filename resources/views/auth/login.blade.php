@@ -59,7 +59,7 @@
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
-                                    <a href="index.html">
+                                    <a href="{{ route('index') }}">
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>

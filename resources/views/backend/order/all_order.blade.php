@@ -14,6 +14,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
+                                        <th>Order ID</th>
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Address</th>
@@ -29,6 +30,7 @@
                                         @foreach ($orders as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
+                                                <td>#elhaambd{{ $item->id }}</td>
                                                 <td>{{ $item->name }}</td>
                                                 <td>{{ $item->phone }}</td>
                                                 <td>{{ $item->address }}</td>
@@ -40,7 +42,7 @@
                                                         {{ 'Cash On Delivery' }}
                                                     @endif
                                                 </td>
-                                                <td>{{ $item->created_at->timezone('Asia/Dhaka')->format('F d, Y h:i A') }}</td>
+                                                <td>{{ $item->created_at->timezone('Asia/Dhaka')->format('g:i A | j M Y') }}</td>
                                                 <td>
                                                     @if ($item->status == 'Processing')
                                                         <span class="badge rounded-pill bg-success">Processing</span>

@@ -7,20 +7,48 @@
     <section class="home-section pt-2">
         <div class="container-fluid-lg">
             <div class="row g-4">
+
                 <div class="col-xl-9 col-lg-8">
-                    <div class="home-contain h-100">
-                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_1.jpg"
-                            class="bg-img blur-up lazyload" alt="">
-                        <div class="home-detail p-center-left w-75 position-relative mend-auto">
+                    <div id="bannerCarousel" class="carousel slide home-contain h-100 position-relative"
+                        data-bs-ride="carousel">
+
+                        <!-- Carousel Indicators (Dots) -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('frontend/assets/images/banner/empotech_bd_banner_1.jpg') }}"
+                                    class="d-block w-100 bg-img blur-up lazyload fixed-size" alt="Banner 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_1.2.jpeg"
+                                    class="d-block w-100 bg-img blur-up lazyload fixed-size" alt="Banner 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_1.1.jpg"
+                                    class="d-block w-100 bg-img blur-up lazyload fixed-size" alt="Banner 3">
+                            </div>
+                        </div>
+
+                        <!-- Text Overlay (remains fixed) -->
+                        <div
+                            class="home-detail p-center-left w-75 position-absolute top-50 start-0 translate-middle-y ps-4">
                             <div>
                                 <h6>Exclusive offer</h6>
-                                <h1 class="w-75 text-uppercase poster-1">Stay home & delivered your <span
-                                        class="daily">Daily Needs</span></h1>
-                                <p class="w-58 d-none d-sm-block">Many organizations have issued official
-                                    statements encouraging people to reduce their intake of sugary drinks.</p>
-                                {{-- <button onclick="location.href = 'shop-left-sidebar.html';"
-                                    class="btn btn-animation mt-xxl-4 mt-2 home-button mend-auto">Shop Now <i
-                                        class="fa-solid fa-right-long ms-2 icon"></i></button> --}}
+                                <h1 class="w-75 text-uppercase poster-1">Stay home & delivered your
+                                    <span class="daily">Daily Needs</span>
+                                </h1>
+                                <p class="w-58 d-none d-sm-block">
+                                    Many organizations have issued official statements encouraging people to reduce their
+                                    intake of sugary drinks.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -360,4 +388,26 @@
         </div>
     </section> --}}
     <!-- Newsletter Section End -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let carousel = document.querySelector("#bannerCarousel");
+            let items = carousel.querySelectorAll(".carousel-item");
+
+            carousel.addEventListener("slide.bs.carousel", function(event) {
+                let activeItem = items[event.from];
+                let nextItem = items[event.to];
+
+                // Move out the previous slide
+                activeItem.style.transform = "translateX(-100%)";
+                activeItem.style.opacity = "0";
+
+                // Move in the next slide
+                nextItem.style.transform = "translateX(0)";
+                nextItem.style.opacity = "1";
+            });
+        });
+    </script>
+
 @endsection

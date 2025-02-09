@@ -321,17 +321,17 @@
                     <!-- Banner Section -->
                     <div class="ratio_156 pt-25">
                         <div class="home-contain">
-                            <img src="{{ asset('frontend') }}/assets/images/veg-2/banner/empotech_bd_banner_3.jpg"
+                            <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_3_1.jpg"
                                 class="bg-img blur-up lazyload" alt="">
                             <div class="home-detail p-top-left home-p-medium">
                                 <div>
-                                    <h6 class="text-yellow home-banner">Seafood</h6>
+                                    <h6 class="text-black home-banner">Honey</h6>
                                     <h3 class="text-uppercase fw-normal"><span class="theme-color fw-bold">Freshes</span>
                                         Products</h3>
                                     <h3 class="fw-light">every hour</h3>
-                                    <button onclick="location.href = 'shop-left-sidebar.html';"
+                                    {{-- <button onclick="location.href = 'shop-left-sidebar.html';"
                                         class="btn btn-animation btn-md fw-bold mend-auto">Shop Now <i
-                                            class="fa-solid fa-arrow-right icon"></i></button>
+                                            class="fa-solid fa-arrow-right icon"></i></button> --}}
                                 </div>
                             </div>
                         </div>

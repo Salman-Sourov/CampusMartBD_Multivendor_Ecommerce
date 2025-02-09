@@ -20,7 +20,6 @@ class OrderController extends Controller
 
     public function orderDetails(string $id)
     {
-
         $orders = Order::with('product')->findOrFail($id);
         // dd($orders);
         return view('backend.order.order_details', compact('orders'));
