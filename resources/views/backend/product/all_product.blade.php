@@ -64,10 +64,11 @@
                                                     <i data-feather="edit"></i>
                                                 </a>
 
-                                                <a href="javascript:void(0);" class="btn btn-outline-danger btn-sm"
+                                                <a href="javascript:void(0);" class="delete-btn btn btn-outline-danger btn-sm"
                                                     data-id="{{ $item->id }}" title="Delete">
                                                     <i data-feather="trash-2"></i>
                                                 </a>
+                                                
 
                                                 <a href="{{ route('get.stock', $item->id) }}"
                                                     class="btn btn-outline-primary btn-sm mx-2" title="Variant & Stock">Variant & Stock

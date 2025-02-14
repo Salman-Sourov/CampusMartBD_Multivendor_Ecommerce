@@ -217,8 +217,6 @@
         </div>
     </div>
 
-
-
     {{-- Store Category --}}
     <script type="text/javascript">
         function StoreCategory() {

@@ -86,7 +86,7 @@ class ProductController extends Controller
                 'thumbnail' => $request->file('thumbnail') ? $directory . $imageName : null,
                 // 'sku' => $sku,
                 'quantity' => $request->quantity,
-                'is_featured' => $request->has('is_featured') ? 0 : 1,
+                'is_featured' => 0,
                 'brand_id' => $request->brand_id,
                 'is_variation' => $request->has('is_variation') ? 0 : 1,
                 'price' => $request->price,
@@ -217,7 +217,7 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required|string|max:255',
             'quantity' => 'required|integer',
-            'price' => 'required|numeric',
+            // 'price' => 'required|numeric',
             'sale_price' => 'required|numeric',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
@@ -369,7 +369,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Product Successfully Deleted'
+            'message' => 'Product Successfully Inactive'
         ]);
     }
 

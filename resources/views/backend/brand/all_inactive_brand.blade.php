@@ -55,6 +55,7 @@
                                                         data-id="{{ $item->id }}" data-action="delete">
                                                         <i data-feather="trash"></i>
                                                     </a>
+                                                    
 
                                                 </td>
                                             </tr>
@@ -152,8 +153,8 @@
             e.preventDefault(); // Prevent the default behavior
             var id = $(this).data('id'); // Get the data-id from the button
             var url = '{{ route('brand.delete', ':id') }}';
-            url = url.replace(":id", id); // Replace placeholder with actual ID
-
+            url = url.replace(':id', id); // Replace placeholder with actual ID
+    
             // SweetAlert confirmation popup
             Swal.fire({
                 title: 'Are you sure?',
@@ -180,19 +181,16 @@
                                     response.message,
                                     'success'
                                 );
-
+    
                                 // Find the specific row (tr) and fade it out, then remove it
                                 $('#brandTableBody tr').each(function() {
-                                    var rowId = $(this).data(
-                                    'id'); // Get the row's data-id
+                                    var rowId = $(this).data('id'); // Get the row's data-id
                                     if (rowId == id) {
                                         $(this).fadeOut(500, function() {
-                                            $(this)
-                                        .remove(); // Remove the item after fading out
+                                            $(this).remove(); // Remove the item after fading out
                                         });
                                     }
                                 });
-
                                 toastr.success('Deleted Successfully.');
                             } else {
                                 toastr.error('Failed to delete the item.');
@@ -207,5 +205,6 @@
             });
         });
     </script>
+    
 
 @endsection

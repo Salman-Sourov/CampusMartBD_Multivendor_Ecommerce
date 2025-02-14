@@ -51,27 +51,29 @@
                                         @endif
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="select-language">
-                                        {{-- English Language Option --}}
-                                        <li>
-                                            <a href="{{ route('lang.change', 'en') }}"
-                                                class="dropdown-item {{ App::getLocale() == 'en' ? 'active' : '' }}"
-                                                id="english">
-                                                <img src="{{ asset('frontend/assets/images/country/united-states.png') }}"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                                <span>English</span>
-                                            </a>
-                                        </li>
-
-                                        {{-- Bangla Language Option --}}
-                                        <li>
-                                            <a href="{{ route('lang.change', 'bn') }}"
-                                                class="dropdown-item {{ App::getLocale() == 'bn' ? 'active' : '' }}"
-                                                id="bangla">
-                                                <img src="{{ asset('frontend/assets/images/country/Bangladesh.png') }}"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                                <span>বাংলা</span>
-                                            </a>
-                                        </li>
+                                        @if (App::getLocale() == 'bn')
+                                            {{-- English Language Option --}}
+                                            <li>
+                                                <a href="{{ route('lang.change', 'en') }}"
+                                                    class="dropdown-item {{ App::getLocale() == 'en' ? 'active' : '' }}"
+                                                    id="english">
+                                                    <img src="{{ asset('frontend/assets/images/country/united-states.png') }}"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                    <span>English</span>
+                                                </a>
+                                            </li>
+                                        @else
+                                            {{-- Bangla Language Option --}}
+                                            <li>
+                                                <a href="{{ route('lang.change', 'bn') }}"
+                                                    class="dropdown-item {{ App::getLocale() == 'bn' ? 'active' : '' }}"
+                                                    id="bangla">
+                                                    <img src="{{ asset('frontend/assets/images/country/Bangladesh.png') }}"
+                                                        class="img-fluid blur-up lazyload" alt="">
+                                                    <span>বাংলা</span>
+                                                </a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </li>
@@ -309,7 +311,8 @@
                                         <li class="onhover-category-list">
                                             <a href="{{ route('category.details', $category->id) }}"
                                                 class="category-name">
-                                                <img src="{{ asset($category->image) }}" alt="">
+                                                <img src="{{ asset($category->image && file_exists(public_path($category->image)) ? $category->image : 'upload/category/no_category.png') }}"
+                                                    alt="category_image">
 
                                                 @if (App::getLocale() == 'en')
                                                     <h6>{{ $category->name }}</h6>
@@ -339,8 +342,10 @@
                                                                 <li>
                                                                     <a
                                                                         href="{{ route('category.details', $child->id) }}">
-                                                                        <img src="{{ asset($child->image) }}"
-                                                                            alt="">
+                                                                        {{-- <img src="{{ asset($child->image) }}"
+                                                                            alt=""> --}}
+                                                                        <img src="{{ asset($child->image && file_exists(public_path($child->image)) ? $child->image : 'upload/category/no_category.png') }}"
+                                                                            alt="category_image">
                                                                         @if (App::getLocale() == 'en')
                                                                             <h6>{{ $child->name }}</h6>
                                                                         @else

@@ -339,7 +339,6 @@
         </div>
       </div>
     </div> <!-- row --> --}}
-
         </div>
 
 @endsection

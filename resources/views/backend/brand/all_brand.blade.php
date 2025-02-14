@@ -21,7 +21,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="addBrandForm" method="POST" action="" class="forms-sample"
-                        onsubmit="event.preventDefault(); StoreBrand();">
+                            onsubmit="event.preventDefault(); StoreBrand();">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="name" class="form-label">Name *</label>
@@ -116,8 +116,7 @@
                                                     {{-- <button type="button" class="btn btn-inverse-danger"
                                                         data-id="{{ $item->id }}" id="delete">Delete</button> --}}
 
-                                                    <a href="javascript:void(0);"
-                                                        class="btn btn-inverse-danger delete-btn"
+                                                    <a href="javascript:void(0);" class="btn btn-inverse-danger delete-btn"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
                                                     </a>
 
@@ -203,44 +202,45 @@
 
 
 
-{{-- Store Brand --}}
-<script type="text/javascript">
-    function StoreBrand() {
-        var formData = new FormData(document.getElementById('addBrandForm'));
+    {{-- Store Brand --}}
+    <script type="text/javascript">
+        function StoreBrand() {
+            var formData = new FormData(document.getElementById('addBrandForm'));
 
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('brand.store') }}',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                //console.log(data); // Check the success response in the console
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('brand.store') }}',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    //console.log(data); // Check the success response in the console
 
-                if (data.success) {
-                    $('#addModal').modal('hide'); // Close modal
-                    toastr.success(data.message);
-                    setTimeout(function() {
-                        window.location.reload(); // Reload the page to see the new brand
-                    }, 1500);
+                    if (data.success) {
+                        $('#addModal').modal('hide'); // Close modal
+                        toastr.success(data.message);
+                        setTimeout(function() {
+                            window.location.reload(); // Reload the page to see the new brand
+                        }, 1500);
 
-                    $('#addBrandForm')[0].reset(); // Reset the correct form
-                } else {
-                    for (let field in data.errors) {
-                        $('#' + field + '_error').text(data.errors[field][0]); // Show validation error messages
+                        $('#addBrandForm')[0].reset(); // Reset the correct form
+                    } else {
+                        for (let field in data.errors) {
+                            $('#' + field + '_error').text(data.errors[field][
+                            0]); // Show validation error messages
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr); // Log the error for debugging
+                    const errors = xhr.responseJSON.errors;
+                    for (let field in errors) {
+                        $('#' + field + '_error').text(errors[field][0]); // Show validation errors
                     }
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr); // Log the error for debugging
-                const errors = xhr.responseJSON.errors;
-                for (let field in errors) {
-                    $('#' + field + '_error').text(errors[field][0]); // Show validation errors
-                }
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
     {{-- Preview Image --}}
     <script type="text/javascript">
@@ -363,13 +363,14 @@
                                     response.message,
                                     'success'
                                 );
-                            
-                                    toastr.success('Deleted Successfully.');
-                                    setTimeout(function() {
-                                        window.location.reload(); // Reload the page to see the new brand
-                                    }, 1500);// Reload the page after successful deletion
-                                
-                                 // Delay the reload to show the message
+
+                                toastr.success('Deleted Successfully.');
+                                setTimeout(function() {
+                                    window.location
+                                .reload(); // Reload the page to see the new brand
+                                }, 1500); // Reload the page after successful deletion
+
+                                // Delay the reload to show the message
                             } else {
                                 toastr.error('Failed to delete the brand.');
                             }
@@ -397,84 +398,5 @@
         });
         $('#edit_banglaInputText').bangla('on');
     </script>
-
-
-    {{-- Change Status --}}
-    {{-- <script type="text/javascript">
-        $(function() {
-            $('.toggle-class').click(function() {
-                // console.log('hello');
-                var $this = $(this); // Assign the clicked button to a variable
-                var status = $this.attr('data-status'); // Get the current data-status via .attr()
-                var brand_id = $this.data('id'); // Assuming data-id doesn't need to change dynamically
-
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '/brand/changeStatus',
-                    data: {
-                        'status': status,
-                        'brand_id': brand_id,
-                        '_token': '{{ csrf_token() }}' // Add CSRF token if necessary
-                    },
-                    success: function(data) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-
-                        if ($.isEmptyObject(data.error)) {
-                            Toast.fire({
-                                type: 'success',
-                                title: data.success,
-                            });
-
-                            // Update button class, icon, and status text based on the returned status
-                            var $statusSpan = $this.closest('tr').find(
-                                '.status-span'); // Find the status text element
-
-                            if (data.status === 'inactive') {
-                                // Update classes for inactive status
-                                $this.removeClass('btn-inverse-success').addClass(
-                                    'btn-inverse-danger');
-                                // Update Feather icon for inactive status
-                                $this.find('i').attr('data-feather', 'toggle-right');
-                                // Update the status text to 'inactive'
-                                $statusSpan.removeClass('bg-success').addClass('bg-danger')
-                                    .text('inactive');
-                            } else {
-                                // Update classes for active status
-                                $this.removeClass('btn-inverse-danger').addClass(
-                                    'btn-inverse-success');
-                                // Update Feather icon for active status
-                                $this.find('i').attr('data-feather', 'toggle-left');
-                                // Update the status text to 'active'
-                                $statusSpan.removeClass('bg-danger').addClass('bg-success')
-                                    .text('active');
-                            }
-
-                            // Update the button's data-status using .attr()
-                            $this.attr('data-status', data.status);
-
-                            // Ensure that Feather icons are re-rendered after the DOM change
-                            feather.replace();
-
-                            location.reload();
-
-                        } else {
-                            Toast.fire({
-                                type: 'error',
-                                title: data.error,
-                            });
-                        }
-                    }
-                }); // End of Ajax
-            });
-        });
-    </script> --}}
-
 
 @endsection

@@ -95,7 +95,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
     Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
     Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
-    Route::delete('/delete-stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stock.destroy');
+    Route::delete('/delete/stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stocks.destroy');
     Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
     Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
 

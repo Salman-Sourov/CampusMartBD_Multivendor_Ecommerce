@@ -203,23 +203,28 @@ class BrandController extends Controller
     } // End Method
 
     public function brandDelete(Request $request, $id)
-    {
-        $brand = Brand::find($id);
+{
+    $brand = Brand::find($id);
 
+    if ($brand) {
+        // Check if logo exists and delete the file
         if (file_exists(public_path($brand->logo)) && !empty($brand->logo)) {
-            unlink(public_path($brand->logo));
-
-            $brand->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Brand deleted successfully.'
-            ]);
+            unlink(public_path($brand->logo)); // Delete logo file
         }
 
+        // Delete the brand record
+        $brand->delete();
+
         return response()->json([
-            'success' => false,
-            'message' => 'Brand not found.'
+            'success' => true,
+            'message' => 'Brand deleted successfully.'
         ]);
     }
+
+    return response()->json([
+        'success' => false,
+        'message' => 'Brand not found.'
+    ]);
+}
+
 }

@@ -1,51 +1,7 @@
 @extends('admin.admin_dashboard')
 @section('admin')
+
     <div class="page-content">
-
-        {{-- Variant --}}
-        {{-- <nav class="page-breadcrumb">
-            <ol class="breadcrumb">
-                <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
-                    Add Variant
-                </button>
-            </ol>
-        </nav> --}}
-
-        <!-- Add Variant-->
-        {{-- <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Add Variant</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addStockForm" method="POST" action="" class="forms-sample"
-                            onsubmit="event.preventDefault(); StoreStock();">
-                            @csrf
-                            <input type="hidden" name="product_id" value={{ $product_id->id }}>
-                            <div class="form-group mb-3">
-                                <label for="category" class="form-label">Attribute Set</label>
-                                <select name="attribute_set" class="form-control" id="attribute_set"
-                                    onChange="attributeChange()">
-                                    <option value="">Select Attribute Set</option>
-                                    <!-- Options will be dynamically populated here -->
-                                    @foreach ($attributeSets as $attributeSet)
-                                        <option value="{{ $attributeSet->id }}">{{ $attributeSet->title }}</option>
-                                    @endforeach
-                                </select>
-                                <span id="attribute_set_error" class="text-danger"></span>
-                                <!-- Error message placeholder -->
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Add Variant</button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
         {{-- ALL Variant --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
@@ -103,16 +59,6 @@
             </div>
         </div>
 
-
-        {{-- Variant Wise Stock --}}
-        {{-- <nav class="page-breadcrumb">
-            <ol class="breadcrumb">
-                <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
-                    Add Variant
-                </button>
-            </ol>
-        </nav> --}}
-
         {{-- ALL Variant Wise Stock --}}
         <div class="row">
             <!-- Full-width Section for Title and Button -->
@@ -120,7 +66,7 @@
                 <div class="card">
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <h6 class="card-title">
-                            Add Variant Wise Stock of - {{ $product_id->name }}
+                            Variant Wise Stock of - {{ $product_id->name }}
                         </h6>
                         <button type="button" class="btn btn-danger delete-btns" data-id="{{ $product_id->id ?? '' }}">
                             Delete All Variant
@@ -485,7 +431,7 @@
         $(document).on('click', '.delete-btns', function(e) {
             e.preventDefault();
             var id = $(this).data('id'); // Get the data-id from the button
-            var url = '{{ route('stock.destroy', ':id') }}';
+            var url = '{{ route('stocks.destroy', ':id') }}';
             url = url.replace(':id', id); // Ensure id is correctly replaced
 
             // SweetAlert confirmation popup

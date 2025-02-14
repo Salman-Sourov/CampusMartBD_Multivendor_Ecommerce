@@ -191,12 +191,9 @@
                                             </a>
                                         </div>
                                     </div>
-                                    @if ($product->stock_status == 'stock_out')
-                                        <h5 style="color: red;">Stock Out</h5>
-                                    @endif
+
                                     <div class="product-footer">
                                         <div class="product-detail">
-
                                             <span
                                                 class="span-name">{{ $product->categories->category_detail->name }}</span>
 
@@ -275,13 +272,15 @@
                                             </a>
                                         </div>
                                     </div>
-                                    @if ($product->stock_status == 'stock_out')
-                                        <h5 style="color: red;">Stock Out</h5>
-                                    @endif
+
                                     <div class="product-footer">
                                         <div class="product-detail">
-                                            <span
-                                                class="span-name">{{ $product->categories->category_detail->name }}</span>
+                                            @if ($product->stock_status == 'stock_out')
+                                            <h5 class="span-name" style="color: red; font-weight: 600;">Stock Out</h5>
+                                        @else
+                                            <span class="span-name">{{ $product->categories->category_detail->name }}</span>
+                                        @endif
+                                        
                                             <a href="{{ route('product.details', $product->id) }}">
                                                 <h5 class="product_name">
                                                     @if (App::getLocale() == 'en')
@@ -304,10 +303,15 @@
                                                 <br> <br>
                                             </h5>
                                             <div class="add-to-cart-box">
-                                                <a href="{{ route('product.details', $product->id) }}">
-                                                    <button class="btn btn-sm btn-animation">Buy Now</button>
-                                                </a>
+                                                @if ($product->stock_status == 'stock_out')
+                                                    <button type="button" class="btn btn-sm btn-animation disabled" disabled>Buy Now</button>
+                                                @else
+                                                    <a href="{{ route('product.details', $product->id) }}">
+                                                        <button type="button" class="btn btn-sm btn-animation">Buy Now</button>
+                                                    </a>
+                                                @endif
                                             </div>
+                                            
                                         </div>
                                     </div>
 
