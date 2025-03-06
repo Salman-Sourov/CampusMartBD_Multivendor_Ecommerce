@@ -43,8 +43,6 @@
                                 </div>
 
                                 <div class="profile-contain">
-
-
                                     <div class="profile-name">
                                         <h3>{{ $auth->name ?? '' }}</h3>
                                         <h6 class="text-content">{{ $auth->email ?? '' }}</h6>
@@ -66,20 +64,15 @@
                                         aria-controls="pills-order" aria-selected="false"><i
                                             data-feather="shopping-bag"></i>Order</button>
                                 </li>
-
-
-
-
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-xxl-9 col-lg-8">
-                        <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">Show
-                            Menu</button>
                         <div class="dashboard-right-sidebar">
                             <div class="tab-content" id="pills-tabContent">
-
+                                <button class="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">Show
+                                    Menu</button>
                                 <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel"
                                     aria-labelledby="pills-dashboard-tab">
                                     <div class="dashboard-home">
@@ -98,7 +91,6 @@
                                             <div class="col-xxl-12">
                                                 <form method="POST" action="">
                                                     @csrf
-
                                                     <!-- Phone Number -->
                                                     <div class="form-floating theme-form-floating mb-3">
                                                         <input type="text" name="phone" class="form-control"
@@ -162,7 +154,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="tab-pane fade show" id="pills-order" role="tabpanel"
                                     aria-labelledby="pills-order-tab">
@@ -307,3 +298,35 @@
         </section>
         <!-- User Dashboard Section End -->
     @endsection
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let sidebar = document.querySelector(".dashboard-left-sidebar");
+            let showMenuBtn = document.querySelector(".left-dashboard-show");
+            let closeMenuBtn = document.querySelector(".close-sidebar");
+            let sidebarLinks = document.querySelectorAll(".user-nav-pills .nav-link");
+    
+            // Show Sidebar
+            if (showMenuBtn) {
+                showMenuBtn.addEventListener("click", function () {
+                    sidebar.classList.add("active");
+                });
+            }
+    
+            // Close Sidebar
+            if (closeMenuBtn) {
+                closeMenuBtn.addEventListener("click", function () {
+                    sidebar.classList.remove("active");
+                });
+            }
+    
+            // Close Sidebar when clicking any sidebar link
+            sidebarLinks.forEach(link => {
+                link.addEventListener("click", function () {
+                    sidebar.classList.remove("active");
+                });
+            });
+        });
+    </script>
+    
+    
