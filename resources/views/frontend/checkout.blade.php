@@ -182,16 +182,15 @@
 
                                                 </td>
                                             @else
-                                                <td class="attribute">No Attribute</td>
+                                                <td class="attribute">X</td>
                                             @endif
-
 
                                             <td class="subtotal">৳ {{ $cart['price'] * $cart['quantity'] }}</td>
                                             <td class="remove close_button">
-                                                <a class="" data-id={{ $key }}
-                                                    onclick="closeCart()">Remove</a>
+                                                <a class="" data-id="{{ $key }}" onclick="closeCart()">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>                                                
                                             </td>
-
                                         </tr>
                                         @php
                                             $total_price = $total_price + $cart['price'] * $cart['quantity'];

@@ -105,9 +105,6 @@ input[type="radio"]:checked + .attribute-label {
     text-overflow: ellipsis; /* Adds ellipsis (...) for overflow text */
 }
 
-
-
-
 .cart-table table {
     width: 100% !important;
     border-collapse: collapse !important;

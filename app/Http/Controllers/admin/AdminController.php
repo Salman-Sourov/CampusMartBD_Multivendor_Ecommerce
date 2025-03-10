@@ -6,14 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Models\Product;
 
 class AdminController extends Controller
 {
     public function adminHome()
     {
-        return view('admin.index');
+        $users = User::all();
+        $orders = Order::all();
+        $products = Product::all();
+        $revenue = Order::sum('total_cost'); // Assuming 'total' is the column for order total
+        $monthlySales = Order::whereMonth('created_at', date('m'))->sum('total_cost'); // Assuming 'created_at' is the order date
+
+        return view('admin.index', compact('users', 'orders', 'products', 'revenue', 'monthlySales'));
     }
 
     public function AdminProfile()

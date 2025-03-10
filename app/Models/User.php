@@ -23,7 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
-
+        'address', // Added address to fillable attributes
     ];
 
     /**
