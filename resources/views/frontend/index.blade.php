@@ -3,12 +3,12 @@
     @php
         use Illuminate\Support\Str;
     @endphp
+
     <!-- Home Section Start -->
     <section class="home-section pt-2">
         <div class="container-fluid-lg">
             <div class="row g-4">
-
-                <div class="col-xl-9 col-lg-8">
+                <div class="col-xl-9 col-lg-8 col-md-12">
                     <div id="bannerCarousel" class="carousel slide home-contain h-100 position-relative"
                         data-bs-ride="carousel">
 
@@ -74,7 +74,6 @@
         </div>
     </section>
     <!-- Home Section End -->
-
 
     <!-- Category Section Start -->
     <section>
