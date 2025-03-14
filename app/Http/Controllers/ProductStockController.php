@@ -25,7 +25,7 @@ class ProductStockController extends Controller
 
         $variants = Product_with_attribute::where('product_id', $id)->get();
 
-        //dd($variants);
+        // dd($attributes);
         return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants', 'attributes'));
     }
 

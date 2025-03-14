@@ -169,7 +169,6 @@ class ProductController extends Controller
                 'message' => 'Product Successfully Added',
                 'alert-type' => 'success'
             );
-
             return back()->with($notification);
         } catch (\Exception $e) {
 
@@ -179,7 +178,6 @@ class ProductController extends Controller
                 'message' => 'Failed to store product',
                 'alert-type' => 'error',
             );
-
             return back()->with($notification);
         }
     }

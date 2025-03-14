@@ -16,13 +16,19 @@ class AttributeController extends Controller
     public function index()
     {
         $attribute_sets = Product_attribute_set::where('status', 'active')
-            ->with(['attributes' => function ($active_attributes) {
-                $active_attributes->where('status', 'active');
-            }])->get();
+            ->with(['attributes' => function ($query) {
+                $query->where('status', 'active')
+                    ->orderByRaw('CAST(title AS UNSIGNED) ASC') // Ensures numeric sorting
+                    ->orderBy('title', 'asc'); // Fallback for non-numeric values
+            }])
+            ->orderByRaw('CAST(title AS UNSIGNED) ASC') // Ensures numeric sorting for attribute sets
+            ->orderBy('title', 'asc') // Fallback for non-numeric values
+            ->get();
 
-        // dd($attributes);
         return view("backend.attribute.all_attribute", compact("attribute_sets"));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,7 +48,7 @@ class AttributeController extends Controller
 
         $request->validate([
             'attribute_set_id' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:product_attributes,title',
             // 'color' => 'nullable|string|max:255',
         ]);
 
