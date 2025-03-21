@@ -10,7 +10,7 @@
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
-                                    <a href="index.html">
+                                    <a href="#">
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>
@@ -22,7 +22,6 @@
             </div>
         </div>
     </section>
-
 
     <section class="section-b-space shop-section">
         <div class="container-fluid-lg">
@@ -44,8 +43,6 @@
                                 </div>
 
                                 <div class="top-filter-menu">
-
-
                                     <div class="grid-option d-none d-md-block">
                                         <ul>
                                             <li class="three-grid">
@@ -74,8 +71,7 @@
                                 </div>
                             </div>
 
-                            <div
-                                class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                            <div class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                                 @forelse ($brand_product as $product)
                                     <div>
                                         <div class="product-box-3 h-100 wow fadeInUp">
@@ -118,18 +114,20 @@
                                                     <div class="add-to-cart-box">
                                                         <a href="{{ route('product.details', $product->id) }}">
                                                             <button class="btn btn-sm btn-animation">Buy Now</button>
-                                                        </a> 
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 @empty
-                                    <!-- No products available -->
+                                    <p>No products available</p>
                                 @endforelse
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </section>
 @endsection

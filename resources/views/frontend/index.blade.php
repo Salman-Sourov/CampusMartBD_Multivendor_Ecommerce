@@ -275,11 +275,12 @@
                                     <div class="product-footer">
                                         <div class="product-detail">
                                             @if ($product->stock_status == 'stock_out')
-                                            <h5 class="span-name" style="color: red; font-weight: 600;">Stock Out</h5>
-                                        @else
-                                            <span class="span-name">{{ $product->categories->category_detail->name }}</span>
-                                        @endif
-                                        
+                                                <h5 class="span-name" style="color: red; font-weight: 600;">Stock Out</h5>
+                                            @else
+                                                <span
+                                                    class="span-name">{{ $product->categories->category_detail->name }}</span>
+                                            @endif
+
                                             <a href="{{ route('product.details', $product->id) }}">
                                                 <h5 class="product_name">
                                                     @if (App::getLocale() == 'en')
@@ -296,21 +297,24 @@
                                                 $get_brand = App\Models\Brand::where('id', $product->brand_id)->first();
                                             @endphp
                                             <h6 class="unit">{{ $get_brand->name ?? 'No Brand' }}</h6>
-                                            <h5 class="price"><span class="theme-color">৳
-                                                    {{ $product->sale_price }}</span>
-                                                <del>৳ {{ $product->price }}</del>
-                                                <br> <br>
-                                            </h5>
+                                            <h5 class="price mb-2">
+                                                <span class="theme-color">৳ {{ $product->sale_price }}</span>
+                                                @if ($product->price)
+                                                    <del>৳ {{ $product->price }}</del>
+                                                @endif
+                                            </h5>                                            
                                             <div class="add-to-cart-box">
                                                 @if ($product->stock_status == 'stock_out')
-                                                    <button type="button" class="btn btn-sm btn-animation disabled" disabled>Buy Now</button>
+                                                    <button type="button" class="btn btn-sm btn-animation disabled"
+                                                        disabled>Buy Now</button>
                                                 @else
                                                     <a href="{{ route('product.details', $product->id) }}">
-                                                        <button type="button" class="btn btn-sm btn-animation">Buy Now</button>
+                                                        <button type="button" class="btn btn-sm btn-animation">Buy
+                                                            Now</button>
                                                     </a>
                                                 @endif
                                             </div>
-                                            
+
                                         </div>
                                     </div>
 

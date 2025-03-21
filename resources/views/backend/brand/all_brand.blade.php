@@ -1,7 +1,6 @@
 @extends('admin.admin_dashboard')
 @section('admin')
 
-
     <div class="page-content">
         <nav class="page-breadcrumb">
             <ol class="breadcrumb">
@@ -60,7 +59,6 @@
                 </div>
             </div>
         </div>
-
 
         {{-- ALL brand --}}
         <div class="row">
@@ -139,7 +137,6 @@
         </div>
     </div>
 
-
     <!-- Edit Brand Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -200,8 +197,6 @@
         </div>
     </div>
 
-
-
     {{-- Store Brand --}}
     <script type="text/javascript">
         function StoreBrand() {
@@ -227,7 +222,8 @@
                     } else {
                         for (let field in data.errors) {
                             $('#' + field + '_error').text(data.errors[field][
-                            0]); // Show validation error messages
+                                0
+                            ]); // Show validation error messages
                         }
                     }
                 },
@@ -367,7 +363,7 @@
                                 toastr.success('Deleted Successfully.');
                                 setTimeout(function() {
                                     window.location
-                                .reload(); // Reload the page to see the new brand
+                                        .reload(); // Reload the page to see the new brand
                                 }, 1500); // Reload the page after successful deletion
 
                                 // Delay the reload to show the message

@@ -87,11 +87,15 @@
                         <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="right-box-contain">
                                 @php
-                                    $Per_Price =
-                                        (($selected_product->price - $selected_product->sale_price) /
-                                            $selected_product->price) *
-                                        100;
+                                    $Per_Price = 0; // Default value to avoid errors
+                                    if ($selected_product->price > 0) {
+                                        $Per_Price =
+                                            (($selected_product->price - $selected_product->sale_price) /
+                                                $selected_product->price) *
+                                            100;
+                                    }
                                 @endphp
+
                                 <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
 
                                 @if (App::getLocale() == 'en')
@@ -354,7 +358,7 @@
                     </svg>
                 </span>
             </div>
-            
+
             <div class="row">
                 <div class="col-12">
                     <div class="slider-6_1 product-wrapper">
