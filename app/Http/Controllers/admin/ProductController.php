@@ -8,13 +8,14 @@ use App\Models\Product;
 use App\Models\Product_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\product_translation;
+use App\Models\Product_translation;
 use App\Models\Product_category_product;
 use App\Models\Multi_image;
 use App\Models\Product_with_multi_image;
 use App\Models\Videos;
 use App\Models\Product_with_videos;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 

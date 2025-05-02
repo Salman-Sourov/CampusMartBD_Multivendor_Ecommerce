@@ -80,7 +80,7 @@
         <div class="row">
             <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
                 <div class="image-contain">
-                    <img src="{{ asset('frontend') }}/assets/images/inner-page/sign-up.png" class="img-fluid" alt="">
+                    <img src="{{ asset('frontend') }}/assets/images/sign-up.png" class="img-fluid" alt="">
                 </div>
             </div>
 
