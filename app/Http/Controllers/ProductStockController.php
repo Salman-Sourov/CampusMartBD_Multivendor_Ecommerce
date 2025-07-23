@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product_attribute_set;
 use App\Models\Product_attribute_wise_stock;
-use App\Models\product_with_attribute;
+use App\Models\Product_with_attribute;
 use App\Models\Product_with_attribute_set;
 use Illuminate\Http\Request;
 use App\Models\Product;
