@@ -8,9 +8,9 @@
     <meta name="description" content="Fastkart">
     <meta name="keywords" content="Fastkart">
     <meta name="author" content="Fastkart">
-    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/ElhaamBD_logo_Fav_icon.png"
+    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/CampusMartBD_logo_Fav_icon.png"
         type="image/x-icon">
-    <title>Elhaam BD</title>
+    <title>Campus Mart BD</title>
 
     <!-- Google font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">

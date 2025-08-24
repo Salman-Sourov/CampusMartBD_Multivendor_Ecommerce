@@ -7,8 +7,8 @@
                         <div class="service-contain">
                             <div class="service-box">
                                 <div class="service-image">
-                                    <img src="{{ asset('frontend') }}/assets/svg/product.svg"
-                                        class="blur-up lazyload" alt="">
+                                    <img src="{{ asset('frontend') }}/assets/svg/product.svg" class="blur-up lazyload"
+                                        alt="">
                                 </div>
 
                                 <div class="service-detail">
@@ -18,8 +18,8 @@
 
                             <div class="service-box">
                                 <div class="service-image">
-                                    <img src="{{ asset('frontend') }}/assets/svg/delivery.svg"
-                                        class="blur-up lazyload" alt="">
+                                    <img src="{{ asset('frontend') }}/assets/svg/delivery.svg" class="blur-up lazyload"
+                                        alt="">
                                 </div>
 
                                 <div class="service-detail">
@@ -29,8 +29,8 @@
 
                             <div class="service-box">
                                 <div class="service-image">
-                                    <img src="{{ asset('frontend') }}/assets/svg/discount.svg"
-                                        class="blur-up lazyload" alt="">
+                                    <img src="{{ asset('frontend') }}/assets/svg/discount.svg" class="blur-up lazyload"
+                                        alt="">
                                 </div>
 
                                 <div class="service-detail">
@@ -40,8 +40,8 @@
 
                             <div class="service-box">
                                 <div class="service-image">
-                                    <img src="{{ asset('frontend') }}/assets/svg/market.svg"
-                                        class="blur-up lazyload" alt="">
+                                    <img src="{{ asset('frontend') }}/assets/svg/market.svg" class="blur-up lazyload"
+                                        alt="">
                                 </div>
 
                                 <div class="service-detail">
@@ -59,7 +59,7 @@
                         <div class="footer-logo">
                             <div class="theme-logo">
                                 <a href="{{ route('index') }}">
-                                    <img src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
+                                    <img src="{{ asset('frontend') }}/assets/images/logo/CampusMartBD.png"
                                         class="blur-up lazyload" alt="">
                                 </a>
                                 {{-- <a href="{{ url('/') }}" class="web-logo nav-logo">
@@ -69,18 +69,21 @@
                             </div>
 
                             <div class="footer-logo-contain">
-                                <p>Welcome to ElhaamBD!
-                                    Your go-to for quality products, great prices, and exceptional service.
-                                    We prioritize convenience, sustainability, and a seamless shopping experience. Shop confidently—your satisfaction is our mission!</p>
+                                <p>Welcome to CampusMartBD!
+                                    CampusMartBD.com is a student-focused multivendor eCommerce platform, empowering
+                                    young entrepreneurs to showcase and sell their products.
+                                    A proud product of <a href="https://www.empotechbd.com" target="_blank"
+                                        style="color: #9e0344; text-decoration: none;">Empotech BD</a>.</p>
                                 <ul class="address">
                                     <li>
                                         <i data-feather="home"></i>
-                                        <a href="javascript:void(0)">House 36, Road-5, Block B, Banasree, <br> Rampura, Dhaka, Bangladesh,1219
+                                        <a href="javascript:void(0)">Block B, Banasree, <br> Rampura,
+                                            Dhaka, Bangladesh,1219
                                         </a>
                                     </li>
                                     <li>
                                         <i data-feather="mail"></i>
-                                        <a href="javascript:void(0)">support@elhaambd.com </a>
+                                        <a href="javascript:void(0)">support@campusmartbd.com</a>
                                     </li>
                                 </ul>
                             </div>
@@ -96,7 +99,8 @@
                             <ul>
                                 @forelse ($categories as $category)
                                     <li>
-                                        <a href="{{ route('category.details', $category->id) }}" class="text-content">{{ $category->name }}</a>
+                                        <a href="{{ route('category.details', $category->id) }}"
+                                            class="text-content">{{ $category->name }}</a>
                                     </li>
                                 @empty
                                     <!-- You can display a message if no categories are available -->
@@ -104,7 +108,7 @@
                                 @endforelse
                             </ul>
                         </div>
-                        
+
                     </div>
 
                     <div class="col-xl col-lg-2 col-sm-3">
@@ -170,18 +174,18 @@
                                     <div class="footer-number">
                                         <i data-feather="phone"></i>
                                         <div class="contact-number">
-                                            <h6 class="text-content">Hotline 24/7 :</h6>
-                                            <h5><a href="tel:+8801791586242">01791586242</a></h5>
+                                            <h6 class="text-content">Any Queries? Call Us!</h6>
+                                            <h5><a href="tel:+8801521406205">01521406205</a></h5>
                                         </div>
                                     </div>
-                                </li>                                
+                                </li>
 
                                 <li>
                                     <div class="footer-number">
                                         <i data-feather="mail"></i>
                                         <div class="contact-number">
                                             <h6 class="text-content">Email Address :</h6>
-                                            <h5>support@elhaambd.com</h5>
+                                            <h5>support@campusmartbd.com</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -211,29 +215,34 @@
 
             <div class="sub-footer section-small-space">
                 <div class="reserve">
-                    <h6 class="text-content">Developed by <strong><a href="https://www.empotechbd.com" target="_blank" style="color: #007bff; text-decoration: none;">Empotech BD</a></strong></h6>
+                    <h6 class="text-content">
+                        © 2025 <strong>Campus Mart BD</strong> | All Rights Reserved
+                    </h6>
                 </div>
 
-                {{-- <div class="payment">
-                    <img src="{{ asset('frontend') }}/assets/images/payment/1.png" class="blur-up lazyload"
-                        alt="">
-                </div> --}}
+                <div class="payment">
+                    <h6 class="text-content">
+                        Powered by <strong><a href="https://www.empotechbd.com" target="_blank"
+                                style="color: #7e0478; text-decoration: none;">Empotech BD</a></strong> — Your Trusted
+                        Tech Partner
+                    </h6>
+                </div>
 
                 <div class="social-link">
                     <h6 class="text-content">Stay connected :</h6>
                     <ul>
                         <li>
-                            <a href="https://www.facebook.com/elhaambd42" target="_blank">
+                            <a href="https://www.facebook.com/empotechbdofficial" target="_blank">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.linkedin.com/company/elhaambd/?viewAsMember=true" target="_blank">
+                            <a href="https://www.facebook.com/empotechbdofficial" target="_blank">
                                 <i class="fa-brands fa-linkedin"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="https://www.facebook.com/empotechbdofficial" target="_blank">
                                 <i class="fa-brands fa-instagram"></i>
                             </a>
                         </li>

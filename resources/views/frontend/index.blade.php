@@ -41,35 +41,44 @@
                         <div
                             class="home-detail p-center-left w-75 position-absolute top-50 start-0 translate-middle-y ps-4">
                             <div>
-                                <h6>Exclusive offer</h6>
-                                <h1 class="w-75 text-uppercase poster-1">Stay home & delivered your
-                                    <span class="daily">Daily Needs</span>
+                                <h6>Shop Smart. Stay Safe.</h6>
+                                <h1 class="w-75 text-uppercase poster-1">Get Your Daily Needs Delivered to 
+                                    <span class="daily">Campus</span>
                                 </h1>
                                 <p class="w-58 d-none d-sm-block">
-                                    Many organizations have issued official statements encouraging people to reduce their
-                                    intake of sugary drinks.
+                                    Your Campus, Your Marketplace – From Students, For Students <br> Empowering Students to Shop, Sell, and Support Locally
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-lg-4 d-lg-inline-block d-none ratio_156">
-                    <div class="home-contain h-100">
-                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_3.jpg"
-                            class="bg-img blur-up lazyload" alt="">
-                        <div class="home-detail p-top-left home-p-sm w-75">
+                <div class="col-xl-3 col-lg-4 d-lg-inline-block d-none d-flex flex-column">
+                    <!-- First Banner -->
+                    <div class="home-contain h-50 mb-1">
+                        <img src="{{ asset('frontend/assets/images/banner/empotech_bd_banner_3.jpg') }}"
+                            class="bg-img blur-up lazyload" alt="Banner 1">
+                        <div class="home-detail p-top-left home-p-sm w-90">
                             <div>
-                                <h2 class="mt-0 text-danger">45% <span class="discount text-title">OFF</span>
-                                </h2>
-                                <h3 class="theme-color">Real Refresement</h3>
-                                <h5 class="text-content">Only this week, Don't miss..</h5>
-                                {{-- <a href="shop-left-sidebar.html" class="shop-button">Shop Now <i
-                                        class="fa-solid fa-right-long ms-2"></i></a> --}}
+                                <h2 class="mt-0 text-danger">0% <span class="discount text-title">Delivery Charge</span></h2>
+                                <h5 class="text-content fw-bold">Coming Soon to Every Campus in Bangladesh</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Second Banner -->
+                    <div class="home-contain h-50">
+                        <img src="{{ asset('frontend/assets/images/banner/empotech_bd_banner_3_2.jpg') }}"
+                            class="bg-img blur-up lazyload" alt="Banner 2">
+                        <div class="home-detail p-top-left home-p-sm w-90">
+                            <div>
+                                <h3 class="theme-color">Become a seller?</h3>
+                                <h5 class="text-content">Register Today & Grow Your Business on CampusMartBD...</h5>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -137,7 +146,6 @@
     </section>
     <!-- Category Section End -->
 
-
     <!-- Discount Section Start -->
     <section>
         <div class="container-fluid-lg">
@@ -145,12 +153,12 @@
                 <div class="col-12">
                     <div class="banner-contain">
                         <div class="banner-contain hover-effect">
-                            <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_4.jpg"
+                            <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_4_1.jpg"
                                 class="bg-img blur-up lazyload" alt="">
                             <div class="banner-details p-center p-sm-4 p-3 text-white text-center">
                                 <div>
-                                    <h3 class="lh-base fw-bold text-light">Look Good, Feel Good – Shop Here!</h3>
-                                    <h6 class="coupon-code">Your stisfaction is our priority</h6>
+                                    <h3 class="lh-base fw-bold text-light">Be Your Own Boss Sell at Your Campus</h3>
+                                    <h6 class="coupon-code">From Students, For Students</h6>
                                 </div>
                             </div>
                         </div>
@@ -235,15 +243,14 @@
                     <br>
                     <br>
                     <div class="offer-box hover-effect">
-                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_5.jpg"
+                        <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_5_1.jpg"
                             class="bg-img blur-up lazyload" alt="">
                         <div class="offer-contain p-4">
-                            <div class="offer-detail" style="color: white; text-align: center;">
-                                <h2 class="text-dark" style="color: white !important;">Special Offers
-                                    <span class="text-danger fw-bold" style="color: white !important;">of the week!</span>
+                            <div class="offer-detail" style="color: #023c42; text-align: center;">
+                                <h2 class="text-dark" style="color: #023c42 !important;">Turn Ideas
+                                    <span class="text-danger fw-bold" style="color: #023c42 !important;">into Income!</span>
                                 </h2>
-                                <p class="text-content" style="color: white !important;">Special offer on this week, Hurry
-                                    Up!</p>
+                                <p class="text-content fw-bold" style="color: #023c42 !important;">Start selling on CampusMartBD and grow your business today!</p>
                             </div>
                         </div>
                     </div>
@@ -302,7 +309,7 @@
                                                 @if ($product->price)
                                                     <del>৳ {{ $product->price }}</del>
                                                 @endif
-                                            </h5>                                            
+                                            </h5>
                                             <div class="add-to-cart-box">
                                                 @if ($product->stock_status == 'stock_out')
                                                     <button type="button" class="btn btn-sm btn-animation disabled"
@@ -332,16 +339,15 @@
                     <div class="position-sticky top-0">
                         <div class="ratio_209 rounded wow fadeIn">
                             <div class="banner-contain-2 rounded hover-effect">
-                                <img src="{{ asset('frontend') }}/assets/images/banner/right_banner.jpg"
+                                <img src="{{ asset('frontend') }}/assets/images/banner/campus_mart_bd_right_banner.jpg"
                                     class="bg-img blur-up lazyload" alt="">
                                 <div class="banner-detail p-top-left">
                                     <div>
-                                        <h6 class="text-uppercase theme-color fw-500">Leather Item</h6>
+                                        <h6 class="text-uppercase theme-color fw-500 mb-3">Campus Mart BD</h6>
                                         <h3 class="text-uppercase">
-                                            special <span class="brand-name">brand</span>
+                                            shop <span class="brand-name">campus</span>
                                         </h3>
-                                        <p class="text-content fw-500 mt-3 lh-lg">Special offer on the discount very
-                                            hungry cake and sweets</p>
+                                        <p class="text-content fw-500 mt-3 lh-lg">Shop Campus-Exclusive Deals, Anytime, Anywhere. Shop Smart,Save More.</p>
 
                                         <div class="banner-detail-box banner-detail-box-2 mb-md-3 mb-1">
                                             <h4 class="text-uppercase">up to</h4>
@@ -366,35 +372,6 @@
     </section>
     <!-- Product Section End -->
 
-    <!-- Newsletter Section Start -->
-    {{-- <section class="newsletter-section section-b-space">
-        <div class="container-fluid-lg">
-            <div class="newsletter-box newsletter-box-2">
-                <div class="newsletter-contain py-5">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-xxl-4 col-lg-5 col-md-7 col-sm-9 offset-xxl-2 offset-md-1">
-                                <div class="newsletter-detail">
-                                    <h2>Join our newsletter and get...</h2>
-                                    <h5>$20 discount for your first order</h5>
-                                    <div class="input-box">
-                                        <input type="email" class="form-control" id="exampleFormControlInput1"
-                                            placeholder="Enter Your Email">
-                                        <i class="fa-solid fa-envelope arrow"></i>
-                                        <button class="sub-btn btn">
-                                            <span class="d-sm-block d-none">Subscribe</span>
-                                            <i class="fa-solid fa-arrow-right icon"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-    <!-- Newsletter Section End -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>

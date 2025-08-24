@@ -6,7 +6,7 @@
                     <div class="col-xxl-3 d-xxl-block d-none">
                         <div class="top-left-header">
                             <i class="iconly-Location icli text-white"></i>
-                            <span class="text-white">Dhaka, Bangladesh</span>
+                            <span class="text-white">All campuses in Bangladesh</span>
                         </div>
                     </div>
 
@@ -15,18 +15,16 @@
                             <div class="notification-slider">
                                 <div>
                                     <div class="timer-notification">
-                                        <h6><strong class="me-1">Welcome to Elhaam BD. </strong>Wrap new
-                                            offers/gift.
-
+                                        <h6><strong class="me-1">Welcome to Campus Mart BD. </strong>Empowering Campus Entrepreneurs
+                                            with Quality Products</h6> 
                                         </h6>
                                     </div>
                                 </div>
 
                                 <div>
                                     <div class="timer-notification">
-                                        <h6>Something you love is now on sale!
-                                            <a href="{{ url('/') }}" class="text-white">Buy Now
-                                                !</a>
+                                        <h6>Your Campus, Your Marketplace | Discover, Support, and Shop Student Creations
+                                            <a href="{{ url('/') }}" class="text-white">Buy Now!</a>
                                         </h6>
                                     </div>
                                 </div>
@@ -96,7 +94,7 @@
                                 </span>
                             </button>
                             <a href="{{ url('/') }}" class="web-logo nav-logo">
-                                <img src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png"
+                                <img src="{{ asset('frontend') }}/assets/images/logo/CampusMartBD.png"
                                     class="img-fluid blur-up lazyload" alt="">
                             </a>
 
@@ -145,13 +143,13 @@
                                         </div>
                                     </li>
                                     <li class="right-side">
-                                        <a href="tel:+8801791586242" class="delivery-login-box">
+                                        <a href="tel:+8801521406205" class="delivery-login-box">
                                             <div class="delivery-icon">
                                                 <i data-feather="phone-call"></i>
                                             </div>
                                             <div class="delivery-detail">
-                                                <h6>24/7 Delivery</h6>
-                                                <h5>+8801791586242</h5>
+                                                <h6>Any Queries? Call Us!</h6>
+                                                <h5>+880 1521 406205</h5>
                                             </div>
                                         </a>
                                     </li>
