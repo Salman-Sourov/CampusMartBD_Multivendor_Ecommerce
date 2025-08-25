@@ -15,15 +15,17 @@
                             <div class="notification-slider">
                                 <div>
                                     <div class="timer-notification">
-                                        <h6><strong class="me-1">Welcome to Campus Mart BD. </strong>Empowering Campus Entrepreneurs
-                                            with Quality Products</h6> 
+                                        <h6><strong class="me-1">Welcome to Campus Mart BD. </strong>Empowering Campus
+                                            Entrepreneurs
+                                            with Quality Products</h6>
                                         </h6>
                                     </div>
                                 </div>
 
                                 <div>
                                     <div class="timer-notification">
-                                        <h6>Your Campus, Your Marketplace | Discover, Support, and Shop Student Creations
+                                        <h6>Your Campus, Your Marketplace | Discover, Support, and Shop Student
+                                            Creations
                                             <a href="{{ url('/') }}" class="text-white">Buy Now!</a>
                                         </h6>
                                     </div>
@@ -385,9 +387,9 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                                                    data-bs-toggle="dropdown">{{ __('content.brands') }}</a>
-
+                                                <a class="nav-link" href="{{ route('all.shops') }}">
+                                                    {{ __('content.shops') }}
+                                                </a>
                                                 <ul class="dropdown-menu">
                                                     @forelse ($brands as $brand)
                                                         <li>
@@ -410,34 +412,9 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="javascript:void(0)"
-                                                    data-bs-toggle="dropdown">{{ __('content.product') }}</a>
-
-                                                @php
-                                                    use Illuminate\Support\Str;
-                                                @endphp
-
-                                                <ul class="dropdown-menu">
-                                                    @forelse ($products->take(5) as $product)
-                                                        <li>
-                                                            @if (App::getLocale() == 'en')
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('product.details', $product->id) }}">
-                                                                    {{ Str::limit($product->name, 20) }}
-                                                                </a>
-                                                            @else
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('product.details', $product->id) }}">
-                                                                    {{ Str::limit($product->translations->name, 25) }}
-                                                                </a>
-                                                            @endif
-
-                                                        </li>
-                                                    @empty
-                                                        <li class="dropdown-item text-muted">No Products available</li>
-                                                    @endforelse
-                                                </ul>
-
+                                                <a class="nav-link" href="{{ route('all.shops') }}">
+                                                    {{ __('content.product') }}
+                                                </a>
                                             </li>
 
                                             <li class="nav-item dropdown">
@@ -446,9 +423,15 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
+                                                <a class="nav-link" style="color: red; font-weight: 600;" href="{{ url('/') }}">
+                                                    {{ __('content.seller') }}
+                                                </a>
+                                            </li>
+
+                                            {{-- <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)"
                                                     data-bs-toggle="dropdown">{{ __('content.blog') }}</a>
-                                            </li>
+                                            </li> --}}
                                         </ul>
                                     </div>
                                 </div>

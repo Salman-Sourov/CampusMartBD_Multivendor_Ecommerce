@@ -2,7 +2,8 @@
 
 return [
     'home' => 'Home',
-    'brands' => 'Brands',
+    // 'brands' => 'Brands',
+    'shops' => 'Shops',
     'product' => 'Product',
     'about' => 'About us',
     'blog' => 'Blog',
@@ -12,6 +13,7 @@ return [
     'for_you' => 'For & You',
     'search' => 'I am searching for...',
     'Subcat' => 'Subcategories',
+    'seller' => 'Become a Seller',
 ];
 
 ?>

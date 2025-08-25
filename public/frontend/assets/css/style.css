@@ -2019,7 +2019,7 @@ input[type=number]::-webkit-outer-spin-button {
 .fullpage-loader span {
     width: 6vmin;
     height: 6vmin;
-    background-color: rgb(233, 9, 147);
+    background-color: rgb(3, 141, 111);
     border-radius: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
