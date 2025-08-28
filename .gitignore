@@ -29,7 +29,3 @@ Homestead.json
 Homestead.yaml
 auth.json
 .qodo
-
-# Database (Hide real structure)
-#/database/migrations/
-#/database/seeders/
