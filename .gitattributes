@@ -1,11 +1,23 @@
-* text=auto eol=lf
-
-*.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
-*.php diff=php
-
-/.github export-ignore
-CHANGELOG.md export-ignore
-.styleci.yml export-ignore
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+.env
+.env.*
+!env.example
+/.phpunit.cache
+/.phpunit.result.cache
+/.idea
+/.vscode
+/.fleet
+*.log
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db
+Homestead.json
+Homestead.yaml
+auth.json
+.qodo

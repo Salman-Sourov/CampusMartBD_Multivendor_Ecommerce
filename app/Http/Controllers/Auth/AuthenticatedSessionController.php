@@ -43,6 +43,9 @@ class AuthenticatedSessionController extends Controller
         } elseif ($request->user()->role === 'user') {
             $url = '/user-dashboard';
         }
+        else{
+            $url = '/user-dashboard';
+        }
 
         return redirect()->intended($url)->with($notification);
     }
