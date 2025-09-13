@@ -268,14 +268,6 @@
                                                         <a href="{{ route('register') }}">Register</a>
                                                     </li>
                                                 @endguest
-
-
-                                                {{-- <li class="product-box-contain">
-                                                        <a href="forgot.html">Forgot Password</a>
-                                                    </li> --}}
-
-
-
                                             </ul>
                                         </div>
                                     </li>
@@ -423,7 +415,7 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link" style="color: red; font-weight: 600;" href="{{ url('/') }}">
+                                                <a class="nav-link" style="color: red; font-weight: 600;" href="{{ route('agentregister.show') }}">
                                                     {{ __('content.seller') }}
                                                 </a>
                                             </li>

@@ -26,7 +26,11 @@ Route::get('/brand-details/{id}', [indexController::class, 'brandDetails'])->nam
 Route::get('/shops', [indexController::class, 'shops'])->name('all.shops');
 Route::get('/product-details/{id}', [indexController::class, 'productDetails'])->name('product.details');
 
-Route::post('/agent/register', [AgentController::class, 'AgentRegister'])->name('agent.register');
+// Show agent register form
+Route::get('/agent/register/', [AgentController::class, 'AgentRegisterShow'])->name('agentregister.show');
+// Handle agent registration
+Route::post('/agent/register/store', [AgentController::class, 'AgentRegister'])->name('agentregister.store');
+
 
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
