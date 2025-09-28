@@ -60,16 +60,7 @@
                                     style="max-width: 200px; display: none;">
                             </div>
 
-                            {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
-                                <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
-                                    <input type="checkbox" name="is_featured" class="form-check-input" id="is_featured">
-                                    <label class="form-check-label" for="is_featured">
-                                        Featured Category
-                                    </label>
-                                </div>
-                            </div> --}}
-
-                            <button type="submit" class="btn btn-primary">Add Category</button>
+                            <button type="submit" class="btn btn-primary">Add Sub Category</button>
                         </form>
 
                     </div>

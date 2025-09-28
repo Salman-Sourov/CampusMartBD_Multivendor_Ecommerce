@@ -49,8 +49,6 @@ class ProductController extends Controller
         // dd('hello');
         $request->validate([
             'product_name' => 'required|string|max:255',
-            'product_name_bangla' => 'required|string|max:255',
-            'brand_id' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'quantity' => 'required|integer',
@@ -77,10 +75,10 @@ class ProductController extends Controller
                 $image->move($directory, $imageName);
             }
 
-            // $sku = $request->sku ?? $this->generateSku($request->product_name, $request->category_id);
-
             $product = Product::create([
+                'agent_id' => Auth::User()->id,
                 'name' => $request->product_name,
+                'slug' => strtolower(str_replace('', '-', $request->name)),
                 'description' => $request->description,
                 'content' => $request->short_content,
                 'status' => 'active',
@@ -88,7 +86,7 @@ class ProductController extends Controller
                 // 'sku' => $sku,
                 'quantity' => $request->quantity,
                 'is_featured' => 0,
-                'brand_id' => $request->brand_id,
+                'brand_id' => '0',
                 'is_variation' => $request->has('is_variation') ? 0 : 1,
                 'price' => $request->price,
                 'sale_price' => $request->sale_price,
@@ -98,7 +96,6 @@ class ProductController extends Controller
                 'wide' => $request->wide,
                 'height' => $request->height,
                 'weight' => $request->weight,
-                'created_by_id' => Auth::User()->id,
             ]);
 
             product_translation::create([
@@ -106,7 +103,6 @@ class ProductController extends Controller
                 'lang_code' => 'bn',
                 'products_id' => $product->id,
             ]);
-            // dd($request->all());
 
             // Handle sub_category_id
             if ($request->filled('sub_category_id')) {
@@ -184,7 +180,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource. 
+     * Display the specified resource.
      */
     public function show(string $id) {}
 
@@ -247,6 +243,7 @@ class ProductController extends Controller
 
             // Update product details
             $product->name = $request->product_name;
+            $product->slug = strtolower(str_replace('', '-', $request->name));
             $product->description = $request->description;
             $product->content = $request->short_content;
             $product->quantity = $request->quantity;
@@ -262,7 +259,7 @@ class ProductController extends Controller
             $product->wide = $request->wide;
             $product->height = $request->height;
             $product->weight = $request->weight;
-            $product->created_by_id = Auth::id();
+            $product->agent_id = Auth::id();
 
             // Save updated product
             $product->save();
@@ -271,7 +268,7 @@ class ProductController extends Controller
 
             $translation = product_translation::where('products_id', $product->id)->first();
 
-            $translation->name = $request->product_name_bangla;
+            $translation->name = $request->product_name_bangla ?? null;
             $translation->lang_code = 'bn';
             $translation->products_id = $product->id;
             $translation->save();
@@ -456,8 +453,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         //dd($product);
 
-        if($product) {
- 
+        if ($product) {
+
             if (!empty($product->thumbnail) && file_exists(public_path($product->thumbnail))) {
                 unlink(public_path($product->thumbnail));
             }
@@ -480,7 +477,5 @@ class ProductController extends Controller
                 'message' => 'Product deleted successfully.'
             ]);
         }
-
-        
     }
 }

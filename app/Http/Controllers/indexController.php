@@ -29,7 +29,7 @@ class indexController extends Controller
         return view('frontend.index', compact('categories', 'brands', 'products', 'carts', 'featured_products'));
     }
 
-    public function categoryDetails($id)
+    public function categoryDetails($slug)
     {
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
         $brands = Brand::with('translations')->where('status', 'active')->where('status', 'active')->get();
@@ -38,12 +38,11 @@ class indexController extends Controller
 
         $category_product = Product_category::with('translations', 'hasChild', 'totalProducts')
             ->where('status', 'active')  // Filter by active status
-            ->where('id', $id)           // Filter by the specific id
+            ->where('slug', $slug)           // Filter by the specific id
             ->first();
 
-        $category_name = Product_category::findOrFail($id);
-        //dd($category_product);
-        return view('frontend.category_detail', compact('categories', 'brands', 'products', 'category_name', 'category_product', 'carts'));
+        // dd($category_product);
+        return view('frontend.category_detail', compact('categories', 'brands', 'products', 'category_product', 'carts'));
     }
 
     public function brandDetails($id)

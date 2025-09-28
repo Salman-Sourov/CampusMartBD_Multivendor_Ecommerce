@@ -1,4 +1,4 @@
-<title>{{ $category_name->name }} - Elhaam BD</title>
+<title>{{ $category_product->name }} - Elhaam BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
     <section class="breadscrumb-section pt-0">
@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadscrumb-contain">
-                        <h2>{{ $category_name->name }}</h2>
+                        <h2>{{ $category_product->name }}</h2>
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -14,7 +14,7 @@
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ $category_name->name }}</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ $category_product->name }}</li>
                             </ol>
                         </nav>
                     </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
     </section>
-    
+
     <section class="section-b-space shop-section">
         <div class="container-fluid-lg">
             <div class="row">
@@ -75,7 +75,7 @@
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                         @forelse ($category_product->totalProducts as $product)
-                            @if ($category_product->parent_id != null)
+                            {{-- @if ($category_product->parent_id == null) --}}
                                 <div>
                                     <div class="product-box-3 h-100 wow fadeInUp">
                                         <div class="product-header">
@@ -108,7 +108,7 @@
                                                 </a>
                                                 <p class="text-content mt-1 mb-2 product-content">
                                                     {{ $product->products->description }}</p>
-                                                <h6 class="unit">{{ $product->products->brands->name }}</h6>
+                                                {{-- <h6 class="unit">{{ $product->products->brands->name }}</h6> --}}
                                                 <h5 class="price">
                                                     <span class="theme-color">{{ $product->products->sale_price }}</span>
                                                     <del>{{ $product->products->price }}</del>
@@ -121,7 +121,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
                         @empty
                             <p>No products available</p>
                         @endforelse

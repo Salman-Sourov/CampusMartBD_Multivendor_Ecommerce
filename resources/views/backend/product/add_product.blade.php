@@ -24,7 +24,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6">
+                                    {{-- <div class="col-sm-6">
                                         <div class="form-group mb-3">
                                             <label for="banglaInputText" class="form-label">Name in Bangla *</label>
                                             <input type="text" name="product_name_bangla" class="form-control"
@@ -33,9 +33,9 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Product Quantity *</label>
                                             <input type="text" name="quantity" class="form-control"
@@ -46,27 +46,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
-                                        <div class="form-group mb-3">
-                                            <label for="brand" class="form-label">Brand *</label>
-                                            <select name="brand_id" class="form-control" id="brand">
-                                                <option value="">Select a Brand</option>
-                                                <!-- Options will be dynamically populated here -->
-                                                @foreach ($brands as $brand)
-                                                    {{-- <option value="{{ $brand->id }}">{{ $brand->name }}</option> --}}
-                                                    <option value="{{ $brand->id }}"
-                                                        {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
-                                                        {{ $brand->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('brand_id')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group mb-3">
                                             <label for="category" class="form-label">Category *</label>
                                             <select name="category_id" class="form-control" id="category_id"
@@ -86,7 +66,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group mb-3">
                                             <label for="sub_category" class="form-label">Sub Category</label>
                                             <select name="sub_category_id" class="form-control" id="sub_category">
@@ -234,50 +214,9 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-sm-4">
-                                        <label class="form-label">Video Type</label>
-                                        <select name="video_type[]" class="form-control">
-                                            <option value="" disabled selected>Select Video Type</option>
-                                            <option value="youtube">Youtube</option>
-                                            <option value="vimeo">Vimeo</option>
-                                            <!-- Add more options as needed -->
-                                        </select>
-                                    </div><!-- Col -->
-
-                                    <div class="col-sm-8">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Video Link</label>
-                                            <input type="text" name="video_link[]" class="form-control"
-                                                id="">
-
-                                        </div>
-                                    </div><!-- Col --> --}}
-
                                 </div>
 
                                 <hr>
-
-                                {{-- <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group mb-3">
-                                            <div class="form-check form-check-inline me-3">
-                                                <input type="checkbox" name="status" value="1"
-                                                    class="form-check-input" id="status">
-                                                <label class="form-check-label" for="status">Enable Status</label>
-                                            </div>
-                                            <div class="form-check form-check-inline me-3">
-                                                <input type="checkbox" name="is_variation" value="1"
-                                                    class="form-check-input" id="is_variation">
-                                                <label class="form-check-label" for="is_variation">Have Variation</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" name="is_featured" value="1"
-                                                    class="form-check-input" id="is_featured">
-                                                <label class="form-check-label" for="is_featured">Enable Featured</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
                                 <button type="submit" class="btn btn-primary">Save Changes </button>
 

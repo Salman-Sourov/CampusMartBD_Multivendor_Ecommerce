@@ -301,7 +301,7 @@
                                 <ul class="category-list">
                                     @forelse ($categories as $category)
                                         <li class="onhover-category-list">
-                                            <a href="{{ route('category.details', $category->id) }}"
+                                            <a href="{{ route('category.details', $category->slug) }}"
                                                 class="category-name">
                                                 <img src="{{ asset($category->image && file_exists(public_path($category->image)) ? $category->image : 'upload/category/no_category.png') }}"
                                                     alt="category_image">

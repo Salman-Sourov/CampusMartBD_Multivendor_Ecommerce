@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
         <a href="{{ url('/') }}" class="sidebar-brand" target="_blank">
-            Elhaam<span>BD</span>
+            CampusMart<span>BD</span>
         </a>
     </div>
 
@@ -14,10 +14,10 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">Elhaam BD</li>
+            <li class="nav-item nav-category">CampusMart BD</li>
 
             {{-- Brands --}}
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#brand" role="button" aria-expanded="false"
                     aria-controls="brand">
                     <i class="link-icon" data-feather="tag"></i>
@@ -34,7 +34,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
             {{-- Category --}}
             <li class="nav-item">

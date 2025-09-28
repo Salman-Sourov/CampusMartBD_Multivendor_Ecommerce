@@ -121,8 +121,6 @@
                                                         class="btn btn-inverse-danger delete-btn"
                                                         data-id="{{ $item->id }}" title="Delete">Delete
                                                     </a>
-
-
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -178,8 +176,6 @@
                             <span id="edit_description_error" class="text-danger"></span>
                         </div>
 
-
-
                         <div class="form-group mb-3">
                             <label for="edit_image" class="form-label">Image</label>
                             <input class="form-control" name="edit_image" type="file" id="edit_image">
@@ -192,25 +188,7 @@
                                 alt="profile">
                         </div>
 
-                        {{-- <div class="col-9-row d-flex justify-content-start align-items-center mb-3">
-                            <div class="form-check mb-2 me-4"> <!-- Added margin to space between checkboxes -->
-                                <input type="checkbox" name="is_featured" class="form-check-input"
-                                    id="edit_is_featured">
-                                <label class="form-check-label" for="edit_is_featured">
-                                    Featured Category
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input type="checkbox" name="enableSubcat" class="form-check-input"
-                                    id="edit_enableSubcat">
-                                <label class="form-check-label" for="edit_enableSubcat">
-                                    Enable Sub Category
-                                </label>
-                            </div>
-                        </div> --}}
-
-
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                 </div>
             </div>
@@ -221,8 +199,6 @@
     <script type="text/javascript">
         function StoreCategory() {
             var formData = new FormData(document.getElementById('addCategoryForm'));
-
-
 
             $.ajax({
                 type: 'POST',
@@ -271,7 +247,7 @@
         });
     </script>
 
-    {{-- Edit Brand --}}
+    {{-- Edit Category --}}
     <script type="text/javascript">
         function categoryEdit(cat_id) {
             $.ajax({
@@ -305,7 +281,7 @@
         }
     </script>
 
-    {{-- Update Brand --}}
+    {{-- Update Category --}}
     <script type="text/javascript">
         function UpdateCategory() {
             var formData = new FormData(document.getElementById('editCategoryForm'));
@@ -415,7 +391,5 @@
         });
         $('#edit_banglaInputText').bangla('on');
     </script>
-
-
 
 @endsection

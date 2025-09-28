@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('phone')->unique('phone');
             $table->string('password');
             $table->string('role');
+            $table->string('university')->nullable();
+            $table->string('roll')->nullable();
+            $table->string('image', 255)->nullable();
             $table->string('address')->nullable(); // New nullable address field
             $table->rememberToken();
             $table->timestamps();

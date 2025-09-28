@@ -58,6 +58,7 @@ class SubCategoryController extends Controller
         $category = Product_category::create([
             'parent_id' => $request->category_id,
             'name' => $request->name,
+            'slug' => strtolower(str_replace('', '-', $request->name)),
             'description' => $request->description,
             'image' => $request->file('image') ? $directory . $imageName : null,
             'is_featured' => $request->has('is_featured') ? 0 : 1,

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name', 191);
+            $table->string('slug');
+            $table->integer('agent_id')->nullable();
             $table->text('description')->nullable();
             $table->longText('content')->nullable();
             $table->string('status', 60)->nullable();
@@ -36,11 +38,11 @@ return new class extends Migration
             $table->double('weight', 8, 2)->nullable();
             $table->bigInteger('views')->nullable();
             $table->string('stock_status', 191)->nullable();
-            $table->integer('created_by_id')->nullable();
+            // $table->integer('created_by_id')->nullable();
             $table->timestamps();
 
             // Define foreign key constraint
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
+            // $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
         });
     }
 

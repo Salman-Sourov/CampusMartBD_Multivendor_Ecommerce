@@ -50,6 +50,7 @@ class CategoryController extends Controller
 
         $category = Product_category::create([
             'name' => $request->name,
+            'slug' => strtolower(str_replace('', '-', $request->name)),
             'description' => $request->description,
             'image' => $request->file('image') ? $directory . $imageName : null,
             // 'is_featured' => $request->has('is_featured') ? 0 : 1,
@@ -80,7 +81,7 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //dd('hello');
+        // dd('hello');
         $category = Product_category::with('translations')->find($id);
 
         if ($category) {
@@ -133,6 +134,7 @@ class CategoryController extends Controller
         // Update the brand's basic details
         $category->update([
             'name' => $request->edit_name,
+            'slug' => strtolower(str_replace('', '-', $request->edit_name)),
             'description' => $request->edit_description,
             // 'is_featured' => $request->has('is_featured') ? 0 : 1,
             // 'enableSubcat' => $request->has('enableSubcat') ? 0 : 1,

@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
         'phone' => ['required', 'string', 'max:255', 'unique:users,phone'], // Ensure 'phone' uniqueness
         'password' => ['required'],
         ]);
-        
+
 
         $user = User::create([
             'name' => $request->name,

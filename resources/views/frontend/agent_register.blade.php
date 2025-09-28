@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadscrumb-contain">
-                        <h2>Seller Register</h2>
+                        <h2>Seller Registration</h2>
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -13,7 +13,7 @@
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item active">Seller Register</li>
+                                <li class="breadcrumb-item active">Seller Registration</li>
                             </ol>
                         </nav>
                     </div>

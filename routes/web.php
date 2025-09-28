@@ -21,7 +21,7 @@ use App\Http\Controllers\AgentController;
 
 Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
 Route::get('/', [indexController::class, 'index'])->name('index');
-Route::get('/category-details/{id}', [indexController::class, 'categoryDetails'])->name('category.details');
+Route::get('/category-details/{slug}', [indexController::class, 'categoryDetails'])->name('category.details');
 Route::get('/brand-details/{id}', [indexController::class, 'brandDetails'])->name('brand.details');
 Route::get('/shops', [indexController::class, 'shops'])->name('all.shops');
 Route::get('/product-details/{id}', [indexController::class, 'productDetails'])->name('product.details');
