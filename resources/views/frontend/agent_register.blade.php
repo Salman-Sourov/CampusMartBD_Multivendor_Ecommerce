@@ -38,7 +38,7 @@
                             <h4>Sign up as a Seller - CampusMart BD</h4>
                         </div>
 
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('agentregister.store') }}">
                             @csrf
                             <div class="input-box">
                                 <form class="row g-4">
@@ -84,7 +84,7 @@
                                     </div>
 
                                     <!-- University Select -->
-                                    <div class="col-12 mb-3">
+                                    {{-- <div class="col-12 mb-3">
                                         <div class="form-floating theme-form-floating">
                                             <select class="form-select @error('university') is-invalid @enderror"
                                                 name="university" id="university">
@@ -106,10 +106,10 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <!-- University ID Input -->
-                                    <div class="col-12 mb-3">
+                                    {{-- <div class="col-12 mb-3">
                                         <div class="form-floating theme-form-floating">
                                             <input type="text"
                                                 class="form-control @error('university_id') is-invalid @enderror"
@@ -120,8 +120,7 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                    </div>
-
+                                    </div> --}}
 
                                     <!-- Password Input -->
                                     <div class="col-12 mb-4">
@@ -143,7 +142,6 @@
                                 </form>
                             </div>
                         </form>
-
 
                         <div class="other-log-in">
                             <h6>or</h6>

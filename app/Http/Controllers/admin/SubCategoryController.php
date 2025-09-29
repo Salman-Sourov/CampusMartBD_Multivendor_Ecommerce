@@ -14,9 +14,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-
         $categories = Product_category::with('translations')->where('status', 'active')->whereNull('parent_id')->get();
-
         $subcategories = Product_category::with(['translations', 'hasChild'])->where('status', 'active')
             ->whereNotNull('parent_id') // Filter categories that have child categories
             ->get();
@@ -143,13 +141,10 @@ class SubCategoryController extends Controller
             $category->image = $directory . $photoName;
         }
 
-        // Directly set 'is_featured' and 'enableSubcat' based on the request
-        // $category->is_featured = $request->has('edit_is_featured') ? 1 : 0;
-
-
         // Update the category's basic details including the toggled fields
         $category->update([
             'name' => $request->edit_name,
+            'slug' => strtolower(str_replace('', '-', $request->edit_name)),
             'parent_id' => $request->edit_category_id,
             'description' => $request->edit_description,
             // 'is_featured' => $category->is_featured, // Save the updated value of 'is_featured'
@@ -173,13 +168,6 @@ class SubCategoryController extends Controller
     {
         $category = Product_category::findOrFail($id);
         $category->status = 'inactive';
-
-        // Check if the image file exists and delete it
-        // if (file_exists(public_path($category->image)) && !empty($category->image)) {
-        //     unlink(public_path($category->image)); // Delete the image from the server
-        // }
-        // $category->image = null;
-
         $category->save();
         return response()->json([
             'success' => true,
@@ -189,14 +177,11 @@ class SubCategoryController extends Controller
 
     public function subcategoryChangeStatus(Request $request)
     {
-
         $subcategory = Product_category::findOrFail($request->subcategory_id);
-
         if ($subcategory->status == 'inactive') {
             $subcategory->status = 'active';
             $subcategory->save();
         }
-
         // Return updated status
         return response()->json(['success' => 'Status changed successfully']);
         // dd($category);

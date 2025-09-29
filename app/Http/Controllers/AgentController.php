@@ -21,7 +21,15 @@ class AgentController extends Controller
         // dd($products);
         return view('frontend.agent_register', compact('categories', 'brands', 'products', 'carts'));
     }
+
     public function AgentRegister(Request $request){
+
+        $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'], // Ensure 'email' uniqueness
+        'phone' => ['required', 'string', 'max:255', 'unique:users,phone'], // Ensure 'phone' uniqueness
+        'password' => ['required'],
+        ]);
 
         $user = User::create([
             'name' => $request->name,
@@ -38,4 +46,23 @@ class AgentController extends Controller
 
         return redirect(RouteServiceProvider::AGENT);
     }
+
+    public function AgentDashboard() {
+        return view('agent.index');
+    }
+
+    public function AgentLogout(Request $request){
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        $notification = array(
+            'message' => 'Agent Succesfully Logout',
+            'alert-type' => 'success'
+        );
+
+        return redirect('/')->with($notification);
+    }
+
 }

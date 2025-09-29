@@ -128,6 +128,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 }); //End Group Admin Middleware
 
+//Agent Management Group Middleware
+Route::middleware(['auth', 'role:agent'])->group(function () {
+
+    Route::get('/agent/dasboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
+    Route::get('/agent/logout', [AgentController::class, 'AgentLogout'])->name('agent.logout');
+});
 
 
 
