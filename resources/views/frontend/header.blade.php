@@ -383,7 +383,7 @@
                                                     {{ __('content.shops') }}
                                                 </a>
                                                 <ul class="dropdown-menu">
-                                                    @forelse ($brands as $brand)
+                                                    {{-- @forelse ($brands as $brand)
                                                         <li>
                                                             @if (App::getLocale() == 'en')
                                                                 <a class="dropdown-item"
@@ -399,7 +399,7 @@
                                                         </li>
                                                     @empty
                                                         <li class="dropdown-item text-muted">No brands available</li>
-                                                    @endforelse
+                                                    @endforelse --}}
                                                 </ul>
                                             </li>
 

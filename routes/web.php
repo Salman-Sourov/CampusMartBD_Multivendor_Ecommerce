@@ -17,7 +17,7 @@ use App\Http\Controllers\LangController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\AgentController;
-
+use App\Http\Controllers\Auth\VerifyEmailController;
 
 Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -136,5 +136,19 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
 });
 
 
-
 require __DIR__ . '/auth.php';
+
+Route::get('/email/verify', [VerifyEmailController::class, 'showVerifyForm'])
+    ->middleware('auth')
+    ->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
+
+// Verification notice page (user sees code input form)
+Route::get('/email/verify', [VerifyEmailController::class, 'showVerifyForm'])
+    ->middleware('auth')
+    ->name('verify.email');
+
+    

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('verification_code', 6)->nullable();
             $table->string('phone')->unique('phone');
             $table->string('password');
             $table->string('role');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('roll')->nullable();
             $table->string('image', 255)->nullable();
             $table->string('id_image', 255)->nullable();
+            $table->integer('verification_attempts')->default(0);
             $table->string('address')->nullable(); // New nullable address field
             $table->rememberToken();
             $table->timestamps();
