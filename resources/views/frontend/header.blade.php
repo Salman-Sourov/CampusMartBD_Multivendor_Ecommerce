@@ -305,56 +305,16 @@
                                                 class="category-name">
                                                 <img src="{{ asset($category->image && file_exists(public_path($category->image)) ? $category->image : 'upload/category/no_category.png') }}"
                                                     alt="category_image">
-
                                                 @if (App::getLocale() == 'en')
                                                     <h6>{{ $category->name }}</h6>
                                                 @else
                                                     <h6>{{ $category->translations->name }}</h6>
                                                 @endif
-
                                                 <i class="fa-solid fa-angle-right"></i>
                                             </a>
-
-                                            {{-- Check if the category has child categories --}}
-                                            @if ($category->hasChild->isNotEmpty())
-                                                <div class="onhover-category-box w-100">
-                                                    <div class="list-1">
-                                                        <div class="category-title-box">
-                                                            @if (App::getLocale() == 'en')
-                                                                <h5>{{ $category->name }} {{ __('content.Subcat') }}
-                                                                </h5>
-                                                            @else
-                                                                <h5>{{ $category->translations->name }}
-                                                                    {{ __('content.Subcat') }}</h5>
-                                                            @endif
-                                                        </div>
-                                                        <ul>
-                                                            {{-- Loop through each child category --}}
-                                                            @foreach ($category->hasChild as $child)
-                                                                <li>
-                                                                    <a
-                                                                        href="{{ route('category.details', $child->id) }}">
-                                                                        {{-- <img src="{{ asset($child->image) }}"
-                                                                            alt=""> --}}
-                                                                        <img src="{{ asset($child->image && file_exists(public_path($child->image)) ? $child->image : 'upload/category/no_category.png') }}"
-                                                                            alt="category_image">
-                                                                        @if (App::getLocale() == 'en')
-                                                                            <h6>{{ $child->name }}</h6>
-                                                                        @else
-                                                                            <h6>{{ $child->translations->name }}</h6>
-                                                                        @endif
-
-                                                                    </a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            @endif
                                         </li>
                                     @empty
-                                        <!-- You can display a message if no categories are available -->
-                                        <li>No categories available.</li>
+                                        <li>No categories found</li>
                                     @endforelse
 
                                 </ul>
@@ -415,7 +375,8 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link" style="color: red; font-weight: 600;" href="{{ route('agentregister.show') }}">
+                                                <a class="nav-link" style="color: red; font-weight: 600;"
+                                                    href="{{ route('agentregister.show') }}">
                                                     {{ __('content.seller') }}
                                                 </a>
                                             </li>
