@@ -250,6 +250,13 @@
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('admin.logout') }}">Logout</a>
                                                         </li>
+                                                    @elseif (auth()->user()->role == 'agent')
+                                                        <li class="product-box-contain">
+                                                            <a href="{{ route('agent.dashboard') }}">Dashboard</a>
+                                                        </li>
+                                                        <li class="product-box-contain">
+                                                            <a href="{{ route('agent.logout') }}">Logout</a>
+                                                        </li>
                                                     @else
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('user.dashboard') }}">Dashboard</a>

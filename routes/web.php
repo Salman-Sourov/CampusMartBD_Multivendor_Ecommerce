@@ -11,7 +11,7 @@ use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SubCategoryController;
-use App\Http\Controllers\indexController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductStockController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\CartController;
@@ -19,6 +19,7 @@ use App\Http\Controllers\admin\SettingController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\ForgotPasswordController;
 
 Route::get('/lang-change/{lang}', [LangController::class, 'langChange'])->name('lang.change');
 Route::get('/', [indexController::class, 'index'])->name('index');
@@ -136,8 +137,8 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/agent/logout', [AgentController::class, 'AgentLogout'])->name('agent.logout');
 });
 
-
 require __DIR__ . '/auth.php';
+
 
 // Registration OTP verification page
 Route::get('/email/verify', [VerifyEmailController::class, 'showVerifyForm'])
@@ -151,6 +152,15 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+Route::get('/dashboard', function () {
+    return view('dashboard'); // resources/views/dashboard.blade.php
+})->name('dashboard');
 
+Route::post('/resend-otp', [RegisteredUserController::class, 'resendOtp'])->name('resend.otp');
 
+// Forgot Password OTP Flow
+Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('forgot.form');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetOtp'])->name('forgot.send');
+
+Route::get('forgot-password/otp', [ForgotPasswordController::class, 'showOtpForm'])->name('forgot.otp.form');
+Route::post('forgot-password/otp', [ForgotPasswordController::class, 'verifyOtp'])->name('forgot.otp.verify');

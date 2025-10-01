@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EmailVerification extends Notification
+class EmailVerification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -26,8 +26,9 @@ class EmailVerification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Your Verification Code')
-            ->line('Your OTP code is: ' . $this->code)
-            ->line('This code will expire in 10 minutes.');
+            ->subject('Verify Your Email - CampusMartBD')
+            ->markdown('emails.verify-email', [
+                'code' => $this->code
+            ]);
     }
 }

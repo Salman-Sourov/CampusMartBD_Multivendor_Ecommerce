@@ -11,16 +11,6 @@ use App\Models\Product_category;
 
 class VerifyEmailController extends Controller
 {
-    public function showVerifyForm()
-    {
-        $categories = Product_category::with('translations', 'hasChild')
-            ->where('level', '1')
-            ->where('status', 'active')
-            ->get();
-
-        return view('auth.verify', compact('categories'));
-    }
-
     public function __invoke(EmailVerificationRequest $request)
     {
         $user = $request->user();

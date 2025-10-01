@@ -16,20 +16,20 @@ class AgentController extends Controller
 {
     public function AgentRegisterShow()
     {
-        $categories = Product_category::with('translations', 'hasChild')
-            ->where('level', '1')
-            ->where('status', 'active')
-            ->get();
-        $brands = Brand::with('translations')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')
-            ->where('status', 'active')
-            ->where('is_featured', '0')
-            ->inRandomOrder()
-            ->latest()
-            ->get();
+        // $categories = Product_category::with('translations', 'hasChild')
+        //     ->where('level', '1')
+        //     ->where('status', 'active')
+        //     ->get();
+        // $brands = Brand::with('translations')->where('status', 'active')->get();
+        // $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')
+        //     ->where('status', 'active')
+        //     ->where('is_featured', '0')
+        //     ->inRandomOrder()
+        //     ->latest()
+        //     ->get();
         $carts = session()->get('cart');
 
-        return view('frontend.agent_register', compact('categories', 'brands', 'products', 'carts'));
+        return view('frontend.agent_register', compact( 'carts'));
     }
 
     public function AgentRegister(Request $request)

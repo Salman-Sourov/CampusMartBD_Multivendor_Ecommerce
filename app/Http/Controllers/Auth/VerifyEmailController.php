@@ -5,46 +5,50 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class VerifyEmailController extends Controller
 {
-    // OTP form দেখাবে
     public function showVerifyForm()
     {
         return view('auth.verify');
     }
 
-    // OTP validate করবে
+    // OTP validate kore DB te insert korbe
     public function verifyCode(Request $request)
     {
-        $request->validate(['otp' => 'required|digits:6']);
+        $request->validate([
+            'code' => 'required|string',
+        ]);
 
-        $temp_user = session('temp_user');
-        $otp_attempts = session('otp_attempts', 0);
+        $tempUser = session('temp_user');
 
-        if (!$temp_user) {
-            return redirect()->route('register')->with('error', 'Session expired, please register again.');
+        if (!$tempUser) {
+            return redirect()->route('register')->with('error', 'Session expired. Please register again.');
         }
 
-        if ($otp_attempts >= 3) {
-            session()->forget(['temp_user', 'otp_attempts']);
-            return redirect()->route('register')->with('error', 'Maximum attempts reached.');
-        }
-
-        if ($request->otp == $temp_user['verification_code']) {
-            User::create([
-                'name' => $temp_user['name'],
-                'email' => $temp_user['email'],
-                'phone' => $temp_user['phone'],
-                'password' => $temp_user['password'],
-                'role' => 'user',
+        if ($request->code == $tempUser['verification_code']) {
+            // User save on DB
+            $user = User::create([
+                'name' => $tempUser['name'],
+                'email' => $tempUser['email'],
+                'phone' => $tempUser['phone'],
+                'password' => $tempUser['password'],
+                'role' => $tempUser['role'],
+                'status' => $tempUser['status'],
+                'email_verified_at' => now(),
             ]);
-            session()->forget(['temp_user', 'otp_attempts']);
-            return redirect('/')->with('success', 'Registration successful.');
+
+            // Session clean
+            session()->forget('temp_user');
+
+            //User login
+            Auth::login($user);
+
+            return redirect('/')->with('success', 'Email verified successfully!');
         } else {
-            session(['otp_attempts' => $otp_attempts + 1]);
-            return back()->with('error', 'OTP is incorrect.');
+            return back()->withErrors(['code' => 'Invalid OTP code']);
         }
     }
 }
