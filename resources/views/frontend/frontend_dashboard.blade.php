@@ -5,29 +5,32 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Fastkart">
-    <meta name="keywords" content="Fastkart">
-    <meta name="author" content="Fastkart">
-    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/CampusMartBD_logo_Fav_icon.png"
-        type="image/x-icon">
-    <title>Campus Mart BD</title>
+    <meta name="description" content="Welcome to CampusMartBD! A student-focused multivendor eCommerce platform empowering young entrepreneurs to showcase and sell products. Your Campus, Your Marketplace – From Students, For Students. Coming Soon to Every Campus in Bangladesh.">
+    <meta name="keywords" content="campus mart bd, student ecommerce, multivendor platform, young entrepreneurs, campus marketplace, shop locally bd, student sellers, bangladesh campus shopping, empotech bd">
+    <meta name="author" content="Empotech BD Team">
+    <link rel="icon" href="{{ asset('frontend') }}/assets/images/favicon/CampusMartBD_logo_Fav_icon.png" type="image/x-icon">
+    <title>CampusMart BD</title>
 
-    <!-- Google font -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="CampusMartBD – Your Campus, Your Marketplace">
+    <meta property="og:description" content="Student-focused eCommerce: Shop, Sell, Support Locally. A Proud Product of Empotech BD.">
+    <meta property="og:image" content="{{ asset('frontend') }}/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://campusmartbd.com">
 
-    <!-- bootstrap css -->
-    <link id="rtl-link" rel="stylesheet" type="text/css"
-        href="{{ asset('frontend') }}/assets/css/vendors/bootstrap.css">
+    <!-- Preload critical fonts and CSS for faster render -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"></noscript>
+
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="{{ asset('frontend') }}/assets/css/vendors/bootstrap.css" as="style">
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/vendors/bootstrap.css">
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <!-- wow css -->
+    <!-- wow css (if needed, else remove) -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/assets/css/animate.min.css" />
 
     <!-- font-awesome css -->
@@ -36,16 +39,15 @@
     <!-- feather icon css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/vendors/feather-icon.css">
 
-     <!-- slick css -->
+    <!-- slick css (lazy load if slider not on all pages) -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/vendors/slick/slick.css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/vendors/slick/slick-theme.css"> 
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/vendors/slick/slick-theme.css">
 
     <!-- Iconly css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/bulk-style.css">
 
     <!-- Template css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/assets/css/style.css">
-
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
@@ -88,13 +90,6 @@
                 </a>
             </li>
 
-            {{-- <li>
-                <a href="wishlist.html" class="notifi-wishlist">
-                    <i class="iconly-Heart icli"></i>
-                    <span>My Wish</span>
-                </a>
-            </li> --}}
-
             <li class="mobile-cart-item">
                 <a href="{{ route('checkout') }}" class="mobile-cart-link">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
@@ -103,17 +98,14 @@
                     <span id="mobile-cart-count" class="mobile-cart-badge">{{ count($carts) }}</span>
                 </a>
             </li>
-                      
+
         </ul>
     </div>
     <!-- mobile fix menu end -->
 
-
     @yield('main')
 
-
     @include('frontend.footer')
-
 
     <!-- Tap to top start -->
     <div class="theme-option">
@@ -129,58 +121,33 @@
     <div class="bg-overlay"></div>
     <!-- Bg overlay End -->
 
-    <!-- Bg overlay Start -->
-    <div class="bg-overlay"></div>
-    <!-- Bg overlay End -->
-
-    <!-- latest jquery-->
+    <!-- Critical JS first (sync for functionality) -->
     <script src="{{ asset('frontend') }}/assets/js/jquery-3.6.0.min.js"></script>
-
-    <!-- jquery ui-->
     <script src="{{ asset('frontend') }}/assets/js/jquery-ui.min.js"></script>
-
-    <!-- Bootstrap js-->
     <script src="{{ asset('frontend') }}/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('frontend') }}/assets/js/bootstrap/bootstrap-notify.min.js"></script>
     <script src="{{ asset('frontend') }}/assets/js/bootstrap/popper.min.js"></script>
 
-    <!-- feather icon js-->
-    <script src="{{ asset('frontend') }}/assets/js/feather/feather.min.js"></script>
-    <script src="{{ asset('frontend') }}/assets/js/feather/feather-icon.js"></script>
+    <!-- Non-critical JS with defer/async -->
+    <script defer src="{{ asset('frontend') }}/assets/js/feather/feather.min.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/feather/feather-icon.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/lazysizes.min.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/slick/slick.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/slick/custom_slick.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/auto-height.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/fly-cart.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/quantity-2.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/wow.min.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/custom-wow.js"></script>
+    <script defer src="{{ asset('frontend') }}/assets/js/script.js"></script>
 
-    <!-- Lazyload Js -->
-    <script src="{{ asset('frontend') }}/assets/js/lazysizes.min.js"></script>
+    <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <!-- Slick js-->
-    <script src="{{ asset('frontend') }}/assets/js/slick/slick.js"></script>
-    <script src="{{ asset('frontend') }}/assets/js/slick/custom_slick.js"></script>
-
-    <!-- Auto Height Js -->
-    <script src="{{ asset('frontend') }}/assets/js/auto-height.js"></script>
-
-    {{-- <!-- Timer Js -->
-    <script src="{{ asset('frontend') }}/assets/js/timer1.js"></script> --}}
-
-    <!-- Fly Cart Js -->
-    <script src="{{ asset('frontend') }}/assets/js/fly-cart.js"></script>
-
-    <!-- Quantity js -->
-    <script src="{{ asset('frontend') }}/assets/js/quantity-2.js"></script>
-
-    <!-- WOW js -->
-    <script src="{{ asset('frontend') }}/assets/js/wow.min.js"></script>
-    <script src="{{ asset('frontend') }}/assets/js/custom-wow.js"></script>
-
-    <!-- script js -->
-    <script src="{{ asset('frontend') }}/assets/js/script.js"></script>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+    <!-- Inline scripts (keep small ones here to avoid extra requests) -->
     <script>
         function closeCart() {
             var id = event.currentTarget.getAttribute('data-id');
             var url = "{{ route('cart.remove', ':id') }}".replace(':id', id);
-            // alert(id);
 
             $.ajax({
                 type: 'GET',
@@ -214,33 +181,18 @@
 
     <script>
         $(document).ready(function() {
-            // Trigger update when the area selection changes
             $('#area').change(function() {
-                // Get the selected value from the dropdown
                 var areaValue = $(this).val();
-                // Default total price (replace with actual value)
-                var totalPrice = parseInt($('#sub_total').text()); // Replace with your dynamic total price
-
-
-                var shippingAmount = 0;
-                if (areaValue) {
-                    shippingAmount = parseInt(areaValue);
-                }
-
-
-                // Update the shipping amount displayed
+                var totalPrice = parseInt($('#sub_total').text());
+                var shippingAmount = areaValue ? parseInt(areaValue) : 0;
                 $('#shipping_amount').text(shippingAmount);
-
-                // Calculate and update the total order amount (including shipping)
                 var totalOrderAmount = totalPrice + shippingAmount;
-
                 $('#total_order_amount').text(totalOrderAmount);
             });
         });
     </script>
 
     @yield('script')
-
 
 </body>
 

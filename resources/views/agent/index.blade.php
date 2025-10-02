@@ -17,8 +17,17 @@
                 </div>
             </div>
         @else
-            <h4>Agent Account is <span class="text-danger">Inactive</span></h4>
-            <p class="text-danger"><b> Please wait admin will check and approve your account</b></p>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-3 text-danger" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <h4 class="alert-heading mb-2 text-danger">Agent Account Inactive</h4>
+                        <p class="mb-0">Your account is under review. Please be patient—our admin team will check and
+                            approve it shortly.</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
         @endif
     </div>
 @endsection

@@ -245,21 +245,21 @@
                                                 @auth
                                                     @if (auth()->user()->role == 'admin')
                                                         <li class="product-box-contain">
-                                                            <a href="{{ route('admin.home') }}">Dashboard</a>
+                                                            <a href="{{ route('admin.home') }}">Admin Dashboard</a>
                                                         </li>
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('admin.logout') }}">Logout</a>
                                                         </li>
                                                     @elseif (auth()->user()->role == 'agent')
                                                         <li class="product-box-contain">
-                                                            <a href="{{ route('agent.dashboard') }}">Dashboard</a>
+                                                            <a href="{{ route('agent.dashboard') }}">Agent Dashboard</a>
                                                         </li>
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('agent.logout') }}">Logout</a>
                                                         </li>
                                                     @else
                                                         <li class="product-box-contain">
-                                                            <a href="{{ route('user.dashboard') }}">Dashboard</a>
+                                                            <a href="{{ route('user.dashboard') }}">User Dashboard</a>
                                                         </li>
                                                         <li class="product-box-contain">
                                                             <a href="{{ route('user.logout') }}">Logout</a>
@@ -272,7 +272,7 @@
                                                         <a href="{{ route('login') }}">Log In</a>
                                                     </li>
                                                     <li class="product-box-contain">
-                                                        <a href="{{ route('register') }}">Register</a>
+                                                        <a href="{{ route('register') }}">User Register</a>
                                                     </li>
                                                 @endguest
                                             </ul>
@@ -342,11 +342,11 @@
                                         <ul class="navbar-nav">
                                             <li class="nav-item dropdown">
                                                 <a href="{{ url('/') }}"
-                                                    class="nav-link">{{ __('content.home') }}</a>
+                                                    class="nav-link" style="font-weight: 500;">{{ __('content.home') }}</a>
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link" href="{{ route('all.shops') }}">
+                                                <a class="nav-link" style="font-weight: 500;" href="{{ route('all.shops') }}">
                                                     {{ __('content.shops') }}
                                                 </a>
                                                 <ul class="dropdown-menu">
@@ -371,14 +371,14 @@
                                             </li>
 
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link" href="{{ route('all.shops') }}">
+                                                <a class="nav-link" style="font-weight: 500;" href="{{ route('all.shops') }}">
                                                     {{ __('content.product') }}
                                                 </a>
                                             </li>
 
                                             <li class="nav-item dropdown">
                                                 <a href="{{ url('/') }}"
-                                                    class="nav-link">{{ __('content.about') }}</a>
+                                                    class="nav-link" style="font-weight: 500;">{{ __('content.about') }}</a>
                                             </li>
 
                                             <li class="nav-item dropdown">

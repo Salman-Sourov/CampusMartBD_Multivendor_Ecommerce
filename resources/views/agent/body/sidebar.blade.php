@@ -7,12 +7,12 @@
 <nav class="sidebar">
     <div class="sidebar-header" style="background: #011b39;">
         <a href="{{ route('agent.dashboard') }}" class="sidebar-brand">
-            CampusMart<span>BD</span>
+            CampusMart<span> BD</span>
         </a>
     </div>
     <div class="sidebar-body" style="background: #011b39;">
         <ul class="nav">
-            <li class="nav-item nav-category">Main</li>
+            <li class="nav-item nav-category">Seller Dashboard</li>
             <li class="nav-item">
                 <a href="{{ route('agent.dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
