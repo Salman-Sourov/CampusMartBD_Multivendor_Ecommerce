@@ -3,7 +3,7 @@
     $role = session('temp_user.role');
 @endphp
 <!DOCTYPE html>
-<html lang="en">
+{{-- <html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -124,10 +124,11 @@
 <body>
     <div class="email-body">
         <h2>Hello {{ $name ?? 'Sir/Mam' }}!</h2>
-        <p>Welcome to <strong>CampusMartBD</strong>! You want to register as a <strong>{{ Str::upper($role ?? 'user/agent') }}</strong>
+        <p>Welcome to <strong>CampusMartBD</strong>! You want to register as a
+            <strong>{{ Str::upper($role ?? 'user/agent') }}</strong>
         </p>
-        <p>campusmart.com is a student-focused multivendor eCommerce platform, empowering young entrepreneurs to
-            showcase and sell their products. A proud product of Empotech BD.</p>
+        <p>CampusMart BD is a student-focused multivendor eCommerce platform, empowering young entrepreneurs to
+            showcase and sell their products.</p>
 
         <p>Your OTP code to verify your email is:</p>
         <span class="otp-code">{{ $code }}</span>
@@ -144,4 +145,30 @@
     </div>
 </body>
 
+</html> --}}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CampusMart Email Verification</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#f4f4f4; padding:20px; }
+        .mail-box { background:#fff; padding:20px; border-radius:10px; max-width:500px; margin:auto; }
+        .btn { display:inline-block; padding:10px 20px; background:#0d6efd; color:#fff; text-decoration:none; border-radius:5px; }
+    </style>
+</head>
+<body>
+    <div class="mail-box">
+        <h2>Welcome to CampusMart BD 🎉</h2>
+        <p>Hi {{ $name ?? '' }},</p>
+        <p>Thank you for with us. To complete your registration/recovering account, please use the following verification code:</p>
+
+        <h1 style="letter-spacing:5px; color:#03bb77;">{{ $code }}</h1>
+
+        <p>Enter this code on the verification page to activate your account.</p>
+        <p>If you did not register on CampusMart BD, please ignore this email.</p>
+    </div>
+</body>
 </html>
+
+

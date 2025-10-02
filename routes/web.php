@@ -133,7 +133,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 //Agent Management Group Middleware
 Route::middleware(['auth', 'role:agent'])->group(function () {
 
-    Route::get('/agent/dasboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
+    Route::get('/agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
     Route::get('/agent/logout', [AgentController::class, 'AgentLogout'])->name('agent.logout');
 });
 
@@ -162,5 +162,5 @@ Route::post('/resend-otp', [RegisteredUserController::class, 'resendOtp'])->name
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('forgot.form');
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetOtp'])->name('forgot.send');
 
-Route::get('forgot-password/otp', [ForgotPasswordController::class, 'showOtpForm'])->name('forgot.otp.form');
-Route::post('forgot-password/otp', [ForgotPasswordController::class, 'verifyOtp'])->name('forgot.otp.verify');
+// Route::get('forgot-password/otp', [ForgotPasswordController::class, 'showOtpForm'])->name('forgot.otp.form');
+// Route::post('forgot-password/otp', [ForgotPasswordController::class, 'verifyOtp'])->name('forgot.otp.verify');

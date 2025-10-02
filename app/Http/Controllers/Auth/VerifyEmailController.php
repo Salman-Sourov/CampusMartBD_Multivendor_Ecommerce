@@ -23,30 +23,48 @@ class VerifyEmailController extends Controller
         ]);
 
         $tempUser = session('temp_user');
+        $existingUser = User::where('email', $tempUser['email'])->first();
 
         if (!$tempUser) {
             return redirect()->route('register')->with('error', 'Session expired. Please register again.');
         }
 
         if ($request->code == $tempUser['verification_code']) {
+
             // User save on DB
-            $user = User::create([
-                'name' => $tempUser['name'],
-                'email' => $tempUser['email'],
-                'phone' => $tempUser['phone'],
-                'password' => $tempUser['password'],
-                'role' => $tempUser['role'],
-                'status' => $tempUser['status'],
-                'email_verified_at' => now(),
-            ]);
+            if ($existingUser) {
+                $existingUser->email_verified_at = now();
+                $existingUser->save();
 
-            // Session clean
-            session()->forget('temp_user');
+                Auth::login($existingUser);
 
-            //User login
-            Auth::login($user);
+                if ($existingUser->role === 'agent') {
+                    return redirect()->route('agent.dashboard')->with('success', 'Welcome Agent!');
+                } else {
+                    return redirect()->route('user.dashboard')->with('success', 'Welcome User!');
+                }
+            } else {
+                $user = User::create([
+                    'name' => $tempUser['name'],
+                    'email' => $tempUser['email'],
+                    'phone' => $tempUser['phone'],
+                    'password' => $tempUser['password'],
+                    'role' => $tempUser['role'],
+                    'status' => $tempUser['status'],
+                    'email_verified_at' => now(),
+                ]);
+                // Session clean
+                session()->forget('temp_user');
+                //User login
+                Auth::login($user);
 
-            return redirect('/')->with('success', 'Email verified successfully!');
+                // Registration case → role wise redirect
+                if ($user->role === 'agent') {
+                    return redirect()->route('agent.dashboard')->with('success', 'Welcome Agent!');
+                } else {
+                    return redirect('/')->with('success', 'Welcome User!');
+                }
+            }
         } else {
             return back()->withErrors(['code' => 'Invalid OTP code']);
         }

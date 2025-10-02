@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\EmailVerification;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyEmailMail;
 
 class ForgotPasswordController extends Controller
 {
@@ -27,54 +31,24 @@ class ForgotPasswordController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        $otp = rand(100000, 999999);
+        $verification_code = rand(100000, 999999);
 
         session([
-            'reset_password' => [
+            'temp_user' => [
                 'user_id' => $user->id,
-                'otp' => $otp,
+                'verification_code' => $verification_code,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
                 'expires_at' => now()->addMinutes(10)
             ]
         ]);
 
-        // OTP Email পাঠানো
-        Notification::route('mail', $user->email)->notify(new EmailVerification($otp));
+        // Notification::route('mail', $user->email)->notify(new EmailVerification($otp));
+        // return redirect()->route('forgot.otp.form')->with('success', 'We have sent an OTP to your email.');
 
-        return redirect()->route('forgot.otp.form')->with('success', 'We have sent an OTP to your email.');
-    }
-
-    // Step 3: Show OTP form
-    public function showOtpForm()
-    {
-        return view('auth.forgot-password-otp');
-    }
-
-    // Step 4: Verify OTP
-    public function verifyOtp(Request $request)
-    {
-        $request->validate([
-            'otp' => 'required|numeric',
-        ]);
-
-        $user = User::where('email', session('reset_password_email'))->first();
-
-        if (!$user || $user->otp !== $request->otp || now()->greaterThan($user->otp_expires_at)) {
-            return back()->withErrors(['otp' => 'Invalid or expired OTP']);
-        }
-
-        // OTP valid হলে reset
-        $user->otp = null;
-        $user->otp_expires_at = null;
-        $user->email_verified_at = now();
-        $user->save();
-
-        Auth::login($user);
-
-        // 👉 Role check করে আলাদা dashboard এ পাঠানো
-        if ($user->role === 'agent') {
-            return redirect()->route('agent.dashboard')->with('success', 'Welcome Agent!');
-        } else {
-            return redirect()->route('user.dashboard')->with('success', 'Welcome User!');
-        }
+         // Send OTP email using custom Mailable
+        Mail::to($request->email)->send(new VerifyEmailMail($verification_code));
+        return redirect()->route('verify.email')->with('success', 'We sent an OTP to your email. Please verify.');
     }
 }

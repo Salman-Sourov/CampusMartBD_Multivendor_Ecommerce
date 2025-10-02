@@ -29,43 +29,50 @@
     <section class="log-in-section background-image-2 section-b-space">
         <div class="container-fluid-lg w-100">
             <div class="row">
-                <!-- <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
-                                    <div class="image-contain">
-                                        <img src="../assets/images/inner-page/log-in.png" class="img-fluid" alt="">
-                                    </div>
-                                </div> -->
-
                 <div class="col-xxl-4 col-xl-5 col-lg-6 col-sm-8 mx-auto">
                     <div class="log-in-box">
                         <div class="log-in-title">
                             <h3>Welcome To CampusMart BD</h3>
                             <h4>Log In Your Account</h4>
                         </div>
+                        
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
-                            <div class="input-box">
-                                <form class="row g-4">
-                                    <div class="col-12">
-                                        <div class="form-floating theme-form-floating log-in-form">
-                                            <input type="email" name="email" class="form-control" id="email"
-                                                placeholder="Email Address">
-                                            <label for="email">Email Address</label>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-12">
-                                        <div class="form-floating theme-form-floating log-in-form">
-                                            <input type="password" name="password" class="form-control" id="password"
-                                                placeholder="Password">
-                                            <label for="password">Password</label>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="col-12">
-                                        <button class="btn btn-animation w-100 justify-content-center" type="submit">Log
-                                            In</button>
-                                    </div>
-                                </form>
+                            <div class="col-12">
+                                <div class="form-floating theme-form-floating log-in-form">
+                                    <input type="email" name="email"
+                                        class="form-control @error('email') is-invalid @enderror" id="email"
+                                        placeholder="Email Address" value="{{ old('email') }}" required>
+                                    <label for="email">Email Address</label>
+
+                                    {{-- Error Message for Email --}}
+                                    @error('email')
+                                        <span class="text-danger small">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="col-12">
+                                <div class="form-floating theme-form-floating log-in-form">
+                                    <input type="password" name="password"
+                                        class="form-control @error('password') is-invalid @enderror" id="password"
+                                        placeholder="Password" required>
+                                    <label for="password">Password</label>
+
+                                    {{-- Error Message for Password --}}
+                                    @error('password')
+                                        <span class="text-danger small">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="col-12">
+                                <button class="btn btn-animation w-100 justify-content-center" type="submit">Log
+                                    In</button>
                             </div>
                         </form>
 

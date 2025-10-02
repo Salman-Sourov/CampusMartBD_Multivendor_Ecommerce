@@ -12,6 +12,8 @@ use Illuminate\View\View;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Product_category;
+use App\Models\User;
+use Hash;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -20,10 +22,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        $categories = Product_category::with('translations')->where('status', 'active')->get();
-        $brands = Brand::with('translations')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks')->where('status', 'active')->get();
-        return view('auth.login', compact('categories', 'brands', 'products'));
+        return view('auth.login');
     }
 
     /**
@@ -31,23 +30,38 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Validate Input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-        $request->authenticate();
+        // Check if email exists
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'This email is not registered. Please create an account.'])->withInput();
+        }
+
+        // Check password
+        if (!\Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Wrong password, please try again.'])->withInput();
+        }
+
+        // If everything is ok → login the user
+        Auth::login($user);
         $request->session()->regenerate();
 
         $notification = '';
 
-        $url = '';
-        if ($request->user()->role === 'admin') {
-            $url = 'admin/dashboard';
-        } elseif ($request->user()->role === 'user') {
-            $url = '/user-dashboard';
+        // Redirect by role
+        if ($user->role === 'admin') {
+            return redirect()->intended('admin/dashboard')->with('success', 'Welcome Admin!');
+        } elseif ($user->role === 'agent') {
+            return redirect()->intended('agent/dashboard')->with('success', 'Welcome Agent!');
+        } else {
+            return redirect()->intended('/')->with('success', 'Welcome User!');
         }
-        else{
-            $url = '/user-dashboard';
-        }
-
-        return redirect()->intended($url)->with($notification);
     }
 
     /**
