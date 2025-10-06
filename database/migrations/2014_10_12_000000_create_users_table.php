@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('university')->nullable();
             $table->string('roll')->nullable();
             $table->string('image', 255)->nullable();
-            $table->string('id_image', 255)->nullable();
+            // $table->string('id_image', 255)->nullable();
             $table->integer('verification_attempts')->default(0);
             $table->string('address')->nullable(); // New nullable address field
             $table->rememberToken();

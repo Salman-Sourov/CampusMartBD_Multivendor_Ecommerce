@@ -14,22 +14,7 @@ use App\Models\Order;
 
 class UserController extends Controller
 {
-    // public function home()
-    // {
-    //     $categories = Product_category::with('translations')->where('status', 'active')->get();
-    //     $brands = Brand::with('translations')->where('status', 'active')->get();
-    //     $products = Product::with('translations', 'inventory_stocks')->where('status', 'active')->get();
-    //     return view('frontend.index', compact('categories', 'brands', 'products'));
-    // }
-    // public function index()
-    // {
-    //     $categories = Product_category::with('translations')->where('status', 'active')->get();
-    //     $brands = Brand::with('translations')->where('status', 'active')->get();
-    //     $products = Product::with('translations', 'inventory_stocks')->where('status', 'active')->get();
-    //     return view('index', compact('categories', 'brands', 'products'));
-    // }
 
-   
     public function userDashboard()
     {
         $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();

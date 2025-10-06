@@ -76,7 +76,8 @@
                                                 value="{{ old('phone') }}" oninput="enforceBDCountryCode()" maxlength="14"
                                                 required pattern="\+8801[3-9][0-9]{8}">
                                             <label for="tel">User Phone No</label>
-                                            <small class="form-text text-muted">Enter a valid Bangladeshi phone number (e.g., +8801XXXXXXXXX).</small>
+                                            <small class="form-text text-muted">Enter a valid Bangladeshi phone number
+                                                (e.g., +8801XXXXXXXXX).</small>
                                             @error('phone')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -90,7 +91,8 @@
                                                 class="form-control @error('password') is-invalid @enderror" name="password"
                                                 id="password" placeholder="Password" required>
                                             <label for="password">Password</label>
-                                            <small class="form-text text-muted">Password must be at least 6 characters long (can include letters, digits, or special characters like @).</small>
+                                            <small class="form-text text-muted">Password must be at least 6 characters long
+                                                (can include letters, digits, or special characters like @).</small>
                                             @error('password')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -99,7 +101,7 @@
 
                                     <!-- Submit Button -->
                                     <div class="col-12">
-                                        <button class="btn btn-animation w-100" type="submit">Sign Up</button>
+                                        <button id="signupBtn" class="btn btn-animation w-100" type="submit">Sign Up</button>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +118,8 @@
 
                         <div class="sign-up-box">
                             <h4>Become a Seller?</h4>
-                            <a style="color: red; font-weight: 600;" href="{{ route('agentregister.show') }}">Registration Now For SELLER</a>
+                            <a style="color: red; font-weight: 600;" href="{{ route('agentregister.show') }}">Registration
+                                Now For SELLER</a>
                         </div>
                     </div>
                 </div>
@@ -148,6 +151,12 @@
                 errorDiv.hide();
             }
         }
+    </script>
+
+    <script>
+        $('#signupBtn').on('click', function() {
+            $(this).prop('disabled', true).text('Processing...');
+        });
     </script>
 
     <!-- Ensure jQuery is included -->

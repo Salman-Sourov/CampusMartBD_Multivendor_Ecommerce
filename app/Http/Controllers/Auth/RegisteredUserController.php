@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\EmailVerification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmailMail;
@@ -57,9 +56,26 @@ class RegisteredUserController extends Controller
         ]);
 
         // Send OTP email using custom Mailable
-        Mail::to($request->email)->send(new VerifyEmailMail($verification_code));
+        // Mail::to($request->email)->send(new VerifyEmailMail($verification_code));
+        // return redirect()->route('verify.email')->with('success', 'We sent an OTP to your email. Please verify.');
 
-        return redirect()->route('verify.email')->with('success', 'We sent an OTP to your email. Please verify.');
+        /**
+         * ✅ Instead of waiting for Mail::send (which blocks),
+         * use dispatch() to send asynchronously.
+         */
+        Mail::to($request->email)
+            ->queue(new VerifyEmailMail($verification_code));
+        // dispatch(function () use ($email, $verification_code) {
+        //     Mail::to($email)->send(new VerifyEmailMail($verification_code));
+        // });
+
+        /**
+         * ✅ Instantly redirect to verify page
+         * No waiting for mail server response → smooth UX
+         */
+        return redirect()
+            ->route('verify.email')
+            ->with('success', 'We sent an OTP to your email. Please verify.');
     }
 
     public function resendOtp(Request $request)
@@ -77,8 +93,13 @@ class RegisteredUserController extends Controller
         session(['temp_user' => $tempUser]);
 
         // Send mail again
-        \Notification::route('mail', $tempUser['email'])
-            ->notify(new \App\Notifications\EmailVerification($verification_code));
+        // \Notification::route('mail', $tempUser['email'])
+        //     ->notify(new \App\Notifications\EmailVerification($verification_code));
+        // return back()->with('success', 'A new OTP has been sent to your email.');
+
+        // ✅ Reuse same async pattern
+        Mail::to($tempUser['email'])
+            ->queue(new VerifyEmailMail($verification_code));
 
         return back()->with('success', 'A new OTP has been sent to your email.');
     }

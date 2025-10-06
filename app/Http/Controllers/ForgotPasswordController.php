@@ -48,7 +48,7 @@ class ForgotPasswordController extends Controller
         // return redirect()->route('forgot.otp.form')->with('success', 'We have sent an OTP to your email.');
 
          // Send OTP email using custom Mailable
-        Mail::to($request->email)->send(new VerifyEmailMail($verification_code));
+        Mail::to($request->email)->queue(new VerifyEmailMail($verification_code));
         return redirect()->route('verify.email')->with('success', 'We sent an OTP to your email. Please verify.');
     }
 }
