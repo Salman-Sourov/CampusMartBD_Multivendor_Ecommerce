@@ -10,7 +10,7 @@
     <meta name="author" content="CampusMart BD Team">
     <meta name="keywords" content="agent panel, campus mart bd, admin dashboard, bootstrap 5, order management, delivery tracking, campus sales, e-commerce agent, responsive ui, bd marketplace">
 
-    <title>Agent Panel - CampusMart BD</title>
+    <title>Seller Dashboard - CampusMart BD</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

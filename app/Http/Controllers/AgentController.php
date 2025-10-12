@@ -14,6 +14,7 @@ use App\Mail\EmailVerification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\VerifyEmailMail;
+use Illuminate\Support\Facades\File;
 
 class AgentController extends Controller
 {
@@ -89,5 +90,107 @@ class AgentController extends Controller
         ];
 
         return redirect('/')->with($notification);
+    }
+
+    public function AgentProfile()
+    {
+        $id = Auth::user()->id; //collect user data from database
+        $profileData = User::find($id); //Laravel Eloquent
+        // dd($profileData);
+        return view('agent.agent_profile_view', compact('profileData'));
+    } //End Method
+
+    public function AgentProfileStore(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'roll' => 'nullable|string|max:50',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $id = Auth::user()->id; //collect user data from database
+        $data = User::find($id); //Laravel Eloquent
+        $data->phone = $request->phone;
+        $data->address = $request->address;
+        // $data->university = $request->university;
+        $data->roll = $request->roll;
+
+        if ($request->file('photo')) {
+            $file = $request->file('photo');
+
+            // Folder path
+            $destinationPath = public_path('upload/agent_images');
+
+            // Check if folder exists, otherwise create
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+
+            // Delete old image if exists
+            if ($data->image && File::exists($destinationPath . '/' . $data->image)) {
+                @unlink($destinationPath . '/' . $data->image);
+            }
+
+            // Save new file
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $data->image = $filename;
+        }
+
+        $data->save();
+
+        $notification = array(
+            'message' => 'Agent Profile Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function AgentChangePassword()
+    {
+
+        $id = Auth::user()->id; //collect user data from database
+        $profileData = User::find($id); //Laravel Eloquent
+        return view('agent.agent_change_password', compact('profileData'));
+    }
+
+    public function AgentUpdatePassword(Request $request)
+    {
+
+        //Validation
+        $request->validate([
+            // 'old_password' => 'required',
+            'new_password' => 'required|confirmed'
+        ]);
+
+        //Match The old password
+        // if (!Hash::check($request->old_password, auth::user()->password)) {
+
+        //     $notification = array(
+        //         'message' => 'Old password does not match',
+        //         'alert-type' => 'error'
+        //     );
+
+        //     return back()->with($notification);
+        // };
+
+        //update the password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        $notification = array(
+            'message' => 'Passord change successfully',
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification);
+    }
+
+    public function AgentVerification(Request $request)
+    {
+        
     }
 }

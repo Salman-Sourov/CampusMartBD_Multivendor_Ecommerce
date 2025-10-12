@@ -39,7 +39,7 @@ class VerifyEmailController extends Controller
                 Auth::login($existingUser);
 
                 if ($existingUser->role === 'agent') {
-                    return redirect()->route('agent.dashboard')->with('success', 'Welcome Agent!');
+                    return redirect()->route('agent.change.password')->with('success', 'Welcome Agent!');
                 } else {
                     return redirect()->route('user.dashboard')->with('success', 'Welcome User!');
                 }

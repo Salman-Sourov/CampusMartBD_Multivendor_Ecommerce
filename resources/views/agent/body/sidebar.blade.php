@@ -6,7 +6,7 @@
 
 <nav class="sidebar">
     <div class="sidebar-header" style="background: #011b39;">
-        <a href="{{ route('agent.dashboard') }}" class="sidebar-brand">
+        <a href="{{ route('index') }}" target="_blank" class="sidebar-brand">
             CampusMart<span> BD</span>
         </a>
     </div>

@@ -45,4 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function verification()
+    {
+        return $this->hasOne(AgentVerification::class,  'agent_id', 'id');
+    }
 }

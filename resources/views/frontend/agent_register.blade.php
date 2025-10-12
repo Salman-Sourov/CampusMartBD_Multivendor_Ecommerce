@@ -48,7 +48,7 @@
                                             <input type="text" class="form-control @error('name') is-invalid @enderror"
                                                 name="name" id="fullname" placeholder="Full Name"
                                                 value="{{ old('name') }}" required>
-                                            <label for="fullname">Seller Full Name</label>
+                                            <label for="fullname">Shop Name</label>
                                             @error('name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -61,7 +61,7 @@
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                                 name="email" id="email" placeholder="Email Address"
                                                 value="{{ old('email') }}" required>
-                                            <label for="email">Seller Email Address</label>
+                                            <label for="email">Email Address</label>
                                             @error('email')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -75,7 +75,7 @@
                                                 name="phone" id="tel" placeholder="Phone No"
                                                 value="{{ old('phone') }}" oninput="enforceBDCountryCode()" maxlength="14"
                                                 required pattern="\+8801[3-9][0-9]{8}">
-                                            <label for="tel">Seller Phone No</label>
+                                            <label for="tel">Phone No</label>
                                             <small class="form-text text-muted">Enter a valid Bangladeshi phone number
                                                 (e.g., +8801XXXXXXXXX).</small>
                                             @error('phone')
