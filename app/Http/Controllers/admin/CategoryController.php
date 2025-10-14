@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product_category;
 use App\Models\Product_category_transletion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -50,7 +51,7 @@ class CategoryController extends Controller
 
         $category = Product_category::create([
             'name' => $request->name,
-            'slug' => strtolower(str_replace('', '-', $request->name)),
+            'slug' => Str::slug($request->name),
             'description' => $request->description,
             'image' => $request->file('image') ? $directory . $imageName : null,
             // 'is_featured' => $request->has('is_featured') ? 0 : 1,

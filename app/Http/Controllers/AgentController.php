@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Institution;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ use App\Mail\EmailVerification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\VerifyEmailMail;
+use App\Models\AgentVerification;
 use Illuminate\Support\Facades\File;
 
 class AgentController extends Controller
@@ -74,7 +76,11 @@ class AgentController extends Controller
 
     public function AgentDashboard()
     {
-        return view('agent.index');
+        $id = Auth::user()->id;
+        $verification = AgentVerification::where('agent_id', $id)->first();
+        $agentId = Auth::user(); // or User::find($id)
+
+        return view('agent.index', compact('id', 'verification', 'agentId'));
     }
 
     public function AgentLogout(Request $request)
@@ -96,43 +102,41 @@ class AgentController extends Controller
     {
         $id = Auth::user()->id; //collect user data from database
         $profileData = User::find($id); //Laravel Eloquent
-        // dd($profileData);
-        return view('agent.agent_profile_view', compact('profileData'));
+        $institutions =  Institution::where('status', 'active')->get();
+        // dd( $profileData);
+        return view('agent.agent_profile_view', compact('profileData',  'institutions'));
     } //End Method
 
     public function AgentProfileStore(Request $request)
     {
-        $request->validate([
+        $id = Auth::user()->id;
+        $data = User::find($id);
+
+        $rules = [
             'phone' => 'required|string|max:20',
             'address' => 'nullable|string|max:255',
-            'roll' => 'nullable|string|max:50',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        ];
 
-        $id = Auth::user()->id; //collect user data from database
-        $data = User::find($id); //Laravel Eloquent
+        $request->validate($rules);
+
+        // Save data
         $data->phone = $request->phone;
         $data->address = $request->address;
-        // $data->university = $request->university;
-        $data->roll = $request->roll;
 
+        // Image upload
         if ($request->file('photo')) {
             $file = $request->file('photo');
-
-            // Folder path
             $destinationPath = public_path('upload/agent_images');
 
-            // Check if folder exists, otherwise create
             if (!File::exists($destinationPath)) {
                 File::makeDirectory($destinationPath, 0755, true);
             }
 
-            // Delete old image if exists
             if ($data->image && File::exists($destinationPath . '/' . $data->image)) {
                 @unlink($destinationPath . '/' . $data->image);
             }
 
-            // Save new file
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $data->image = $filename;
@@ -140,13 +144,14 @@ class AgentController extends Controller
 
         $data->save();
 
-        $notification = array(
+        $notification = [
             'message' => 'Agent Profile Updated Successfully',
-            'alert-type' => 'success'
-        );
+            'alert-type' => 'success',
+        ];
 
         return redirect()->back()->with($notification);
     }
+
 
     public function AgentChangePassword()
     {
@@ -191,6 +196,54 @@ class AgentController extends Controller
 
     public function AgentVerification(Request $request)
     {
-        
+        $id = Auth::user()->id;
+
+        $uploadPath = public_path('upload/agent_ver_images');
+        if (!File::exists($uploadPath)) {
+            File::makeDirectory($uploadPath, 0777, true, true);
+        }
+
+        // Use firstOrCreate to ensure record exists
+        $verification = AgentVerification::firstOrCreate(['agent_id' => $id]);
+
+        // Only update NID if file is uploaded
+        if ($request->hasFile('nid')) {
+            $nidFile = $request->file('nid');
+            $nidName = time() . '_nid.' . $nidFile->getClientOriginalExtension();
+            $nidFile->move($uploadPath, $nidName);
+            $verification->nid = $nidName;
+        }
+
+        // Only update Student ID if file is uploaded
+        if ($request->hasFile('student_id')) {
+            $studentFile = $request->file('student_id');
+            $studentName = time() . '_student.' . $studentFile->getClientOriginalExtension();
+            $studentFile->move($uploadPath, $studentName);
+            $verification->student_id = $studentName;
+        }
+
+        // Only update institution/roll if they are provided (first time)
+        if ($request->filled('institution_id')) {
+            $verification->institution = $request->input('institution_id');
+        }
+        if ($request->filled('roll')) {
+            $verification->roll = $request->input('roll');
+        }
+
+        $verification->verification_date = now();
+        $verification->save();
+
+        $user = User::find($id);
+        if ($user) {
+            $user->status = 'pending';
+            $user->save();
+        }
+
+        $notification = [
+            'message' => 'Verification documents uploaded successfully!',
+            'alert-type' => 'success',
+        ];
+
+        return redirect()->back()->with($notification);
     }
 }

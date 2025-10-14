@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product_category;
 use App\Models\Product_category_transletion;
+use Illuminate\Support\Str;
 
 class SubCategoryController extends Controller
 {
@@ -144,7 +145,7 @@ class SubCategoryController extends Controller
         // Update the category's basic details including the toggled fields
         $category->update([
             'name' => $request->edit_name,
-            'slug' => strtolower(str_replace('', '-', $request->edit_name)),
+            'slug' => Str::slug($request->name),
             'parent_id' => $request->edit_category_id,
             'description' => $request->edit_description,
             // 'is_featured' => $category->is_featured, // Save the updated value of 'is_featured'

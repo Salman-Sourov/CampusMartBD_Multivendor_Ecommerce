@@ -19,6 +19,8 @@ use App\Http\Controllers\admin\AttributeSetController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\SettingController;
+use App\Http\Controllers\admin\InstitutionsController;
+
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -88,10 +90,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatePassword'])->name('admin.update.password');
     Route::get('/admin/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 
-    // Brand Management
+    // institutions Management
     Route::resource('brand', BrandController::class);
     Route::post('/brand/changeStatus', [BrandController::class, 'brandChangeStatus'])->name('brand.change.status');
     Route::delete('/delete-brand/{id}', [BrandController::class, 'brandDelete'])->name('brand.delete');
+
+    // Institutions Management
+    Route::resource('institutions', InstitutionsController::class);
+    Route::post('/institutions/change-status', [InstitutionsController::class, 'institutionsChangeStatus'])->name('institutions.change.status');
+    Route::delete('/delete-institution/{id}', [InstitutionsController::class, 'institutionsDelete'])->name('institutions.delete');
 
     // Category Management
     Route::resource('category', CategoryController::class);
@@ -149,6 +156,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/featured_products', 'updateFeaturedProducts')->name('update.featured.products');
         Route::get('/delete/featured_products/{id}', 'deleteFeaturedProducts')->name('delete.featured.products');
     });
+
+    // Seller Verification
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/seller/verification', 'verificationIndex')->name('verification.index');
+        Route::get('/seller/verification/details/{id}', 'verificationDetails')->name('verification.details');
+        Route::get('/seller/verification/confirm/{id}', 'verificationConfirm')->name('verification.confirm');
+        Route::get('/seller/verification/reject/{id}', 'verificationReject')->name('verification.reject');
+    });
 });
 
 
@@ -164,8 +179,7 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::post('/agent/profile/store', [AgentController::class, 'AgentProfileStore'])->name('agent.profile.store');
     Route::get('/agent/change/passowrd', [AgentController::class, 'AgentChangePassword'])->name('agent.change.password');
     Route::post('/agent/update/password', [AgentController::class, 'AgentUpdatePassword'])->name('agent.update.password');
-    // Route::get('/agent/verification', [AgentController::class, 'AgentVerification'])->name('agent.verification');
-
+    Route::post('/agent/verification', [AgentController::class, 'AgentVerification'])->name('agent.verification');
 });
 
 

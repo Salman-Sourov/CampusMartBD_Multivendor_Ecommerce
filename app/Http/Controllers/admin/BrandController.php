@@ -10,6 +10,7 @@ use App\Models\Brand;
 use App\Models\Brand_translation;
 use Illuminate\Support\Facades\File;
 use Log;
+use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
@@ -57,6 +58,7 @@ class BrandController extends Controller
         if ($request->file('image')) {
             $brand = Brand::create([
                 'name' => $request->name,
+                'slug' => Str::slug($request->name),
                 'description' => $request->description,
                 'website' => $request->website,
                 'logo' => $directory . $photoName,
@@ -203,28 +205,27 @@ class BrandController extends Controller
     } // End Method
 
     public function brandDelete(Request $request, $id)
-{
-    $brand = Brand::find($id);
+    {
+        $brand = Brand::find($id);
 
-    if ($brand) {
-        // Check if logo exists and delete the file
-        if (file_exists(public_path($brand->logo)) && !empty($brand->logo)) {
-            unlink(public_path($brand->logo)); // Delete logo file
+        if ($brand) {
+            // Check if logo exists and delete the file
+            if (file_exists(public_path($brand->logo)) && !empty($brand->logo)) {
+                unlink(public_path($brand->logo)); // Delete logo file
+            }
+
+            // Delete the brand record
+            $brand->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Brand deleted successfully.'
+            ]);
         }
 
-        // Delete the brand record
-        $brand->delete();
-
         return response()->json([
-            'success' => true,
-            'message' => 'Brand deleted successfully.'
+            'success' => false,
+            'message' => 'Brand not found.'
         ]);
     }
-
-    return response()->json([
-        'success' => false,
-        'message' => 'Brand not found.'
-    ]);
-}
-
 }

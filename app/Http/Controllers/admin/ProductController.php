@@ -16,6 +16,7 @@ use App\Models\Videos;
 use App\Models\Product_with_videos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 
 
@@ -78,7 +79,7 @@ class ProductController extends Controller
             $product = Product::create([
                 'agent_id' => Auth::User()->id,
                 'name' => $request->product_name,
-                'slug' => strtolower(str_replace('', '-', $request->name)),
+                'slug' => Str::slug($request->name),
                 'description' => $request->description,
                 'content' => $request->short_content,
                 'status' => 'active',
