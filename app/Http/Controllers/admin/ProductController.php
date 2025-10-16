@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::where('status', 'active')->get();
-        return view("backend.product.all_product", compact("products"));
+        return view("agent.product.all_product", compact("products"));
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductController extends Controller
     {
         $brands = Brand::where("status", 'active')->orderBy("name", "asc")->get();
         $categories = Product_category::where('status', 'active')->whereNull('parent_id')->orderBy('name', 'asc')->get();
-        return view('backend.product.add_product', compact('brands', 'categories'));
+        return view('agent.product.add_product', compact('brands', 'categories'));
     }
 
     /**
@@ -52,7 +52,7 @@ class ProductController extends Controller
             'product_name' => 'required|string|max:255',
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
-            'quantity' => 'required|integer',
+            'quantity' => 'nullable|integer',
             'price' => 'nullable|numeric',
             'sale_price' => 'required|numeric',
             'start_date' => 'nullable|date',
@@ -61,8 +61,8 @@ class ProductController extends Controller
             'wide' => 'nullable|numeric',
             'height' => 'nullable|numeric',
             'weight' => 'nullable|numeric',
-            'short_content' => 'nullable|string',
-            'description' => 'required|string',
+            'short_content' => 'required|string',
+            'description' => 'nullable|string',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,webp,gif',
         ]);
 
@@ -85,7 +85,7 @@ class ProductController extends Controller
                 'status' => 'active',
                 'thumbnail' => $request->file('thumbnail') ? $directory . $imageName : null,
                 // 'sku' => $sku,
-                'quantity' => $request->quantity,
+                'quantity' => $request->quantity ?? 0,
                 'is_featured' => 0,
                 'brand_id' => '0',
                 'is_variation' => $request->has('is_variation') ? 0 : 1,
@@ -97,12 +97,6 @@ class ProductController extends Controller
                 'wide' => $request->wide,
                 'height' => $request->height,
                 'weight' => $request->weight,
-            ]);
-
-            product_translation::create([
-                'name' => $request->product_name_bangla,
-                'lang_code' => 'bn',
-                'products_id' => $product->id,
             ]);
 
             // Handle sub_category_id
@@ -199,7 +193,7 @@ class ProductController extends Controller
 
         $categories = Product_category::where('status', 'active')->whereNull('parent_id')->orderBy('name', 'asc')->get();
         // dd($product->brands);
-        return view('backend.product.edit_product', compact('product', 'brands', 'categories'));
+        return view('agent.product.edit_product', compact('product', 'brands', 'categories'));
     }
 
 
@@ -244,7 +238,7 @@ class ProductController extends Controller
 
             // Update product details
             $product->name = $request->product_name;
-            $product->slug = strtolower(str_replace('', '-', $request->name));
+            $product->slug = Str::slug($request->name);
             $product->description = $request->description;
             $product->content = $request->short_content;
             $product->quantity = $request->quantity;
@@ -352,8 +346,6 @@ class ProductController extends Controller
         }
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -408,18 +400,9 @@ class ProductController extends Controller
 
     public function deleteMultiImg($id)
     {
-
-        // dd(vars: $id);
-
         $multiImage = Multi_image::findOrFail($id);
         unlink($multiImage->image);
-
         $multiImage->delete();
-
-        // $product = Product_with_multi_image::where('multiImage_id','$id')->first();
-
-        // $product->delete();
-
         $notification = array(
             'message' => 'Product MultiImage Deleted Successfully',
             'alert-type' => 'success'
@@ -431,16 +414,13 @@ class ProductController extends Controller
     public function inactive_product()
     {
         $inactive_product = Product::where('status', 'inactive')->get();
-        return view('backend.product.all_inactive_product', compact('inactive_product'));
+        return view('agent.product.all_inactive_product', compact('inactive_product'));
     }
 
     public function productChangeStatus(Request $request)
     {
-
         $inactiveProduct = Product::findOrFail($request->product_id);
-
         if ($inactiveProduct->status == 'inactive') {
-
             $inactiveProduct->status = 'active';
             $inactiveProduct->save();
         }
@@ -450,18 +430,12 @@ class ProductController extends Controller
 
     public function productDelete(Request $request, $id)
     {
-        //dd('hello');
         $product = Product::findOrFail($id);
-        //dd($product);
-
         if ($product) {
-
             if (!empty($product->thumbnail) && file_exists(public_path($product->thumbnail))) {
                 unlink(public_path($product->thumbnail));
             }
-
             $multiImages = Multi_image::where('product_id', $id)->get();
-
             if ($multiImages->count() > 0) {
                 foreach ($multiImages as $multiImage) {
                     if (!empty($multiImage->image) && file_exists(public_path($multiImage->image))) {

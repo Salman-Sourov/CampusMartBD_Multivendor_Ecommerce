@@ -40,4 +40,6 @@ class Product extends Model
     {
         return $this->hasMany(Product_attribute_wise_stock::class, 'product_id', 'id')->with(['inventory_details']);
     }
+
+    
 }

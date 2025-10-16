@@ -53,6 +53,27 @@ class UserController extends Controller
         $user = User::with('verification.institution')->findOrFail($id);
         return view('backend.user.verification_modal', compact('user'));
     }
-    public function verificationConfirm(string $id) {}
-    public function verificationReject(string $id) {}
+    public function verificationConfirm($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->status == 'pending') {
+            $user->status = 'active';
+            $user->save();
+            return redirect()->back()->with('Account activated');
+        }
+    }
+    public function verificationReject(string $id)
+    {
+        $user = User::with('verification')->findOrFail($id);
+        if ($user->status == 'pending') {
+            $user->status = null;
+            $user->verification->nid = null;
+            $user->verification->student_id = null;
+            $user->verification->institution = null;
+            $user->verification->roll = null;
+            $user->verification->save();
+            $user->save();
+            return redirect()->back()->with('Verification rejected');
+        }
+    }
 }

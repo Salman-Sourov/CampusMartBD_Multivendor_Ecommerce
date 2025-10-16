@@ -90,15 +90,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/update/password', [AdminController::class, 'AdminUpdatePassword'])->name('admin.update.password');
     Route::get('/admin/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 
-    // institutions Management
-    Route::resource('brand', BrandController::class);
-    Route::post('/brand/changeStatus', [BrandController::class, 'brandChangeStatus'])->name('brand.change.status');
-    Route::delete('/delete-brand/{id}', [BrandController::class, 'brandDelete'])->name('brand.delete');
-
-    // Institutions Management
-    Route::resource('institutions', InstitutionsController::class);
-    Route::post('/institutions/change-status', [InstitutionsController::class, 'institutionsChangeStatus'])->name('institutions.change.status');
-    Route::delete('/delete-institution/{id}', [InstitutionsController::class, 'institutionsDelete'])->name('institutions.delete');
+    // Brand Management
+    // Route::resource('brand', BrandController::class);
+    // Route::post('/brand/changeStatus', [BrandController::class, 'brandChangeStatus'])->name('brand.change.status');
+    // Route::delete('/delete-brand/{id}', [BrandController::class, 'brandDelete'])->name('brand.delete');
 
     // Category Management
     Route::resource('category', CategoryController::class);
@@ -120,23 +115,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/attribute/changeStatus', [AttributeController::class, 'attributeChangeStatus'])->name('attribute.change.status');
     Route::delete('/delete-attribute/{id}', [AttributeController::class, 'attributeDelete'])->name('attribute.delete');
 
-    // Product Management
-    Route::resource('product', ProductController::class);
-    Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
-    Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
-    Route::post('/product/{id}', [ProductController::class, 'productDelete'])->name('product.delete');
-
-    // Product Stock Management
-    Route::resource('stock', ProductStockController::class);
-    Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
-    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
-    Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
-    Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
-    Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
-    Route::delete('/delete/stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stocks.destroy');
-    Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
-    Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
-
     // Category AJAX Helpers
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
     Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
@@ -156,6 +134,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/update/featured_products', 'updateFeaturedProducts')->name('update.featured.products');
         Route::get('/delete/featured_products/{id}', 'deleteFeaturedProducts')->name('delete.featured.products');
     });
+
+    // Institutions Management
+    Route::resource('institutions', InstitutionsController::class);
+    Route::post('/institutions/change-status', [InstitutionsController::class, 'institutionsChangeStatus'])->name('institutions.change.status');
+    Route::delete('/delete-institution/{id}', [InstitutionsController::class, 'institutionsDelete'])->name('institutions.delete');
 
     // Seller Verification
     Route::controller(UserController::class)->group(function () {
@@ -180,6 +163,23 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/agent/change/passowrd', [AgentController::class, 'AgentChangePassword'])->name('agent.change.password');
     Route::post('/agent/update/password', [AgentController::class, 'AgentUpdatePassword'])->name('agent.update.password');
     Route::post('/agent/verification', [AgentController::class, 'AgentVerification'])->name('agent.verification');
+
+    // Product Management
+    Route::resource('product', ProductController::class);
+    Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
+    Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
+    Route::post('/product/{id}', [ProductController::class, 'productDelete'])->name('product.delete');
+
+    // Product Stock Management
+    Route::resource('stock', ProductStockController::class);
+    Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
+    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
+    Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
+    Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
+    Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
+    Route::delete('/delete/stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stocks.destroy');
+    Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
+    Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
 });
 
 

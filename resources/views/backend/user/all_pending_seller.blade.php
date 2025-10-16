@@ -35,20 +35,20 @@
                                             <td>{{ $item->phone }}</td>
                                             <td>
                                                 <img src="{{ !empty($item->verification->nid) && file_exists(public_path('upload/agent_ver_images/' . $item->verification->nid)) ? asset('upload/agent_ver_images/' . $item->verification->nid) : asset('upload/no_image.jpg') }}"
-                                                    style="width:70px; height:40px; cursor:pointer;" class="preview-image"
+                                                    style="width:50px; height:30px; cursor:pointer;" class="preview-image"
                                                     data-bs-toggle="modal" data-bs-target="#imageModal"
                                                     data-image="{{ asset('upload/agent_ver_images/' . $item->verification->nid) }}">
                                             </td>
                                             <td>
                                                 <img src="{{ !empty($item->verification->student_id) && file_exists(public_path('upload/agent_ver_images/' . $item->verification->student_id)) ? asset('upload/agent_ver_images/' . $item->verification->student_id) : asset('upload/no_image.jpg') }}"
-                                                    style="width:70px; height:40px; cursor:pointer;" class="preview-image"
+                                                    style="width:50px; height:30px; cursor:pointer;" class="preview-image"
                                                     data-bs-toggle="modal" data-bs-target="#imageModal"
                                                     data-image="{{ asset('upload/agent_ver_images/' . $item->verification->student_id) }}">
                                             </td>
-                                            <td class="address-column">{{ $item->verification->institutionData->name ?? 'N/A' }}</td>
+                                            <td class="two-line-column">{{ $item->verification->institutionData->name ?? 'N/A' }}</td>
                                             <td>{{ $item->verification->roll ?? 'N/A' }}</td>
-                                            <td class="address-column">{{ $item->address ?? 'N/A' }}</td>
-                                            <td class="address-column">{{ $item->created_at->timezone('Asia/Dhaka')->format('g:i A | j M Y') }}
+                                            <td class="two-line-column">{{ $item->address ?? 'N/A' }}</td>
+                                            <td class="two-line-column">{{ $item->created_at->timezone('Asia/Dhaka')->format('g:i A | j M Y') }}
                                             </td>
                                             <td>
                                                 <span
@@ -86,7 +86,7 @@
                                         <p>Phone: {{ $item->phone }}</p>
                                         <p>Institution: {{ $item->verification->institutionData->name ?? 'N/A' }}</p>
                                         <p>Roll: {{ $item->verification->roll ?? 'N/A' }}</p>
-                                        <p class="address">Address: {{ $item->address ?? 'N/A' }}</p>
+                                        <p class="two-line">Address: {{ $item->address ?? 'N/A' }}</p>
                                         <div class="d-flex mb-2">
                                             {{-- NID --}}
                                             <img src="{{ !empty($item->verification->nid) &&
@@ -169,50 +169,5 @@
         });
     </script>
 
-    <style>
-        /* Mobile tweaks */
-        .table img {
-            object-fit: cover;
-        }
 
-        @media (max-width: 768px) {
-            .card-body h6 {
-                font-size: 16px;
-            }
-
-            .card-body p {
-                font-size: 14px;
-                margin-bottom: 4px;
-                word-break: break-word;
-                white-space: normal;
-            }
-
-            .card-body p.address {
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-
-            .badge {
-                font-size: 12px;
-            }
-
-            .btn {
-                padding: 3px 6px;
-                font-size: 12px;
-            }
-        }
-
-        /* Table long text wrapping */
-        .table td.address-column {
-            word-break: break-word;
-            white-space: normal;
-            max-width: 200px;
-        }
-
-        .table td img {
-            object-fit: cover;
-        }
-    </style>
 @endsection

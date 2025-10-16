@@ -20,7 +20,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#institutions" role="button" aria-expanded="false"
                     aria-controls="institutions">
-                    <i class="link-icon" data-feather="tag"></i>
+                    <i class="link-icon" data-feather="book-open"></i>
                     <span class="link-title">Institutions</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
@@ -37,30 +37,9 @@
             </li>
 
             {{-- Seller Verification --}}
-            {{-- <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#verification" role="button" aria-expanded="false"
-                    aria-controls="verification">
-                    <i class="link-icon" data-feather="tag"></i>
-                    <span class="link-title">Seller Verification</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
-                </a>
-                <div class="collapse" id="verification">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="{{ route('verification.index') }}" class="nav-link">Pending Sellers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('verification.create') }}" class="nav-link">Inactive Brands</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('verification.create') }}" class="nav-link">Inactive Brands</a>
-                        </li>
-                    </ul>
-                </div>
-            </li> --}}
             <li class="nav-item">
                 <a href="{{ route('verification.index') }}" class="nav-link">
-                    <i class="link-icon" data-feather="settings"></i>
+                    <i class="link-icon" data-feather="user-check"></i>
                     <span class="link-title">Seller Verification</span>
                 </a>
             </li>
@@ -166,7 +145,7 @@
             </li>
 
             {{-- Product --}}
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#product" role="button" aria-expanded="false"
                     aria-controls="product">
                     <i class="link-icon" data-feather="package"></i>
@@ -186,7 +165,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
             {{-- Order --}}
             <li class="nav-item">

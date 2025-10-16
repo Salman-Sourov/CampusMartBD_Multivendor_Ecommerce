@@ -6,9 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Secure Agent Panel for CampusMart BD - Manage orders, track deliveries, and monitor commissions with our responsive Bootstrap 5 admin dashboard. Empower your campus sales today!">
+    <meta name="description"
+        content="Secure Agent Panel for CampusMart BD - Manage orders, track deliveries, and monitor commissions with our responsive Bootstrap 5 admin dashboard. Empower your campus sales today!">
     <meta name="author" content="CampusMart BD Team">
-    <meta name="keywords" content="agent panel, campus mart bd, admin dashboard, bootstrap 5, order management, delivery tracking, campus sales, e-commerce agent, responsive ui, bd marketplace">
+    <meta name="keywords"
+        content="agent panel, campus mart bd, admin dashboard, bootstrap 5, order management, delivery tracking, campus sales, e-commerce agent, responsive ui, bd marketplace">
 
     <title>Seller Dashboard - CampusMart BD</title>
 
@@ -143,6 +145,8 @@
     <script src="{{ asset('backend/assets/vendors/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/tinymce.js') }}"></script>
     <!-- tinymce -->
+
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
 

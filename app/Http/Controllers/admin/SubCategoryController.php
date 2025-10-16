@@ -57,7 +57,7 @@ class SubCategoryController extends Controller
         $category = Product_category::create([
             'parent_id' => $request->category_id,
             'name' => $request->name,
-            'slug' => strtolower(str_replace('', '-', $request->name)),
+            'slug' => Str::slug($request->name),
             'description' => $request->description,
             'image' => $request->file('image') ? $directory . $imageName : null,
             'is_featured' => $request->has('is_featured') ? 0 : 1,
@@ -98,6 +98,7 @@ class SubCategoryController extends Controller
                 'cat_id' => $sub_category->id ?? null,
                 'edit_category_id' => $sub_category->parent_id ?? null,
                 'name' => $sub_category->name ?? null,
+                'slug' => $sub_category->name ? Str::slug($sub_category->name) : null,
                 'name_bangla' => $sub_category->translations->name ?? null,
                 'description' => $sub_category->description ?? null,
 
@@ -145,7 +146,7 @@ class SubCategoryController extends Controller
         // Update the category's basic details including the toggled fields
         $category->update([
             'name' => $request->edit_name,
-            'slug' => Str::slug($request->name),
+            'slug' => Str::slug($request->edit_name),
             'parent_id' => $request->edit_category_id,
             'description' => $request->edit_description,
             // 'is_featured' => $category->is_featured, // Save the updated value of 'is_featured'

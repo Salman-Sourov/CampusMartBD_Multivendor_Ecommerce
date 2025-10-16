@@ -53,15 +53,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">All Institutions</h6>
-
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
                                 <thead>
                                     <tr>
-                                        <th>Sl</th>
+                                        <th class="serial-col">Sl</th>
                                         <th>Name</th>
-                                        <th>Logo</th>
-                                        <th>Status</th>
+                                        <th class="hidden-column">Logo</th>
+                                        <th class="hidden-column">Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -69,11 +68,11 @@
                                     @if ($institutions && count($institutions) > 0)
                                         @foreach ($institutions as $key => $item)
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td><img src="{{ !empty($item->logo) ? url($item->logo) : url('upload/no_image.jpg') }}"
+                                                <td class="serial-col">{{ $key + 1 }}</td>
+                                                <td class="two-line-column">{{ $item->name }}</td>
+                                                <td class="hidden-column"><img src="{{ !empty($item->logo) ? url($item->logo) : url('upload/no_image.jpg') }}"
                                                         style="width:70px; height:40px;"> </td>
-                                                <td>
+                                                <td class="hidden-column">
                                                     @if ($item->status == 'active')
                                                         <span class="badge rounded-pill bg-success">Active</span>
                                                     @else
@@ -81,8 +80,6 @@
                                                     @endif
                                                 </td>
                                                 <td>
-
-
                                                     <button type="button" class="btn btn-inverse-warning"
                                                         data-bs-toggle="modal" data-bs-target="#editModal"
                                                         id="{{ $item->id }}" onclick="institutionEdit(this.id)">
