@@ -115,13 +115,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/attribute/changeStatus', [AttributeController::class, 'attributeChangeStatus'])->name('attribute.change.status');
     Route::delete('/delete-attribute/{id}', [AttributeController::class, 'attributeDelete'])->name('attribute.delete');
 
-    // Category AJAX Helpers
-    Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
-    Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
-
-    // Product Image Upload/Delete
-    Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
-    Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
 
     // Order Management
     Route::get('/all/order', [OrderController::class, 'allOrder'])->name('all.order');
@@ -169,6 +162,14 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
     Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
     Route::post('/product/{id}', [ProductController::class, 'productDelete'])->name('product.delete');
+
+    // Category AJAX Helpers
+    Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
+    Route::get('/agent/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
+
+    // Product Image Upload/Delete
+    Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
+    Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
 
     // Product Stock Management
     Route::resource('stock', ProductStockController::class);

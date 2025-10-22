@@ -1,19 +1,19 @@
 @extends('admin.admin_dashboard')
 @section('admin')
     <div class="page-content">
-        
+
         <div class="d-flex justify-content-start mb-3">
             <!-- All Products Button -->
             <a href="{{ route('product.index') }}" class="btn btn-primary btn-sm d-flex align-items-center me-3" title="View All Products">
                 <i data-feather="box" class="me-2" style="width: 18px; height: 18px;"></i> All Products
             </a>
-            
+
             <!-- View Product Button -->
             <a href="{{ route('product.details', $product->id) }}" class="btn btn-success btn-sm d-flex align-items-center" title="View Product on Website" target="_blank">
                 <i data-feather="eye" class="me-2" style="width: 18px; height: 18px;"></i> View Product on Website
             </a>
-        </div>        
-                
+        </div>
+
 
         <div class="row profile-body">
             <!-- middle wrapper start -->
@@ -304,10 +304,10 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h6 class="card-title">Edit Multi Image</h6>
-                
+
                                             <form method="post" action="" id="myForm" enctype="multipart/form-data">
                                                 @csrf
-                
+
                                                 <div class="row">
                                                     @foreach ($product->multi_images as $multi_image => $img)
                                                         <!-- Each image is in a column and occupies 4 columns out of 12 -->
@@ -321,10 +321,10 @@
                                                         </div>
                                                     @endforeach
                                                 </div>
-                
-                                                
+
+
                                             </form>
-                
+
                                             <!-- Upload New Images -->
                                             <form method="post" action="{{ route('uploadMultiImg.add') }}" id="myForm" enctype="multipart/form-data">
                                                 @csrf
@@ -339,7 +339,7 @@
                                                                     <span class="text-danger">{{ $message }}</span>
                                                                 @enderror
                                                             </td>
-                
+
                                                             <td>
                                                                 <input type="submit" class="btn btn-info px-4" value="Add Image">
                                                             </td>
@@ -347,7 +347,7 @@
                                                     </tbody>
                                                 </table>
                                             </form>
-                
+
                                         </div>
                                     </div>
                                 </div>
@@ -355,7 +355,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 

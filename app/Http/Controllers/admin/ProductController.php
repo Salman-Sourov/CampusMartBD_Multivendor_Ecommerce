@@ -216,7 +216,7 @@ class ProductController extends Controller
             'height' => 'nullable|numeric',
             'weight' => 'nullable|numeric',
             'short_content' => 'nullable|string',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
 
         ]);
 
@@ -261,12 +261,12 @@ class ProductController extends Controller
 
             //dd('hello');
 
-            $translation = product_translation::where('products_id', $product->id)->first();
+            // $translation = product_translation::where('products_id', $product->id)->first();
 
-            $translation->name = $request->product_name_bangla ?? null;
-            $translation->lang_code = 'bn';
-            $translation->products_id = $product->id;
-            $translation->save();
+            // $translation->name = $request->product_name_bangla ?? null;
+            // $translation->lang_code = 'bn';
+            // $translation->products_id = $product->id;
+            // $translation->save();
 
             // dd($request->all());
 

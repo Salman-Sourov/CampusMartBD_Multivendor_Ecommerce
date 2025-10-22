@@ -52,11 +52,11 @@
                                             <select name="category_id" class="form-control" id="category_id"
                                                 onChange="categoryChanged()">
                                                 <option value="">Select a Category</option>
-
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                    {{-- <option value="{{ $category->id }}" {{ old('category_id') ==  $category->id ? 'selected' : ''}}> --}}
-                                                    {{ $category->name }}
+                                                    {{-- <option value="{{ $category->id }}">{{ $category->name }}</option> --}}
+                                                    <option value="{{ $category->id }}"
+                                                        {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                        {{ $category->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -125,7 +125,7 @@
                                     <div class="col-sm-12">
                                         <div class="mb-3">
                                             <label class="form-label text-danger">Short Content *</label>
-                                            <textarea name="short_content" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ old('short_content') }}</textarea>
+                                            <textarea name="short_content" class="form-control" id="exampleFormControlTextarea1" rows="4">{{ old('short_content') }}</textarea>
                                             @error('short_content')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -234,36 +234,29 @@
 
     <script>
         function categoryChanged() {
-            // console.log('hello');
             var categoryId = $('#category_id').val();
             // Get selected category ID
+            console.log('Selected Category ID:', categoryId);
             if (categoryId) {
                 $.ajax({
-                    url: '/get-subcategories/' + categoryId, // URL to fetch subcategories
+                    url: "{{ url('get-subcategories') }}/" + categoryId, // URL to fetch subcategories
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        $('#sub_category').empty(); // Clear existing options
-                        $('#sub_category').append(
-                            '<option value="">Select a Sub Category</option>'); // Add default option
-
+                        $('#sub_category').empty().append('<option value="">Select a Sub Category</option>');
                         $.each(data, function(key, value) {
                             $('#sub_category').append('<option value="' + value.id + '">' + value.name +
                                 '</option>');
                         });
                     },
-                    error: function() {
-                        console.log('Error fetching subcategories');
+                    error: function(xhr) {
+                        console.log('Error fetching subcategories:', xhr.responseText);
                     }
                 });
             } else {
-
+                $('#sub_category').empty();
             }
-            console.log('Selected Category ID:', categoryId);
-
-            // You can add more logic here to load subcategories based on the selected category
         }
-
 
 
         $(document).ready(function() {

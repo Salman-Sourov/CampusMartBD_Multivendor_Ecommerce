@@ -98,11 +98,7 @@
 
                                 <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
 
-                                @if (App::getLocale() == 'en')
                                     <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
-                                @else
-                                    <h2 class="name">{{ Str::limit($selected_product->translations->name) }}</h2>
-                                @endif
 
                                 <div class="price-rating">
                                     <h3 class="theme-color price">৳ {{ $selected_product->sale_price }} <del

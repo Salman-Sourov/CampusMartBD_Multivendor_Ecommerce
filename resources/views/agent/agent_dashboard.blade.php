@@ -75,6 +75,9 @@
         </div>
     </div>
 
+    <!-- ✅ jQuery (must be loaded before any plugin using $) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- core:js -->
     <script src="{{ asset('backend/assets/vendors/core/core.js') }}"></script>
     <!-- endinject -->
@@ -147,7 +150,6 @@
     <!-- tinymce -->
 
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 
 
 </body>
