@@ -148,7 +148,7 @@
                                                 <td>{{ $quantity }}</td>
                                                 <td>
                                                     <button type="button"
-                                                        class="btn 
+                                                        class="btn
                                                         {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}"
                                                         data-bs-toggle="modal" data-bs-target="#addStock"
                                                         data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
@@ -216,7 +216,7 @@
                                                 <td>{{ $quantity }}</td>
                                                 <td>
                                                     <button type="button"
-                                                        class="btn 
+                                                        class="btn
                                                         {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}"
                                                         data-bs-toggle="modal" data-bs-target="#addStock"
                                                         data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"
@@ -283,7 +283,7 @@
                                                 <td>{{ $quantity }}</td>
                                                 <td>
                                                     <button type="button"
-                                                        class="btn 
+                                                        class="btn
                                                         {{ $quantity > 0 ? 'btn-primary' : 'btn-success' }}"
                                                         data-bs-toggle="modal" data-bs-target="#addStock"
                                                         data-attribute-ids="{{ implode(',', array_map(fn($attribute) => $attribute->id, $combination)) }}"

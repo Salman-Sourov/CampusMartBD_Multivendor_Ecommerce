@@ -27,8 +27,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $agent = Auth::user();
         $products = Product::where('status', 'active')->get();
-        return view("agent.product.all_product", compact("products"));
+        return view("agent.product.all_product", compact('products','agent'));
     }
 
     /**
@@ -47,9 +48,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        // dd('hello');
         $request->validate([
-            'product_name' => 'required|string|max:255',
+            'product_name' => 'unique|required|string|max:255',
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'quantity' => 'nullable|integer',
@@ -79,7 +79,7 @@ class ProductController extends Controller
             $product = Product::create([
                 'agent_id' => Auth::User()->id,
                 'name' => $request->product_name,
-                'slug' => Str::slug($request->name),
+                'slug' => Str::slug($request->product_name),
                 'description' => $request->description,
                 'content' => $request->short_content,
                 'status' => 'active',
@@ -184,16 +184,10 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('translations', 'categories', 'multi_images', 'videos')->find($id);
-        // dd(vars: $product);
-        $product->start_date = \Carbon\Carbon::parse($product->start_date)->format('Y-m-d');
-        $product->end_date = \Carbon\Carbon::parse($product->end_date)->format('Y-m-d');
-
-        $brands = Brand::where('status', 'active')->get();
-
+        $agent = Auth::user();
+        $product = Product::with( 'categories', 'multi_images')->find($id);
         $categories = Product_category::where('status', 'active')->whereNull('parent_id')->orderBy('name', 'asc')->get();
-        // dd($product->brands);
-        return view('agent.product.edit_product', compact('product', 'brands', 'categories'));
+        return view('agent.product.edit_product', compact('product', 'categories','agent'));
     }
 
 
@@ -238,7 +232,7 @@ class ProductController extends Controller
 
             // Update product details
             $product->name = $request->product_name;
-            $product->slug = Str::slug($request->name);
+            $product->slug = Str::slug($request->product_name);
             $product->description = $request->description;
             $product->content = $request->short_content;
             $product->quantity = $request->quantity;

@@ -22,8 +22,6 @@
                                         <th>Sl</th>
                                         <th>Product Name</th>
                                         <th>Image</th>
-                                        <th>Brand</th>
-                                        <th>Price</th>
                                         <th>Sale Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -38,13 +36,6 @@
                                                 <td><img src="{{ asset($item->thumbnail) }}"
                                                         style="width:70px; height:40px;">
                                                 </td>
-                                                @php
-                                                    $brand = App\Models\Brand::find($item->brand_id); // Corrected namespace and query
-                                                @endphp
-                                                <td>{{ $brand ? $brand->name : 'N/A' }}</td>
-                                                <!-- Check if brand exists and display its name, otherwise 'N/A' -->
-
-                                                <td>{{ $item->price }}</td>
                                                 <td>{{ $item->sale_price }}</td>
                                                 <td>
                                                     @if ($item->status == 'active')
@@ -54,7 +45,6 @@
                                                     @endif
                                                 </td>
                                                 <td>
-
                                                     <a class="btn toggle-class {{ $item->status == 'active' ? 'btn-inverse-success' : 'btn-inverse-danger' }}"
                                                         title="Status" data-id="{{ $item->id }}"
                                                         data-status="{{ $item->status }}">
@@ -100,7 +90,7 @@
                 var $this = $(this);
                 var status = $this.attr('data-status');
                 var product_id = $this.data('id');
-                console.log($('meta[name="csrf-token"]').attr('content'));
+                console.log('Token:', $('meta[name="csrf-token"]').attr('content'));
 
                 $.ajax({
                     type: "POST", // Use POST for status change
@@ -142,7 +132,10 @@
 
                             $this.attr('data-status', data.status);
                             feather.replace(); // Re-initialize Feather icons
-                            window.location.reload();
+                            setTimeout(function() {
+                                window.location
+                                    .reload(); // Reload the page to see the new brand
+                            }, 100);
                         } else {
                             Toast.fire({
                                 icon: 'error',
@@ -193,7 +186,7 @@
                                 $('#brandTableBody tr[data-id="' + id + '"]').fadeOut(500,
                                     function() {
                                         $(this)
-                                    .remove(); // Remove the item after fading out
+                                            .remove(); // Remove the item after fading out
                                     });
 
                                 toastr.success('Deleted Successfully.');
@@ -212,6 +205,5 @@
             });
         });
     </script>
-
 
 @endsection

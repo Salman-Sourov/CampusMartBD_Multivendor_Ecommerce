@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(AgentVerification::class,  'agent_id', 'id');
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'agent_id', 'id');
+    }
 }

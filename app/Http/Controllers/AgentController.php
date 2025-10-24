@@ -29,7 +29,7 @@ class AgentController extends Controller
     public function AgentRegister(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users,name'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone' => [
                 'required',
@@ -40,7 +40,7 @@ class AgentController extends Controller
             ],
             'password' => ['required', 'string', 'min:6'],
         ], [
-            'name.required' => 'Please enter your full name.',
+            'name.required' => 'Please enter your shop name.',
             'email.required' => 'Please enter your email address.',
             'email.email' => 'Please enter a valid email address.',
             'email.unique' => 'This email address is already registered.',

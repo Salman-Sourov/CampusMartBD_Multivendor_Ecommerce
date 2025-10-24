@@ -42,11 +42,12 @@
                             class="home-detail p-center-left w-75 position-absolute top-50 start-0 translate-middle-y ps-4">
                             <div>
                                 <h6>Shop Smart. Stay Safe.</h6>
-                                <h1 class="w-75 text-uppercase poster-1">Get Your Daily Needs Delivered to 
+                                <h1 class="w-75 text-uppercase poster-1">Get Your Daily Needs Delivered to
                                     <span class="daily">Campus</span>
                                 </h1>
                                 <p class="w-58 d-none d-sm-block">
-                                    Your Campus, Your Marketplace – From Students, For Students <br> Empowering Students to Shop, Sell, and Support Locally
+                                    Your Campus, Your Marketplace – From Students, For Students <br> Empowering Students to
+                                    Shop, Sell, and Support Locally
                                 </p>
                             </div>
                         </div>
@@ -60,7 +61,8 @@
                             class="bg-img blur-up lazyload" alt="Banner 1">
                         <div class="home-detail p-top-left home-p-sm w-90">
                             <div>
-                                <h2 class="mt-0 text-danger">0% <span class="discount text-title">Delivery Charge</span></h2>
+                                <h2 class="mt-0 text-danger">0% <span class="discount text-title">Delivery Charge</span>
+                                </h2>
                                 <h5 class="text-content fw-bold">Coming Soon to Every Campus in Bangladesh</h5>
                             </div>
                         </div>
@@ -209,7 +211,7 @@
                                                     @if (App::getLocale() == 'en')
                                                         {{ $product->name }}
                                                     @else
-                                                        {{ $product->translations->name }}
+                                                        {{ $product->name }}
                                                     @endif
                                                 </h5>
                                             </a>
@@ -248,9 +250,11 @@
                         <div class="offer-contain p-4">
                             <div class="offer-detail" style="color: #023c42; text-align: center;">
                                 <h2 class="text-dark" style="color: #023c42 !important;">Turn Ideas
-                                    <span class="text-danger fw-bold" style="color: #023c42 !important;">into Income!</span>
+                                    <span class="text-danger fw-bold" style="color: #023c42 !important;">into
+                                        Income!</span>
                                 </h2>
-                                <p class="text-content fw-bold" style="color: #023c42 !important;">Start selling on CampusMartBD and grow your business today!</p>
+                                <p class="text-content fw-bold" style="color: #023c42 !important;">Start selling on
+                                    CampusMartBD and grow your business today!</p>
                             </div>
                         </div>
                     </div>
@@ -272,7 +276,8 @@
                                 <div class="product-box-3 h-100 wow fadeInUp">
                                     <div class="product-header">
                                         <div class="product-image">
-                                            <a href="{{ route('product.details', $product->id) }}">
+                                            <a
+                                                href="{{ route('product.details', ['shop' => $product->agent->name, 'slug' => $product->slug]) }}">
                                                 <img src="{{ asset($product->thumbnail) }}"
                                                     class="img-fluid blur-up lazyload" alt="">
                                             </a>
@@ -288,12 +293,13 @@
                                                     class="span-name">{{ $product->categories->category_detail->name }}</span>
                                             @endif
 
-                                            <a href="{{ route('product.details', $product->id) }}">
+                                            <a
+                                                href="{{ route('product.details', ['shop' => $product->agent->name, 'slug' => $product->slug]) }}">
                                                 <h5 class="product_name">
                                                     @if (App::getLocale() == 'en')
                                                         {{ $product->name }}
                                                     @else
-                                                        {{ $product->translations->name }}
+                                                        {{ $product->name }}
                                                     @endif
                                                 </h5>
                                             </a>
@@ -315,7 +321,8 @@
                                                     <button type="button" class="btn btn-sm btn-animation disabled"
                                                         disabled>Buy Now</button>
                                                 @else
-                                                    <a href="{{ route('product.details', $product->id) }}">
+                                                    <a
+                                                        href="{{ route('product.details', ['shop' => $product->agent->name, 'slug' => $product->slug]) }}">
                                                         <button type="button" class="btn btn-sm btn-animation">Buy
                                                             Now</button>
                                                     </a>
@@ -347,14 +354,15 @@
                                         <h3 class="text-uppercase">
                                             shop <span class="brand-name">campus</span>
                                         </h3>
-                                        <p class="text-content fw-500 mt-3 lh-lg">Shop Campus-Exclusive Deals, Anytime, Anywhere. Shop Smart,Save More.</p>
+                                        <p class="text-content fw-500 mt-3 lh-lg">Shop Campus-Exclusive Deals, Anytime,
+                                            Anywhere. Shop Smart,Save More.</p>
 
                                         <div class="banner-detail-box banner-detail-box-2 mb-md-3 mb-1">
                                             <h4 class="text-uppercase">up to</h4>
                                             <h2 class="mt-2">50%</h2>
                                             <h3 class="text-uppercase">off</h3>
                                         </div>
-                                        {{-- 
+                                        {{--
                                         <div>
                                             <button onclick="location.href = 'shop-left-sidebar.html';"
                                                 class="btn text-white btn-md mt-xxl-4 mt-2 home-button mend-auto theme-bg-color">Shop

@@ -12,6 +12,7 @@
     <meta name="keywords"
         content="agent panel, campus mart bd, admin dashboard, bootstrap 5, order management, delivery tracking, campus sales, e-commerce agent, responsive ui, bd marketplace">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Seller Dashboard - CampusMart BD</title>
 
     <!-- Fonts -->
@@ -19,6 +20,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- End fonts -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    {{-- Script for subcategory and multiimage --}}
 
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/jquery-tags-input/jquery.tagsinput.min.css') }}">
@@ -58,10 +62,7 @@
         <!-- partial:partials/_sidebar.html -->
         @include('agent.body.sidebar')
 
-        <!-- partial -->
-
         <div class="page-wrapper">
-
             <!-- partial:partials/_navbar.html -->
             @include('agent.body.header')
             <!-- partial -->
@@ -71,7 +72,6 @@
             <!-- partial:partials/_footer.html -->
             @include('agent.body.footer')
             <!-- partial -->
-
         </div>
     </div>
 
@@ -81,6 +81,19 @@
     <!-- core:js -->
     <script src="{{ asset('backend/assets/vendors/core/core.js') }}"></script>
     <!-- endinject -->
+
+    <script src="{{ asset('backend/assets/js/bangla.js') }}"></script>
+    <script>
+        $('#banglaInput').bangla({
+            enable: true
+        });
+        $('#banglaInput').bangla('on');
+
+        $('#banglaInputText').bangla({
+            enable: true
+        });
+        $('#banglaInputText').bangla('on');
+    </script>
 
     <!-- Plugin js for this page -->
     <script src="{{ asset('backend/assets/vendors/flatpickr/flatpickr.min.js') }}"></script>
@@ -131,7 +144,6 @@
     <script src="{{ asset('backend/assets/js/data-table.js') }}"></script>
     <!-- End datatables -->
 
-
     <!-- Input Tags -->
     <script src="{{ asset('backend/assets/vendors/inputmask/jquery.inputmask.min.js') }}"></script>
     <script src="{{ asset('backend/assets/vendors/select2/select2.min.js') }}"></script>
@@ -150,7 +162,6 @@
     <!-- tinymce -->
 
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 
 </body>
 

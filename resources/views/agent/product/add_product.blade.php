@@ -80,17 +80,6 @@
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Price (Old Price)</label>
-                                            <input type="text" name="price" class="form-control"
-                                                value="{{ old('price') }}">
-                                            @error('price')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <div class="form-group mb-3">
                                             <label class="form-label text-danger">Sale Price (Sell/New Price) *</label>
                                             <input type="text" name="sale_price" class="form-control"
                                                 value="{{ old('sale_price') }}">
@@ -100,27 +89,17 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-sm-3">
+                                    <div class="col-sm-3">
                                         <div class="form-group mb-3">
-                                            <label class="form-label">Start Date</label>
-                                            <input type="date" name="start_date" class="form-control"
-                                                value="{{ old('start_date') }}">
-                                            @error('start_date')
+                                            <label class="form-label">Price (Old Price)</label>
+                                            <input type="text" name="price" class="form-control"
+                                                value="{{ old('price') }}">
+                                            @error('price')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">End Date</label>
-                                            <input type="date" name="end_date" class="form-control"
-                                                value="{{ old('end_date') }}">
-                                            @error('end_date')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
 
                                     <div class="col-sm-12">
                                         <div class="mb-3">
@@ -173,50 +152,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Length</label>
-                                            <input type="text" name="length" class="form-control"
-                                                value="{{ old('length') }}">
-                                            @error('length')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Wide</label>
-                                            <input type="text" name="wide" class="form-control"
-                                                value="{{ old('wide') }}">
-                                            @error('wide')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Height</label>
-                                            <input type="text" name="height" class="form-control"
-                                                value="{{ old('height') }}">
-                                            @error('height')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                        <div class="form-group mb-3">
-                                            <label class="form-label">Weight</label>
-                                            <input type="text" name="weight" class="form-control"
-                                                value="{{ old('weight') }}">
-                                            @error('weight')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <hr>
@@ -231,6 +166,7 @@
         </div>
 
     </div>
+
 
     <script>
         function categoryChanged() {

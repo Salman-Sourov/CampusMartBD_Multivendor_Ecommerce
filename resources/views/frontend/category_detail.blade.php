@@ -1,4 +1,4 @@
-<title>{{ $category_product->name }} - Elhaam BD</title>
+<title>{{ $category_product->name }} - CampusMart BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
     <section class="breadscrumb-section pt-0">
@@ -75,12 +75,13 @@
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                         @forelse ($category_product->totalProducts as $product)
-                            {{-- @if ($category_product->parent_id == null) --}}
+                            @if ($product->products)
                                 <div>
                                     <div class="product-box-3 h-100 wow fadeInUp">
                                         <div class="product-header">
                                             <div class="product-image">
-                                                <a href="{{ route('product.details', $product->products->id) }}">
+                                                <a
+                                                    href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
                                                     <img src="{{ asset($product->products->thumbnail) }}"
                                                         class="img-fluid blur-up lazyload" alt="">
                                                 </a>
@@ -90,7 +91,8 @@
                                             <div class="product-detail">
                                                 <span
                                                     class="span-name">{{ $product->products->categories->category_detail->name }}</span>
-                                                <a href="{{ route('product.details', $product->products->id) }}">
+                                                <a
+                                                    href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
                                                     @if (App::getLocale() == 'en')
                                                         <h5 class="name">{{ Str::limit($product->products->name, 20) }}
                                                         </h5>
@@ -110,18 +112,19 @@
                                                     {{ $product->products->description }}</p>
                                                 {{-- <h6 class="unit">{{ $product->products->brands->name }}</h6> --}}
                                                 <h5 class="price">
-                                                    <span class="theme-color">{{ $product->products->sale_price }}</span>
+                                                    <span class="theme-color">৳ {{ $product->products->sale_price }}</span>
                                                     <del>{{ $product->products->price }}</del>
                                                     <br> <br>
                                                 </h5>
-                                                <a href="{{ route('product.details', $product->products->id) }}">
+                                                <a
+                                                    href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
                                                     <button class="btn btn-sm btn-animation">Buy Now</button>
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            {{-- @endif --}}
+                            @endif
                         @empty
                             <p>No products available</p>
                         @endforelse

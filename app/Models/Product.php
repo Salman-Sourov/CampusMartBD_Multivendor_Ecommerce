@@ -22,7 +22,7 @@ class Product extends Model
     }
     public function brands()
     {
-        return $this->hasOne(brand::class, 'id', 'brand_id');
+        return $this->hasOne(Brand::class, 'id', 'brand_id');
     }
     public function multi_images()
     {
@@ -40,6 +40,8 @@ class Product extends Model
     {
         return $this->hasMany(Product_attribute_wise_stock::class, 'product_id', 'id')->with(['inventory_details']);
     }
-
-    
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'agent_id', 'id');
+    }
 }

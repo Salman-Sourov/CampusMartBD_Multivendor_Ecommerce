@@ -14,8 +14,23 @@
                     <span class="link-title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item nav-category">CampusMart BD</li>
 
+            <li class="nav-item nav-category">Seller</li>
+            {{-- Seller Verification --}}
+            <li class="nav-item">
+                <a href="{{ route('verification.index') }}" class="nav-link">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Seller Verification</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('sellers.index') }}" class="nav-link">
+                    <i class="link-icon" data-feather="users"></i>
+                    <span class="link-title">All Seller</span>
+                </a>
+            </li>
+
+            <li class="nav-item nav-category">Functionality</li>
             {{-- Institutions --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#institutions" role="button" aria-expanded="false"

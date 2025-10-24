@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Product_category;
 use App\Models\Product_category_product;
 use App\Models\Product_with_attribute;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,18 +32,13 @@ class indexController extends Controller
 
     public function categoryDetails($slug)
     {
-        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
-        $brands = Brand::with('translations')->where('status', 'active')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
         $carts = session()->get('cart');
-
-        $category_product = Product_category::with('translations', 'hasChild', 'totalProducts')
+        $category_product = Product_category::with('hasChild', 'totalProducts')
             ->where('status', 'active')  // Filter by active status
             ->where('slug', $slug)           // Filter by the specific id
-            ->first();
+            ->firstOrFail();
 
-        // dd($category_product);
-        return view('frontend.category_detail', compact('categories', 'brands', 'products', 'category_product', 'carts'));
+        return view('frontend.category_detail', compact('category_product', 'carts'));
     }
 
     public function brandDetails($id)
@@ -73,18 +69,22 @@ class indexController extends Controller
         $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '0')->inRandomOrder()->latest()->get();
         $carts = session()->get('cart'); // Default to an empty array if no cart exists
 
-        return view('frontend.all_shops',compact('categories', 'brands', 'products', 'carts', 'featured_products'));
+        return view('frontend.all_shops', compact('categories', 'brands', 'products', 'carts', 'featured_products'));
     }
 
-    public function productDetails($id)
+    public function productDetails($shop, $slug)
     {
-        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
-        $brands = Brand::with('translations')->where('status', 'active')->get();
+        $agent = User::where('name', $shop)->firstOrFail();
+
+        $selected_product = Product::with('multi_images', 'attribute_set')
+            ->where('slug', $slug)->where('agent_id', $agent->id)
+            ->firstOrFail();
+
         $featured_products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '1')->latest()->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
+
         $carts = session()->get('cart');
 
-        $selected_product = Product::with('multi_images', 'attribute_set',)->findOrFail($id);
+        $id = $selected_product->id;
 
         $attributes = Product_with_attribute::where('product_id', $id)->first();
 
@@ -105,7 +105,7 @@ class indexController extends Controller
 
         // dd($category_product);
 
-        return view('frontend.product_detail', compact('categories', 'brands', 'products', 'selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products'));
+        return view('frontend.product_detail', compact('selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products'));
     }
 
     public function confirmOrder(Request $request)

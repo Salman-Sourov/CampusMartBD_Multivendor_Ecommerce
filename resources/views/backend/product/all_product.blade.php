@@ -66,9 +66,9 @@
 
                                                 <a href="javascript:void(0);" class="delete-btn btn btn-outline-danger btn-sm"
                                                     data-id="{{ $item->id }}" title="Delete">
-                                                    <i data-feather="trash-2"></i>
+                                                    <i data-feather="power"></i>
                                                 </a>
-                                                
+
 
                                                 <a href="{{ route('get.stock', $item->id) }}"
                                                     class="btn btn-outline-primary btn-sm mx-2" title="Variant & Stock">Variant & Stock

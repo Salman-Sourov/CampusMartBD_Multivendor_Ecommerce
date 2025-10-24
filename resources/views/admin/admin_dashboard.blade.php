@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Secure Admin Panel for Elhaam BD: Responsive Bootstrap 5 dashboard for managing fashion orders, inventory, and customer service in Bangladesh's premier online store.">
+    <meta name="description"
+        content="Secure Admin Panel for Elhaam BD: Responsive Bootstrap 5 dashboard for managing fashion orders, inventory, and customer service in Bangladesh's premier online store.">
     <meta name="author" content="Elhaam BD Team">
-    <meta name="keywords" content="elhaam bd, admin panel, bootstrap 5, e-commerce dashboard, order management, inventory control, fashion bd, responsive admin, bangladesh online store, women's clothing admin">
+    <meta name="keywords"
+        content="elhaam bd, admin panel, bootstrap 5, e-commerce dashboard, order management, inventory control, fashion bd, responsive admin, bangladesh online store, women's clothing admin">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,8 +20,8 @@
     <!-- End fonts -->
 
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    {{-- Script for subcategory and multiimage --}}
 
 
     <link rel="stylesheet" href="{{ asset('backend/assets/vendors/select2/select2.min.css') }}">

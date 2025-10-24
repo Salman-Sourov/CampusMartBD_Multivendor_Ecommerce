@@ -26,7 +26,7 @@ class ProductStockController extends Controller
         $variants = Product_with_attribute::where('product_id', $id)->get();
 
         // dd($attributes);
-        return view('backend.product.stock_page', compact('attributeSets', 'product_id', 'variants', 'attributes'));
+        return view('agent.product.stock_page', compact('attributeSets', 'product_id', 'variants', 'attributes'));
     }
 
     public function getAttribute(string $id)
@@ -61,8 +61,8 @@ class ProductStockController extends Controller
         //dd($request);
 
         // $request->validate([
-        //     'attribute' => 'required|array|min:1', 
-        //     'attribute.*' => 'exists:product_with_attributes,attribute_ids', 
+        //     'attribute' => 'required|array|min:1',
+        //     'attribute.*' => 'exists:product_with_attributes,attribute_ids',
         // ]);
 
         $check_attribute = product_with_attribute::where('product_id', $request->product_id)->first();
@@ -245,21 +245,21 @@ class ProductStockController extends Controller
         // Assuming the 'id' is the stock record ID, find and delete it
         $stock = Product_with_attribute::where('product_id', $id)->first();
         $attribute_stock = Product_attribute_wise_stock::where('product_id', $id)->get();
-        
+
         if ($stock || $attribute_stock->isNotEmpty()) {
             if ($stock) {
                 $stock->delete();
             }
-            
+
             foreach ($attribute_stock as $item) {
                 $item->delete();
             }
-        
+
             return response()->json(['success' => true, 'message' => 'Stock deleted successfully.']);
         } else {
             return response()->json(['success' => false, 'message' => 'Stock not found.']);
         }
-        
+
     }
 
     public function stockOut(string $id){

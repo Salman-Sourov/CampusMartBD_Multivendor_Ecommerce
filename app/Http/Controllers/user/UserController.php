@@ -76,4 +76,13 @@ class UserController extends Controller
             return redirect()->back()->with('Verification rejected');
         }
     }
+
+    public function allSellers(){
+        $active_seller = User::where('status', 'active')
+            ->where('role', 'agent')
+            ->with('verification.institutionData')
+            ->get();
+        // dd($inactive_seller);
+        return view('backend.user.all_seller', compact('active_seller'));
+    }
 }

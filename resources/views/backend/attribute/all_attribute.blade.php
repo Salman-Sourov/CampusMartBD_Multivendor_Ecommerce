@@ -206,7 +206,7 @@
                         $('#addAttributeForm')[0].reset();
                         setTimeout(function() {
                             window.location.reload(); // Reload the page to see the new brand
-                        }, 1500);
+                        }, 100);
                     } else {
                         for (let field in data.errors) {
                             $('#' + field + '_error').text(data.errors[field][0]); // Show error

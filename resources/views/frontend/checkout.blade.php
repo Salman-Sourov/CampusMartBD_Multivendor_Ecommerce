@@ -40,7 +40,7 @@
                                     <div class="col-12">
                                         <div class="form-floating theme-form-floating">
                                             <input type="text" name="name" class="form-control" id="fullname"
-                                                placeholder="Full Name" value="{{ Auth::check() ? Auth::user()->name : '' }}" 
+                                                placeholder="Full Name" value="{{ Auth::check() ? Auth::user()->name : '' }}"
                                                 {{ Auth::check()}}>
                                             <label for="fullname">Full Name (আপনার নাম)</label>
                                             <span id="name_error" class="text-danger"></span>
@@ -49,7 +49,7 @@
                                         <div class="col-12 mb-2">
                                             <div class="form-floating theme-form-floating">
                                                 <input type="text" name="phone" class="form-control" id="phone"
-                                                    placeholder="phone" value="{{ Auth::check() ? Auth::user()->phone : '' }}" 
+                                                    placeholder="phone" value="{{ Auth::check() ? Auth::user()->phone : '' }}"
                                                     {{ Auth::check() }}>
                                                 <label for="phone">Phone Number (ফোন নাম্বার)</label>
                                                 <span id="phone_error" class="text-danger"></span>
@@ -136,13 +136,13 @@
                                         <tr class="product-box-contain">
                                             <td class="product-detail">
                                                 <div class="product border-0">
-                                                    <a href="{{ route('product.details', $key) }}" class="product-image">
+                                                    <a href="" class="product-image">
                                                         <img src="{{ asset($cart['image']) }}" alt="">
                                                     </a>
                                                 </div>
                                             </td>
                                             <td class="name">
-                                                <a href="{{ route('product.details', $key) }}">
+                                                <a href="">
                                                     {{ $cart['name'] }}
                                                 </a>
                                             </td>
@@ -189,7 +189,7 @@
                                             <td class="remove close_button">
                                                 <a class="" data-id="{{ $key }}" onclick="closeCart()">
                                                     <i class="fa fa-trash"></i>
-                                                </a>                                                
+                                                </a>
                                             </td>
                                         </tr>
                                         @php

@@ -40,7 +40,7 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/category-details/{slug}', [IndexController::class, 'categoryDetails'])->name('category.details');
 Route::get('/brand-details/{id}', [IndexController::class, 'brandDetails'])->name('brand.details');
 Route::get('/shops', [IndexController::class, 'shops'])->name('all.shops');
-Route::get('/product-details/{id}', [IndexController::class, 'productDetails'])->name('product.details');
+Route::get('/product/{shop}/{slug}', [IndexController::class, 'productDetails'])->name('product.details');
 
 // Agent Registration
 Route::get('/agent/register', [AgentController::class, 'AgentRegisterShow'])->name('agentregister.show');
@@ -139,6 +139,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/seller/verification/details/{id}', 'verificationDetails')->name('verification.details');
         Route::get('/seller/verification/confirm/{id}', 'verificationConfirm')->name('verification.confirm');
         Route::get('/seller/verification/reject/{id}', 'verificationReject')->name('verification.reject');
+        Route::get('/all/sellers', 'allSellers')->name('sellers.index');
     });
 });
 
@@ -148,6 +149,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 | Agent Routes (Requires Authentication & Agent Role)
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
     Route::get('/agent/logout', [AgentController::class, 'AgentLogout'])->name('agent.logout');
@@ -156,7 +158,9 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/agent/change/passowrd', [AgentController::class, 'AgentChangePassword'])->name('agent.change.password');
     Route::post('/agent/update/password', [AgentController::class, 'AgentUpdatePassword'])->name('agent.update.password');
     Route::post('/agent/verification', [AgentController::class, 'AgentVerification'])->name('agent.verification');
+});
 
+Route::prefix('agent')->group(function () {
     // Product Management
     Route::resource('product', ProductController::class);
     Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
@@ -165,7 +169,7 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
 
     // Category AJAX Helpers
     Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
-    Route::get('/agent/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
+    Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
 
     // Product Image Upload/Delete
     Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');

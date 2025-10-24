@@ -179,14 +179,14 @@
                                                     @forelse($carts as $key=>$cart)
                                                         <li class="product-box-contain">
                                                             <div class="drop-cart">
-                                                                <a href="{{ route('product.details', $key) }}"
+                                                                <a href=""
                                                                     class="drop-image">
                                                                     <img src="{{ asset($cart['image']) }}"
                                                                         class="blur-up lazyload" alt="">
                                                                 </a>
 
                                                                 <div class="drop-contain">
-                                                                    <a href="{{ route('product.details', $key) }}">
+                                                                    <a href="">
                                                                         <h5>{{ $cart['name'] }}</h5>
                                                                     </a>
                                                                     <h6><span>{{ $cart['quantity'] }} x</span>
@@ -308,7 +308,7 @@
                                   <ul class="category-list">
                                     @forelse ($categories as $category)
                                         <li class="onhover-category-list">
-                                            <a href="{{ route('category.details', $category->id) }}"
+                                            <a href="{{ route('category.details', $category->slug) }}"
                                                 class="category-name">
                                                 <img src="{{ asset($category->image && file_exists(public_path($category->image)) ? $category->image : 'upload/category/no_category.png') }}"
                                                     alt="category_image">
@@ -340,7 +340,7 @@
                                                             @foreach ($category->hasChild as $child)
                                                                 <li>
                                                                     <a
-                                                                        href="{{ route('category.details', $child->id) }}">
+                                                                        href="{{ route('category.details', $child->slug) }}">
                                                                         {{-- <img src="{{ asset($child->image) }}"
                                                                             alt=""> --}}
                                                                         <img src="{{ asset($child->image && file_exists(public_path($child->image)) ? $child->image : 'upload/category/no_category.png') }}"
@@ -389,25 +389,6 @@
                                                 <a class="nav-link" style="font-weight: 500;" href="{{ route('all.shops') }}">
                                                     {{ __('content.shops') }}
                                                 </a>
-                                                <ul class="dropdown-menu">
-                                                    {{-- @forelse ($brands as $brand)
-                                                        <li>
-                                                            @if (App::getLocale() == 'en')
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('brand.details', $brand->id) }}">
-                                                                    {{ $brand->name ?? 'Unnamed Brand' }}
-                                                                </a>
-                                                            @else
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('brand.details', $brand->id) }}">
-                                                                    {{ $brand->translations->name ?? ($brand->name ?? 'Unnamed Brand') }}
-                                                                </a>
-                                                            @endif
-                                                        </li>
-                                                    @empty
-                                                        <li class="dropdown-item text-muted">No brands available</li>
-                                                    @endforelse --}}
-                                                </ul>
                                             </li>
 
                                             <li class="nav-item dropdown">

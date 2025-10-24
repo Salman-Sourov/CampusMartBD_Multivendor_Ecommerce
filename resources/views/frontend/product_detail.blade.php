@@ -98,11 +98,17 @@
 
                                 <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
 
-                                    <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
+                                <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
 
                                 <div class="price-rating">
-                                    <h3 class="theme-color price">৳ {{ $selected_product->sale_price }} <del
-                                            class="text-content">৳ {{ $selected_product->price }}</del></h3>
+                                    <h3 class="theme-color price" aria-label="Product pricing">
+                                        <span class="currency price">৳
+                                        </span>{{ number_format($selected_product->sale_price, 2) }}
+                                        @if ($selected_product->price)
+                                            <del class="text-content" aria-label="Original price">৳
+                                                {{ number_format($selected_product->price, 2) }}</del>
+                                        @endif
+                                    </h3>
                                 </div>
 
                                 <div class="procuct-contain">
@@ -193,13 +199,6 @@
                                         @endif
                                 </form>
                             </div>
-
-                            {{-- <div class="buy-box">
-                                <a href="wishlist.html">
-                                    <i data-feather="heart"></i>
-                                    <h4 style="font-weight: bold;">Add To Wishlist</h4>
-                                </a>
-                            </div> --}}
 
                             <div class="pickup-box">
                                 <div class="product-info">
@@ -321,14 +320,13 @@
                     <!-- Banner Section -->
                     <div class="ratio_156 pt-25">
                         <div class="home-contain">
-                            <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_3_1.jpg"
+                            <img src="{{ asset('frontend') }}/assets/images/banner/campus_mart_bd_right_banner.jpg"
                                 class="bg-img blur-up lazyload" alt="">
                             <div class="home-detail p-top-left home-p-medium">
                                 <div>
-                                    <h6 class="text-black home-banner">Honey</h6>
-                                    <h3 class="text-uppercase fw-normal"><span class="theme-color fw-bold">Freshes</span>
-                                        Products</h3>
-                                    <h3 class="fw-light">every hour</h3>
+                                    <h3 class="text-uppercase fw-normal"><span class="theme-color fw-bold">Start</span>
+                                        selling on</h3>
+                                    <h3 class="fw-bold">CampusMart BD</h3>
                                     {{-- <button onclick="location.href = 'shop-left-sidebar.html';"
                                         class="btn btn-animation btn-md fw-bold mend-auto">Shop Now <i
                                             class="fa-solid fa-arrow-right icon"></i></button> --}}
@@ -359,7 +357,7 @@
                 <div class="col-12">
                     <div class="slider-6_1 product-wrapper">
                         @forelse ($related_products->totalProducts as $product)
-                            @if ($product->products->id != $category_product->product_id)
+                            @if ($product->products && $product->products->id != $category_product->product_id)
                                 <div>
                                     <div class="product-box-3 wow fadeInUp">
                                         <div class="product-header">
@@ -373,14 +371,15 @@
 
                                         <div class="product-footer">
                                             <div class="product-detail">
-                                                {{-- <span class="span-name">Cake</span> --}}
                                                 <a href="{{ route('product.details', $product->products->id) }}">
                                                     <h5 class="name">{{ $product->products->name }}</h5>
                                                 </a>
-                                                {{-- <h6 class="unit">500 G</h6> --}}
+
                                                 <h5 class="price"><span class="theme-color">৳
                                                         {{ $product->products->sale_price }}</span>
-                                                    <del>৳ {{ $product->products->price }}</del>
+                                                    @if ($product->products->price)
+                                                        <del>৳ {{ $product->products->price }}</del>
+                                                    @endif
                                                 </h5>
                                                 <div class="add-to-cart-box bg-white">
                                                     <button class="btn btn-add-cart addcart-button">Add
@@ -448,13 +447,11 @@
                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Include CSRF token
                 },
                 success: function(data) {
-                    console.log('hello'); // Check the success response in the console
-
                     if (data.success) {
                         toastr.success(data.message); // Show success message
                         setTimeout(function() {
-                            window.location.reload(); // Reload the page after 1500 milliseconds
-                        }, 1500);
+                            window.location.reload();
+                        }, 100);
                     } else {
                         toastr.error(data.message || 'Failed.'); // Show error message if needed
                     }
