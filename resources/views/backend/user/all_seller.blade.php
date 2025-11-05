@@ -9,7 +9,7 @@
 
                         {{-- Table for large screens only --}}
                         <div class="table-responsive d-none d-md-block" style="overflow-x:auto;">
-                            <table class="table table-bordered table-striped align-midde">
+                            <table id="dataTableExample" class="table table-bordered table-striped align-midde">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>
@@ -17,12 +17,12 @@
                                         <th>Shop Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
-                                        <th>NID</th>
-                                        <th>S_ID_Photo</th>
                                         <th>Institution</th>
-                                        <th>ID/Roll</th>
+                                        <th>NID</th>
+                                        <th>SID</th>
+                                        {{-- <th>ID/Roll</th>
                                         <th>Address</th>
-                                        <th>Time</th>
+                                        <th>Time</th> --}}
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -35,6 +35,8 @@
                                             <td class="two-line-column">{{ $item->name }}</td>
                                             <td class="two-line-column">{{ $item->email }}</td>
                                             <td>{{ $item->phone }}</td>
+                                            <td class="two-line-column">
+                                                {{ $item->verification->institutionData->name ?? 'N/A' }}</td>
                                             <td>
                                                 <img src="{{ !empty($item->verification->nid) && file_exists(public_path('upload/agent_ver_images/' . $item->verification->nid)) ? asset('upload/agent_ver_images/' . $item->verification->nid) : asset('upload/no_image.jpg') }}"
                                                     style="width:50px; height:30px; cursor:pointer;" class="preview-image"
@@ -47,13 +49,11 @@
                                                     data-bs-toggle="modal" data-bs-target="#imageModal"
                                                     data-image="{{ asset('upload/agent_ver_images/' . $item->verification->student_id) }}">
                                             </td>
-                                            <td class="two-line-column">
-                                                {{ $item->verification->institutionData->name ?? 'N/A' }}</td>
-                                            <td>{{ $item->verification->roll ?? 'N/A' }}</td>
+                                            {{-- <td>{{ $item->verification->roll ?? 'N/A' }}</td>
                                             <td class="two-line-column">{{ $item->address ?? 'N/A' }}</td>
                                             <td class="two-line-column">
                                                 {{ $item->created_at->timezone('Asia/Dhaka')->format('g:i A | j M Y') }}
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <span
                                                     class="badge rounded-pill {{ $item->status == 'active' ? 'bg-success' : 'bg-danger' }}">
@@ -62,16 +62,26 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-1">
-    <a href="#" class="btn btn-sm btn-success text-white rounded-pill shadow px-3 py-1"
-       data-bs-toggle="tooltip" data-bs-placement="top" title="View Seller Profile">
-        <i data-feather="check-circle" class="align-middle me-1"></i>
-    </a>
-    <a href="#" class="btn btn-sm btn-outline-info rounded-pill shadow px-3 py-1"
-       data-bs-toggle="tooltip" data-bs-placement="top" title="View Shop" target="_blank">
-        <i data-feather="eye" class="align-middle me-1"></i>
-    </a>
-</div>
+                                                    <!-- Check Seller Profile (Backend) -->
+                                                    <a href="#"
+                                                        class="btn btn-sm btn-success text-white rounded-pill shadow px-2 py-1"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Check Seller Profile (Backend)">
+                                                        <i data-feather="user-check" class="align-middle me-1"
+                                                            style="width:14px; height:14px;"></i>
+                                                    </a>
+
+                                                    <!-- View Shop (Frontend) -->
+                                                    <a href=""
+                                                        class="btn btn-sm btn-outline-info rounded-pill shadow px-2 py-1"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="View Shop (Frontend)" target="_blank">
+                                                        <i data-feather="eye" class="align-middle me-1"
+                                                            style="width:14px; height:14px;"></i>
+                                                    </a>
+                                                </div>
                                             </td>
+
                                         </tr>
                                     @empty
                                         <tr>
@@ -119,21 +129,19 @@
                                             class="badge rounded-pill {{ $item->status == 'pending' ? 'bg-success' : 'bg-danger' }}">
                                             {{ ucfirst($item->status) }}
                                         </span>
-                                        <div class="mt-2">
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-warning viewDetails"
-                                                data-id="{{ $item->id }}">
-                                                <i data-feather="eye"></i>
+                                        <div class="d-flex gap-1 mt-2">
+                                            <a href="#"
+                                                class="btn btn-sm btn-success text-white rounded-pill shadow px-3 py-1"
+                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="View Seller Profile">
+                                                <i data-feather="user-check" class="align-middle me-1"></i>
                                             </a>
-                                            @if ($item->status == 'pending')
-                                                <a href="{{ route('verification.confirm', $item->id) }}"
-                                                    class="btn btn-sm btn-success">
-                                                    <i data-feather="check-circle"></i>
-                                                </a>
-                                                <a href="{{ route('verification.reject', $item->id) }}"
-                                                    class="btn btn-sm btn-danger">
-                                                    <i data-feather="x-circle"></i>
-                                                </a>
-                                            @endif
+                                            <a href="#"
+                                                class="btn btn-sm btn-outline-info rounded-pill shadow px-3 py-1"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="View Shop"
+                                                target="_blank">
+                                                <i data-feather="eye" class="align-middle me-1"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

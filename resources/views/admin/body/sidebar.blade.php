@@ -45,18 +45,10 @@
                             <a href="{{ route('institutions.index') }}" class="nav-link">All Institutions</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('institutions.create') }}" class="nav-link">Inactive Brands</a>
+                            <a href="{{ route('institutions.create') }}" class="nav-link">Inactive Institutions</a>
                         </li>
                     </ul>
                 </div>
-            </li>
-
-            {{-- Seller Verification --}}
-            <li class="nav-item">
-                <a href="{{ route('verification.index') }}" class="nav-link">
-                    <i class="link-icon" data-feather="user-check"></i>
-                    <span class="link-title">Seller Verification</span>
-                </a>
             </li>
 
             {{-- Brands --}}

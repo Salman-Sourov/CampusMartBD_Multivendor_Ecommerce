@@ -7,7 +7,6 @@
             </ol>
         </nav>
 
-
         {{-- ALL institution --}}
         <div class="row col">
             <div class="col-md-12 grid-margin stretch-card">

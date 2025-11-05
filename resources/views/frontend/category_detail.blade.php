@@ -93,20 +93,8 @@
                                                     class="span-name">{{ $product->products->categories->category_detail->name }}</span>
                                                 <a
                                                     href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
-                                                    @if (App::getLocale() == 'en')
-                                                        <h5 class="name">{{ Str::limit($product->products->name, 20) }}
-                                                        </h5>
-                                                    @else
-                                                        @php
-                                                            $get_product_bangla = App\Models\product_translation::where(
-                                                                'products_id',
-                                                                $product->products->id,
-                                                            )->first();
-                                                            // print_r ($get_product_bangla);
-                                                        @endphp
-                                                        <h5 class="name">{{ Str::limit($get_product_bangla->name, 20) }}
-                                                        </h5>
-                                                    @endif
+                                                    <h5 class="name">{{ Str::limit($product->products->name, 20) }}
+                                                    </h5>
                                                 </a>
                                                 <p class="text-content mt-1 mb-2 product-content">
                                                     {{ $product->products->description }}</p>

@@ -9,7 +9,7 @@
 
                         {{-- Table for large screens only --}}
                         <div class="table-responsive d-none d-md-block" style="overflow-x:auto;">
-                            <table class="table table-bordered table-striped align-midde">
+                            <table id="dataTableExample" class="table table-bordered table-striped align-midde">
                                 <thead>
                                     <tr>
                                         <th>Sl</th>

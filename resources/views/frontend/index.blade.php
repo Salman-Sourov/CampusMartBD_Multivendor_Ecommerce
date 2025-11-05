@@ -105,7 +105,7 @@
                         <div class="slider-9">
                             @forelse ($categories as $category)
                                 <div>
-                                    <a href="{{ route('category.details', $category->id) }}"
+                                    <a href="{{ route('category.details', $category->slug) }}"
                                         class="category-box wow fadeInUp">
                                         <div>
                                             <img src="{{ asset($category->image) }}" class="blur-up lazyload"
@@ -127,7 +127,7 @@
                         <div class="slider-9">
                             @forelse ($categories as $category)
                                 <div>
-                                    <a href="{{ route('category.details', $category->id) }}"
+                                    <a href="{{ route('category.details', $category->slug) }}"
                                         class="category-box wow fadeInUp">
                                         <div>
                                             <img src="{{ asset($category->image) }}" class="blur-up lazyload"

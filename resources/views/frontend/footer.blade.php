@@ -99,7 +99,7 @@
                             <ul>
                                 @forelse ($categories as $category)
                                     <li>
-                                        <a href="{{ route('category.details', $category->id) }}"
+                                        <a href="{{ route('category.details', $category->slug) }}"
                                             class="text-content">{{ $category->name }}</a>
                                     </li>
                                 @empty
