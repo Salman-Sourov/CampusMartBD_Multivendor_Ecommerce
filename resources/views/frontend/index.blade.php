@@ -307,9 +307,9 @@
                                             <p class="text-content mt-1 mb-2 product-content">{{ $product->description }}
                                             </p>
                                             @php
-                                                $get_brand = App\Models\Brand::where('id', $product->brand_id)->first();
+                                                $get_shop = App\Models\User::where('id', $product->agent_id)->first();
                                             @endphp
-                                            <h6 class="unit">{{ $get_brand->name ?? 'No Brand' }}</h6>
+                                            <h6 class="unit">{{ $get_shop->name ?? 'Campuss Mart' }}</h6>
                                             <h5 class="price mb-2">
                                                 <span class="theme-color">৳ {{ $product->sale_price }}</span>
                                                 @if ($product->price)

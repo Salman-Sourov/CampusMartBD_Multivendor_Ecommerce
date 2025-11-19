@@ -1,4 +1,4 @@
-<title>{{ $selected_product->name }} - Elhaam BD</title>
+<title>{{ $selected_product->name }} - CampusMart BD</title>
 @extends('frontend.frontend_dashboard')
 @section('main')
 

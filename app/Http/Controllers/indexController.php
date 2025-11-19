@@ -41,35 +41,35 @@ class indexController extends Controller
         return view('frontend.category_detail', compact('category_product', 'carts'));
     }
 
-    public function brandDetails($id)
-    {
-        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
-        $brands = Brand::with('translations')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
-        $carts = session()->get('cart');
+    // public function brandDetails($id)
+    // {
+    //     $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
+    //     $brands = Brand::with('translations')->where('status', 'active')->get();
+    //     $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->latest()->get();
+    //     $carts = session()->get('cart');
 
-        $brand_product = Product::with('translations', 'brands', 'categories')
-            ->where('status', 'active')->where('brand_id', $id)   // Filter by active status
-            ->get();
+    //     $brand_product = Product::with('translations', 'brands', 'categories')
+    //         ->where('status', 'active')->where('brand_id', $id)   // Filter by active status
+    //         ->get();
 
-        $brand_name = Brand::findOrFail($id);
-        $brands = Brand::with('translations')->where('status', 'active')->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')
-            ->where('status', 'active')->latest()->get();
+    //     $brand_name = Brand::findOrFail($id);
+    //     $brands = Brand::with('translations')->where('status', 'active')->get();
+    //     $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')
+    //         ->where('status', 'active')->latest()->get();
 
-        // dd($brand_product);
-        return view('frontend.brand_detail', compact('categories', 'brands', 'products', 'brand_name', 'brand_product', 'carts'));
-    }
+    //     // dd($brand_product);
+    //     return view('frontend.brand_detail', compact('categories', 'brands', 'products', 'brand_name', 'brand_product', 'carts'));
+    // }
 
     public function shops()
     {
-        $categories = Product_category::with('translations', 'hasChild')->where('level', '1')->where('status', 'active')->get();
-        $brands = Brand::with('translations')->where('status', 'active')->get();
-        $featured_products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '1')->latest()->get();
-        $products = Product::with('translations', 'inventory_stocks', 'brands', 'categories')->where('status', 'active')->where('is_featured', '0')->inRandomOrder()->latest()->get();
         $carts = session()->get('cart'); // Default to an empty array if no cart exists
-
-        return view('frontend.all_shops', compact('categories', 'brands', 'products', 'carts', 'featured_products'));
+        $active_seller = User::where('status', 'active')
+            ->where('role', 'agent')
+            ->with('verification.institutionData')
+            ->get();
+        // dd($active_seller);
+        return view('frontend.all_shops', compact('carts', 'active_seller'));
     }
 
     public function productDetails($shop, $slug)
