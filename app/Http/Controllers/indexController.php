@@ -66,7 +66,7 @@ class indexController extends Controller
         $carts = session()->get('cart'); // Default to an empty array if no cart exists
         $active_seller = User::where('status', 'active')
             ->where('role', 'agent')
-            ->with('verification.institutionData')
+            ->with('verification.institutionData','products')
             ->get();
         // dd($active_seller);
         return view('frontend.all_shops', compact('carts', 'active_seller'));

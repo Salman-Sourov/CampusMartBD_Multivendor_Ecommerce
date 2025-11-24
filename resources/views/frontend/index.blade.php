@@ -45,7 +45,7 @@
                                 <h1 class="w-75 text-uppercase poster-1">Get Your Daily Needs Delivered to
                                     <span class="daily">Campus</span>
                                 </h1>
-                                <p class="w-58 d-none d-sm-block">
+                                <p class="w-78 d-none d-sm-block">
                                     Your Campus, Your Marketplace – From Students, For Students <br> Empowering Students to
                                     Shop, Sell, and Support Locally
                                 </p>

@@ -139,7 +139,7 @@ class AgentController extends Controller
 
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
-            $data->image = $filename;
+            $data->image = 'upload/agent_images/' . $filename;
         }
 
         $data->save();
