@@ -8,8 +8,8 @@
 
                     {{-- Agent Image --}}
                     <div class="flex-shrink-0">
-                        <img src="{{ !empty($agentId->image) ? url('upload/agent_images/' . $agentId->image) : url('upload/no_image.jpg') }}"
-                            alt="Agent Image" class="rounded-circle border border-light shadow-sm"
+                        <img src="{{ !empty($agentId->image) ? asset($agentId->image) : asset('upload/no_image.jpg') }}"
+                            alt="Agent Image" class="rounded-circle border border-secondary shadow-sm"
                             style="width: 80px; height: 80px; object-fit: cover;">
                     </div>
 
@@ -35,7 +35,7 @@
 
                     {{-- Agent Image --}}
                     <div class="flex-shrink-0">
-                        <img src="{{ !empty($agentId->image) ? url('upload/agent_images/' . $agentId->image) : url('upload/no_image.jpg') }}"
+                        <img src="{{ !empty($agentId->image) ? asset($agentId->image) : asset('upload/no_image.jpg') }}"
                             alt="Agent Image" class="rounded-circle border border-secondary shadow-sm"
                             style="width: 80px; height: 80px; object-fit: cover;">
                     </div>

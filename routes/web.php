@@ -40,6 +40,7 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/category-details/{slug}', [IndexController::class, 'categoryDetails'])->name('category.details');
 // Route::get('/brand-details/{id}', [IndexController::class, 'brandDetails'])->name('brand.details');
 Route::get('/shops', [IndexController::class, 'shops'])->name('all.shops');
+Route::get('/shop/{id}', [IndexController::class, 'shopDetails'])->name('shop.details');
 Route::get('/product/{shop}/{slug}', [IndexController::class, 'productDetails'])->name('product.details');
 
 // Agent Registration

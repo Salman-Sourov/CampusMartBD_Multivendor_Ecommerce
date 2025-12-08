@@ -59,7 +59,7 @@
                                 </div>
 
                                 <div class="seller-category">
-                                    <button onclick="location.href = 'shop-left-sidebar.html';"
+                                    <button onclick="window.location.href = '{{ route('shop.details',$seller->id) }}';"
                                         class="btn btn-sm theme-bg-color text-white fw-bold">Visit Store <i
                                             class="fa-solid fa-arrow-right-long ms-2"></i></button>
                                 </div>

@@ -34081,7 +34081,7 @@ header .offcanvas-backdrop {
 }
 
 .vendor-box .verndor-contain .vendor-image {
-    width: 64px;
+    width: 118px;
     height: auto;
 }
 
@@ -35435,22 +35435,6 @@ header .offcanvas-backdrop {
     color: #fff !important;
 }
 
-.btn-animation {
-    background: linear-gradient(90deg, #0da487 0%, #0f6e5e 100%) !important;
-    padding: 9px 58px;
-    font-size: 17px;
-    font-weight: 550;
-}
-
-@media (min-width: 1280px) and (max-width: 1500px) {
-    .btn-animation {
-        background: linear-gradient(90deg, #0da487 0%, #0f6e5e 100%) !important;
-        padding: 9px 36px !important;
-        font-size: 17px !important;
-        font-weight: 550 !important;
-    }
-}
-
 .banner-contain .banner-details h3 {
     color: #023c42 !important;
 }
@@ -35696,7 +35680,7 @@ input[type="radio"]:checked + .attribute-label {
     }
 
     .btn-animation {
-        background: linear-gradient(90deg, #ef35ab 0%, #a90061 100%) !important;
+        background: linear-gradient(90deg, #0e947a 0%, #0da487 100%) !important;
         padding: 9px 45px;
         font-size: 17px;
         font-weight: 550;
@@ -35756,4 +35740,22 @@ input[type="radio"]:checked + .attribute-label {
 .contact-detail h5 {
     margin: 0;
     white-space: nowrap; /* optional to prevent line break */
+}
+
+@media (max-width: 1920px) {
+    .btn-animation {
+        background: linear-gradient(90deg, #0da487 0%, #0f6e5e 100%) !important;
+        padding: 9px 58px !important;
+        font-size: 17px;
+        font-weight: 550;
+    }
+}
+
+@media (max-width: 1400px) {
+    .btn-animation {
+        background: linear-gradient(90deg, #0da487 0%, #0f6e5e 100%) !important;
+        padding: 9px 10px !important;
+        font-size: 17px !important;
+        font-weight: 550 !important;
+    }
 }

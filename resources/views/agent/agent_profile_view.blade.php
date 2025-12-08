@@ -18,7 +18,7 @@
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div>
                                 <img class="wd-100 rounded-circle"
-                                    src="{{ !empty($profileData->image) ? url('upload/agent_images/' . $profileData->image) : url('upload/no_image.jpg') }}"
+                                    src="{{ !empty($profileData->image) ? asset($profileData->image) : asset('upload/no_image.jpg') }}"
                                     alt="profile">
                                 <span class="h4 ms-3 ">{{ $profileData->name }}</span>
                             </div>
@@ -176,7 +176,7 @@
 
                                     <div class="col-md-6 d-flex justify-content-center mb-3">
                                         <img id="showImage" class="wd-80 rounded-circle"
-                                            src="{{ !empty($profileData->image) ? url('upload/agent_images/' . $profileData->image) : url('upload/no_image.jpg') }}"
+                                            src="{{ !empty($profileData->image) ? asset($profileData->image) : asset('upload/no_image.jpg') }}"
                                             alt="profile" style="width: 80px; height: 80px; object-fit: cover;">
                                     </div>
                                 </div>

@@ -66,15 +66,22 @@ class indexController extends Controller
         $carts = session()->get('cart'); // Default to an empty array if no cart exists
         $active_seller = User::where('status', 'active')
             ->where('role', 'agent')
-            ->with('verification.institutionData','products')
+            ->with('verification.institutionData', 'products')
             ->get();
         // dd($active_seller);
         return view('frontend.all_shops', compact('carts', 'active_seller'));
     }
 
+    public function shopDetails($id)
+    {
+        $shop = User::where('id', $id)->firstOrFail();
+
+        return view('frontend.shop_detail',compact('shop'));
+    }
+
     public function productDetails($shop, $slug)
     {
-        $agent = User::where('name', $shop)->firstOrFail();
+        $agent = User::where('name', $shop)->with('verification.institutionData')->firstOrFail();
 
         $selected_product = Product::with('multi_images', 'attribute_set')
             ->where('slug', $slug)->where('agent_id', $agent->id)
@@ -105,7 +112,7 @@ class indexController extends Controller
 
         // dd($category_product);
 
-        return view('frontend.product_detail', compact('selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products'));
+        return view('frontend.product_detail', compact('selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products','agent'));
     }
 
     public function confirmOrder(Request $request)

@@ -206,11 +206,24 @@
                                         <li>Type : <a
                                                 href="javascript:void(0)">{{ $category_product->category_detail->name }}</a>
                                         </li>
-                                        {{-- <li>SKU : <a href="javascript:void(0)">{{ $selected_product->sku }}</a></li>
-                                        <li>Stock : <a href="javascript:void(0)">{{ $selected_product->quantity }}</a></li> --}}
                                     </ul>
                                 </div>
                             </div>
+
+                            <div class="pickup-box">
+                                <div class="product-title">
+                                    <h4>Store Information</h4>
+                                    <p>
+                                        <strong>Shop Name:</strong>
+                                        <a href="#">{{ $agent->name }}</a>
+                                    </p>
+                                    <p>
+                                        <strong>Institution:</strong>
+                                        <a href="#">{{ $agent->verification->institutionData->name }}</a>
+                                    </p>
+                                </div>
+                            </div>
+
 
                             {{-- <div class="paymnet-option">
                                 <div class="product-title">
@@ -279,11 +292,38 @@
 
             <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
                 <div class="right-sidebar-box">
+                    {{-- Store Information start --}}
+                    <div class="vendor-box">
+                        <div class="verndor-contain">
+                            <div class="vendor-image">
+                                <img src="{{ $agent->image ? asset($agent->image) : asset('upload/no_image.jpg') }}"
+                                    class="blur-up lazyload" alt="campusmartbd {{ $agent->name }}">
+                            </div>
+
+                            <div class="vendor-name mt-1">
+                                <h3 class="fw-bold mb-1">{{ $agent->name }}</h3>
+                                <label style="color: rgb(255, 86, 2); font-weight: 600;">{{ count($agent->products) }}
+                                    Products</label>
+                            </div>
+                        </div>
+
+                        <div class="vendor-list">
+                            <ul>
+                                <li>
+                                    <div class="address-contact">
+                                        <i data-feather="map-pin"></i>
+                                        <span
+                                            class="text-content fw-bold">{{ $agent->verification->institutionData->name }}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {{-- Store Information end --}}
                     <!-- Trending Product -->
                     <div class="pt-25">
                         <div class="category-menu">
                             <h3>Trending Products</h3>
-
                             <ul class="product-list product-right-sidebar border-0 p-0">
                                 @forelse ($featured_products->take(5) as $product)
                                     <li>
@@ -336,7 +376,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
     <!-- Product Left Sidebar End -->

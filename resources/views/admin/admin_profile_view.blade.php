@@ -10,7 +10,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div>
-                                <img class="wd-100 rounded-circle" src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png" alt="profile">
+                                <img class="wd-100 rounded-circle"
+                                    src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png" alt="profile">
                             </div>
                         </div>
                         <div class="mt-3">
@@ -50,11 +51,13 @@
                                     <input type="email" name="email" class="form-control" id="exampleInputUsername1"
                                         autocomplete="off" value="{{ $profileData->email }}">
                                 </div>
+
                                 <div class="mb-3">
-                                    <label for="exampleInputUsername1" class="form-label">Phone</label>
-                                    <input type="number" name="phone" class="form-control" id="exampleInputUsername1"
-                                        autocomplete="off" value="{{ $profileData->phone }}">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        value="{{ old('phone', $profileData->phone) }}">
                                 </div>
+
                                 <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                             </form>
                         </div>
