@@ -73,14 +73,12 @@
                                                             class="img-fluid blur-up lazyload" alt=""
                                                             style="width: 82px;">
                                                     </div>
-
                                                 </div>
                                             @empty
                                             @endforelse
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -97,7 +95,6 @@
                                 @endphp
 
                                 <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
-
                                 <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
 
                                 <div class="price-rating">
@@ -215,7 +212,7 @@
                                     <h4>Store Information</h4>
                                     <p>
                                         <strong>Shop Name:</strong>
-                                        <a href="#">{{ $agent->name }}</a>
+                                        <a href="{{ route('shop.details',$agent->id) }}">{{ $agent->name }}</a>
                                     </p>
                                     <p>
                                         <strong>Institution:</strong>
@@ -223,8 +220,6 @@
                                     </p>
                                 </div>
                             </div>
-
-
                             {{-- <div class="paymnet-option">
                                 <div class="product-title">
                                     <h4>Guaranteed Safe Checkout</h4>

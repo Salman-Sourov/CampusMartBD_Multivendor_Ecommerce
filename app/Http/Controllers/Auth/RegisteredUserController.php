@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmailMail;
+use App\Notifications\EmailVerification;
 
 
 class RegisteredUserController extends Controller
@@ -55,24 +56,12 @@ class RegisteredUserController extends Controller
             ]
         ]);
 
-        // Send OTP email using custom Mailable
-        // Mail::to($request->email)->send(new VerifyEmailMail($verification_code));
-        // return redirect()->route('verify.email')->with('success', 'We sent an OTP to your email. Please verify.');
-
-        /**
-         * ✅ Instead of waiting for Mail::send (which blocks),
-         * use dispatch() to send asynchronously.
-         */
         Mail::to($request->email)
             ->queue(new VerifyEmailMail($verification_code));
-        // dispatch(function () use ($email, $verification_code) {
-        //     Mail::to($email)->send(new VerifyEmailMail($verification_code));
-        // });
 
-        /**
-         * ✅ Instantly redirect to verify page
-         * No waiting for mail server response → smooth UX
-         */
+        Notification::route('mail', $request->email)
+            ->notify(new EmailVerification($verification_code));
+
         return redirect()
             ->route('verify.email')
             ->with('success', 'We sent an OTP to your email. Please verify.');
@@ -91,11 +80,6 @@ class RegisteredUserController extends Controller
         $tempUser['verification_code'] = $verification_code;
         $tempUser['expires_at'] = now()->addMinutes(10);
         session(['temp_user' => $tempUser]);
-
-        // Send mail again
-        // \Notification::route('mail', $tempUser['email'])
-        //     ->notify(new \App\Notifications\EmailVerification($verification_code));
-        // return back()->with('success', 'A new OTP has been sent to your email.');
 
         // ✅ Reuse same async pattern
         Mail::to($tempUser['email'])
