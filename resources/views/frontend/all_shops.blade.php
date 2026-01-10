@@ -26,17 +26,15 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Grid Section Start -->
-    <section class="seller-grid-section">
+    <section class="seller-grid-section mb-3">
         <div class="container-fluid-lg">
             @forelse ($active_seller as $seller)
-                {{-- {{ dd($seller->image) }} --}}
                 <div class="row g-4">
                     <div class="col-xxl-4 col-md-6">
                         <div class="seller-grid-box seller-grid-box-1">
                             <div class="grid-image">
                                 <div class="image">
-                                    <img src="{{ !empty($seller->image) ? asset($seller->image) : asset('upload/no_image.jpg') }}"
-                                        class="img-fluid" alt="{{ $seller->name }}">
+                                    {{ $shop->name }}
                                 </div>
                                 <div class="contain-name">
                                     <div>
@@ -59,7 +57,7 @@
                                 </div>
 
                                 <div class="seller-category">
-                                    <button onclick="window.location.href = '{{ route('shop.details',$seller->id) }}';"
+                                    <button onclick="window.location.href = '{{ route('shop.details', $seller->id) }}';"
                                         class="btn btn-sm theme-bg-color text-white fw-bold">Visit Store <i
                                             class="fa-solid fa-arrow-right-long ms-2"></i></button>
                                 </div>
@@ -70,6 +68,30 @@
             @empty
                 <p>No Seller Registered</p>
             @endforelse
+
+            <nav class="custome-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="javascript:void(0)">1</a>
+                    </li>
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" href="javascript:void(0)">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </section>
     <!-- Grid Section End -->

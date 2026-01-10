@@ -1016,7 +1016,7 @@
 }
 
 .vendore-breadscrumb-section {
-    background-image: url("../images/vendor-page/breadcrumb.png");
+    /* background-image: url("../images/vendor-page/breadcrumb.png"); */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

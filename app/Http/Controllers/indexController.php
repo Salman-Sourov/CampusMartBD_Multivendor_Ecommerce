@@ -74,9 +74,11 @@ class indexController extends Controller
 
     public function shopDetails($id)
     {
-        $shop = User::where('id', $id)->firstOrFail();
+        $seller = User::where('id', $id)->firstOrFail();
+        $products = Product::with('translations', 'inventory_stocks', 'categories')->where('status', 'active')->where('agent_id', $id)->inRandomOrder()->get();
 
-        return view('frontend.shop_detail',compact('shop'));
+        // dd($products);
+        return view('frontend.shop_detail', compact('seller','products'));
     }
 
     public function productDetails($shop, $slug)
@@ -112,7 +114,7 @@ class indexController extends Controller
 
         // dd($category_product);
 
-        return view('frontend.product_detail', compact('selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products','agent'));
+        return view('frontend.product_detail', compact('selected_product', 'category_product', 'trending_products', 'related_products', 'attributes', 'carts', 'featured_products', 'agent'));
     }
 
     public function confirmOrder(Request $request)
