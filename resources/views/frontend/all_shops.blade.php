@@ -34,7 +34,8 @@
                         <div class="seller-grid-box seller-grid-box-1">
                             <div class="grid-image">
                                 <div class="image">
-                                    {{ $shop->name }}
+                                    <img src="{{ !empty($seller->image) ? asset($seller->image) : asset('upload/no_image.jpg') }}"
+                                        class="img-fluid" alt="{{ $seller->name }}">
                                 </div>
                                 <div class="contain-name">
                                     <div>

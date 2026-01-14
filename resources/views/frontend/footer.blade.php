@@ -12,7 +12,7 @@
                                 </div>
 
                                 <div class="service-detail">
-                                    <h5>Every Fresh Products</h5>
+                                    <h5>Quality You Can Trust</h5>
                                 </div>
                             </div>
 
@@ -23,7 +23,7 @@
                                 </div>
 
                                 <div class="service-detail">
-                                    <h5>Free Delivery For Limited Products</h5>
+                                    <h5>Fast Campus & All Over BD Delivery</h5>
                                 </div>
                             </div>
 
@@ -34,7 +34,7 @@
                                 </div>
 
                                 <div class="service-detail">
-                                    <h5>Daily Mega Discounts</h5>
+                                    <h5>Student-Friendly Prices</h5>
                                 </div>
                             </div>
 
@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="service-detail">
-                                    <h5>Best Price On The Market</h5>
+                                    <h5>Empowering Student Sellers</h5>
                                 </div>
                             </div>
                         </div>
