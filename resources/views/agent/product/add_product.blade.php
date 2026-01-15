@@ -70,7 +70,6 @@
                                         <div class="form-group mb-3">
                                             <label for="sub_category" class="form-label">Sub Category</label>
                                             <select name="sub_category_id" class="form-control" id="sub_category">
-
                                             </select>
                                             @error('sub_category_id')
                                                 <span class="text-danger">{{ $message }}</span>

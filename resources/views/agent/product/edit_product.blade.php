@@ -42,18 +42,6 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-sm-6">
-                                        <div class="form-group mb-3">
-                                            <label for="banglaInputText" class="form-label">Name in Bangla *</label>
-                                            <input type="text" name="product_name_bangla" class="form-control"
-                                                id="banglaInputText"
-                                                value="{{ $product->translations ? $product->translations->name : 'N/A' }}">
-                                            @error('product_name_bangla')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
-
                                     <div class="col-sm-4">
                                         <div class="form-group mb-3">
                                             <label class="form-label">Product Quantity *</label>
@@ -64,24 +52,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    {{-- <div class="col-sm-3">
-                                        <div class="form-group mb-3">
-                                            <label for="brand" class="form-label">Brand *</label>
-                                            <select name="brand_id" class="form-control" id="brand">
-                                                <option selected="" disabled="">Select a Brand</option>
-                                                @foreach ($brands as $brand)
-                                                    <option value="{{ $brand->id }}"
-                                                        {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
-                                                        {{ $brand->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('brand_id')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
 
                                     <div class="col-sm-3">
                                         <div class="form-group mb-3">

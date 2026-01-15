@@ -86,6 +86,111 @@
     </section>
     <!-- Home Section End -->
 
+        <!-- home section start -->
+    {{-- <section class="home-section-2 home-section-small section-b-space">
+        <div class="container-fluid-lg">
+            <div class="row g-4">
+                <div class="col-xxl-6 col-md-8">
+                    <div id="bannerCarousel" class="carousel slide home-contain h-100 position-relative"
+                        data-bs-ride="carousel">
+
+                        <!-- Carousel Indicators (Dots) -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                        </div>
+
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{ asset('frontend/assets/images/banner/empotech_bd_banner_1.jpg') }}"
+                                    class="d-block w-100 bg-img blur-up lazyload fixed-size" alt="Banner 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_1.2.jpeg"
+                                    class="d-block w-100 bg-img blur-up lazyload fixed-size" alt="Banner 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{ asset('frontend') }}/assets/images/banner/empotech_bd_banner_1.1.jpg"
+                                    class="d-block w-100 bg-img blur-up lazyload fixed-size" alt="Banner 3">
+                            </div>
+                        </div>
+
+                        <!-- Text Overlay (remains fixed) -->
+                        <div
+                            class="home-detail p-center-left w-75 position-absolute top-50 start-0 translate-middle-y ps-4">
+                            <div>
+                                <h6>Shop Smart. Stay Safe.</h6>
+                                <h1 class="w-75 text-uppercase poster-1">Get Your Daily Needs Delivered to
+                                    <span class="daily">Campus</span>
+                                </h1>
+                                <p class="w-78 d-none d-sm-block">
+                                    Your Campus, Your Marketplace – From Students, For Students <br> Empowering Students to
+                                    Shop, Sell, and Support Locally
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 col-md-4 ratio_medium d-md-block d-none">
+                    <div class="home-contain home-small h-100">
+                        <div class="h-100">
+                            <img src="../assets/images/veg-3/home/2.png" class="img-fluid bg-img blur-up lazyload"
+                                alt="">
+                        </div>
+                        <div class="home-detail text-center p-top-center w-100 text-white">
+                            <div>
+                                <h4 class="fw-bold">Fresh & 100% Organic</h4>
+                                <h5 class="text-center">famer's market</h5>
+                                <button class="btn bg-white theme-color mt-3 home-button mx-auto btn-2"
+                                    onclick="location.href = 'shop-left-sidebar.html';">Shop Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-3 ratio_65 d-xxl-block d-none">
+                    <div class="row g-3">
+                        <div class="col-xxl-12 col-sm-6">
+                            <div class="home-contain">
+                                <a href="shop-left-sidebar.html">
+                                    <img src="../assets/images/veg-3/home/3.png"
+                                        class="img-fluid bg-img blur-up lazyload" alt="">
+                                </a>
+                                <div class="home-detail text-white p-center text-center">
+                                    <div>
+                                        <h4 class="text-center">Organic Lifestyle</h4>
+                                        <h5 class="text-center">Best Weekend Sales</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-12 col-sm-6">
+                            <div class="home-contain">
+                                <a href="shop-left-sidebar.html">
+                                    <img src="../assets/images/veg-3/home/4.png"
+                                        class="img-fluid bg-img blur-up lazyload" alt="">
+                                </a>
+                                <div class="home-detail text-white w-50 p-center-left home-p-sm">
+                                    <div>
+                                        <h4 class="fw-bold">Safe food saves lives</h4>
+                                        <h5>Discount Offer</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> --}}
+    <!-- Home Section End -->
+
     <!-- Category Section Start -->
     <section>
         <div class="container-fluid-lg">

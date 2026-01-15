@@ -34,7 +34,7 @@
                                 </div>
 
                                 <div class="service-detail">
-                                    <h5>Student-Friendly Prices</h5>
+                                    <h5>Student Exclusive Deals</h5>
                                 </div>
                             </div>
 

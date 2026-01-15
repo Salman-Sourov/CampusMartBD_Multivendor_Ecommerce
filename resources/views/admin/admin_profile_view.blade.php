@@ -10,8 +10,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div>
-                                <img class="wd-100 rounded-circle"
-                                    src="{{ asset('frontend') }}/assets/images/logo/ElhaamBD_logo.png" alt="profile">
+                                <img class="wd-200 rounded-circle"
+                                    src="{{ asset('frontend') }}/assets/images/logo/CampusMartBD.png" alt="profile">
                             </div>
                         </div>
                         <div class="mt-3">
