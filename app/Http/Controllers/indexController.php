@@ -33,9 +33,24 @@ class indexController extends Controller
     public function categoryDetails($slug)
     {
         $carts = session()->get('cart');
-        $category_product = Product_category::with('hasChild', 'totalProducts')
-            ->where('status', 'active')  // Filter by active status
-            ->where('slug', $slug)           // Filter by the specific id
+
+        // $category_product = Product_category::with('hasChild', 'totalProducts')
+        //     ->where('status', 'active')  // Filter by active status
+        //     ->where('slug', $slug)           // Filter by the specific id
+        //     ->firstOrFail();
+        // dd($category_product);
+
+        $category_product = Product_category::with([
+            'hasChild',
+            'totalProducts' => function ($query) {
+                $query->whereHas('products', function ($q) {
+                    $q->where('status', 'active');
+                });
+            },
+            'totalProducts.products.agent'
+        ])
+            ->where('status', 'active')
+            ->where('slug', $slug)
             ->firstOrFail();
 
         return view('frontend.category_detail', compact('category_product', 'carts'));
@@ -78,7 +93,7 @@ class indexController extends Controller
         $products = Product::with('translations', 'inventory_stocks', 'categories')->where('status', 'active')->where('agent_id', $id)->inRandomOrder()->get();
 
         // dd($products);
-        return view('frontend.shop_detail', compact('seller','products'));
+        return view('frontend.shop_detail', compact('seller', 'products'));
     }
 
     public function productDetails($shop, $slug)

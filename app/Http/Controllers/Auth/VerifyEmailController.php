@@ -88,8 +88,8 @@ class VerifyEmailController extends Controller
         }
 
         // forgot password flow
-        if ($tempUser['otp_type'] === 'forgot') {
-
+        if (isset($tempUser['otp_type']) && $tempUser['otp_type'] === 'forgot') {
+            
             $user = User::where('email', $tempUser['email'])->firstOrFail();
             $user->email_verified_at = now();
             $user->save();

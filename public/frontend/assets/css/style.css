@@ -35742,6 +35742,121 @@ input[type="radio"]:checked + .attribute-label {
     white-space: nowrap; /* optional to prevent line break */
 }
 
+.category-box-label {
+    padding: 10px 20px;
+    background-color: rgba(var(--theme-color-rgb), 0.1);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    color: var(--theme-color);
+    margin-right: 6px;
+    display: inline-block;
+}
+
+/* All Shops */
+/* Card Container */
+.seller-card-standard {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+    height: 100%;
+    padding: 20px;
+}
+
+.seller-card-standard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+    border-color: #00b085; /* আপনার থিম কালার অনুযায়ী পরিবর্তন করুন */
+}
+
+/* Logo Alignment */
+.seller-logo-container {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f8f9fa;
+    border: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+
+.seller-logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* লোগো কাটবে না */
+    padding: 5px;
+}
+
+/* Header & Typography */
+.seller-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.seller-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #222;
+    line-height: 1.2;
+}
+
+.product-count-badge {
+    display: inline-block;
+    font-size: 12px;
+    color: #666;
+    background: #f0fdf4;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-top: 5px;
+    color: #00b085;
+}
+
+.card-divider {
+    margin: 15px 0;
+    opacity: 0.1;
+}
+
+/* Footer & Location */
+.seller-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location-info {
+    font-size: 14px;
+    color: #777;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.location-info i {
+    color: #00b085;
+}
+
+.visit-action {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #00b085;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.visit-text {
+    border-bottom: 1.5px solid transparent;
+    transition: 0.3s;
+}
+
+.seller-card-standard:hover .visit-text {
+    border-bottom-color: #00b085;
+}
+
 @media (max-width: 1920px) {
     .btn-animation {
         background: linear-gradient(90deg, #0da487 0%, #0f6e5e 100%) !important;

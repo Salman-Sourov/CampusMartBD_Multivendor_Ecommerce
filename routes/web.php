@@ -159,34 +159,35 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/agent/change/passowrd', [AgentController::class, 'AgentChangePassword'])->name('agent.change.password');
     Route::post('/agent/update/password', [AgentController::class, 'AgentUpdatePassword'])->name('agent.update.password');
     Route::post('/agent/verification', [AgentController::class, 'AgentVerification'])->name('agent.verification');
+
+    Route::prefix('agent')->group(function () {
+        // Product Management
+        Route::resource('product', ProductController::class);
+        Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
+        Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
+        Route::post('/product/{id}', [ProductController::class, 'productDelete'])->name('product.delete');
+
+        // Category AJAX Helpers
+        Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
+        Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
+
+        // Product Image Upload/Delete
+        Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
+        Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
+
+        // Product Stock Management
+        Route::resource('stock', ProductStockController::class);
+        Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
+        Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
+        Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
+        Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
+        Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
+        Route::delete('/delete/stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stocks.destroy');
+        Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
+        Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
+    });
 });
 
-Route::prefix('agent')->group(function () {
-    // Product Management
-    Route::resource('product', ProductController::class);
-    Route::get('/product_inactive', [ProductController::class, 'inactive_product'])->name('inactive.product');
-    Route::post('/product/changeStatus', [ProductController::class, 'productChangeStatus'])->name('product.change.status');
-    Route::post('/product/{id}', [ProductController::class, 'productDelete'])->name('product.delete');
-
-    // Category AJAX Helpers
-    Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
-    Route::get('/selected-subcategories/{id}', [CategoryController::class, 'selectedSubcategories']);
-
-    // Product Image Upload/Delete
-    Route::post('/uploadmultiimg', [ProductController::class, 'uploadMultiImg'])->name('uploadMultiImg.add');
-    Route::get('/deletemultiimg/{id}', [ProductController::class, 'deleteMultiImg'])->name('deleteMultiImg.delete');
-
-    // Product Stock Management
-    Route::resource('stock', ProductStockController::class);
-    Route::get('/get-stock/{id}', [ProductStockController::class, 'getStock'])->name('get.stock');
-    Route::get('/get-attribute/{id}', [ProductStockController::class, 'getAttribute']);
-    Route::get('/get-edit-attribute/{id}', [ProductStockController::class, 'getEditAttribute']);
-    Route::get('/get-stock-attribute/{id}', [ProductStockController::class, 'getStockAttribute']);
-    Route::post('/add-attribute-wisestock', [ProductStockController::class, 'addAttributeWiseStock'])->name('attributeWise.stock.store');
-    Route::delete('/delete/stock/{id}', [ProductStockController::class, 'deleteStock'])->name('stocks.destroy');
-    Route::get('/stock-out/{id}', [ProductStockController::class, 'stockOut'])->name('stock.out');
-    Route::get('/stock-in/{id}', [ProductStockController::class, 'stockIn'])->name('stock.in');
-});
 
 
 require __DIR__ . '/auth.php';

@@ -38,11 +38,16 @@
 
                 <div class="col-custome-12">
                     <div class="show-button">
-                        <div class="filter-button-group mt-0">
+                        {{-- <div class="filter-button-group mt-0">
                             <div class="filter-button d-inline-block d-lg-none">
                                 <a><i class="fa-solid fa-filter"></i> Filter Menu</a>
                             </div>
-                        </div>
+                        </div> --}}
+                        @foreach ($category_product->hasChild as $child)
+                            <a href="{{ route('category.details', $child->slug) }}" class="category-box-label">
+                                {{ $child->name }}
+                            </a>
+                        @endforeach
 
                         <div class="top-filter-menu">
                             <div class="grid-option d-none d-md-block">
@@ -74,45 +79,44 @@
 
                     <div
                         class="row g-sm-4 g-3 row-cols-xxl-5 row-cols-xl-4 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                        {{-- @forelse ($category_product->totalProducts->where('products.status', 'active') as $product) --}}
                         @forelse ($category_product->totalProducts as $product)
-                            @if ($product->products)
-                                <div>
-                                    <div class="product-box-3 h-100 wow fadeInUp">
-                                        <div class="product-header">
-                                            <div class="product-image">
-                                                <a
-                                                    href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
-                                                    <img src="{{ asset($product->products->thumbnail) }}"
-                                                        class="img-fluid blur-up lazyload" alt="">
-                                                </a>
-                                            </div>
+                            <div>
+                                <div class="product-box-3 h-100 wow fadeInUp">
+                                    <div class="product-header">
+                                        <div class="product-image">
+                                            <a
+                                                href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
+                                                <img src="{{ asset($product->products->thumbnail) }}"
+                                                    class="img-fluid blur-up lazyload" alt="">
+                                            </a>
                                         </div>
-                                        <div class="product-footer">
-                                            <div class="product-detail">
-                                                <span
-                                                    class="span-name">{{ $product->products->categories->category_detail->name }}</span>
-                                                <a
-                                                    href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
-                                                    <h5 class="name">{{ Str::limit($product->products->name, 20) }}
-                                                    </h5>
-                                                </a>
-                                                <p class="text-content mt-1 mb-2 product-content">
-                                                    {{ $product->products->description }}</p>
-                                                {{-- <h6 class="unit">{{ $product->products->brands->name }}</h6> --}}
-                                                <h5 class="price">
-                                                    <span class="theme-color">৳ {{ $product->products->sale_price }}</span>
-                                                    <del>{{ $product->products->price }}</del>
-                                                    <br> <br>
+                                    </div>
+                                    <div class="product-footer">
+                                        <div class="product-detail">
+                                            <span
+                                                class="span-name">{{ $product->products->categories->category_detail->name }}</span>
+                                            <a
+                                                href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
+                                                <h5 class="name">{{ Str::limit($product->products->name, 20) }}
                                                 </h5>
-                                                <a
-                                                    href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
-                                                    <button class="btn btn-sm btn-animation">Buy Now</button>
-                                                </a>
-                                            </div>
+                                            </a>
+                                            <p class="text-content mt-1 mb-2 product-content">
+                                                {{ $product->products->description }}</p>
+                                            {{-- <h6 class="unit">{{ $product->products->brands->name }}</h6> --}}
+                                            <h5 class="price">
+                                                <span class="theme-color">৳ {{ $product->products->sale_price }}</span>
+                                                <del>{{ $product->products->price }}</del>
+                                                <br> <br>
+                                            </h5>
+                                            <a
+                                                href="{{ route('product.details', ['shop' => $product->products->agent->name, 'slug' => $product->products->slug]) }}">
+                                                <button class="btn btn-sm btn-animation">Buy Now</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
                         @empty
                             <p>No products available</p>
                         @endforelse

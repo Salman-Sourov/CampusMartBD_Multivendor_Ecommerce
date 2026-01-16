@@ -26,74 +26,51 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Grid Section Start -->
-    <section class="seller-grid-section mb-3">
-        <div class="container-fluid-lg">
+    <section class="seller-grid-section mb-5">
+    <div class="container-fluid-lg">
+        <div class="row g-4">
             @forelse ($active_seller as $seller)
-                <div class="row g-4">
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="seller-grid-box seller-grid-box-1">
-                            <div class="grid-image">
-                                <div class="image">
+                <div class="col-xxl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="seller-card-standard position-relative">
+                        <a href="{{ route('shop.details', $seller->id) }}" class="stretched-link"></a>
+
+                        <div class="seller-card-body">
+                            <div class="seller-header">
+                                <div class="seller-logo-container">
                                     <img src="{{ !empty($seller->image) ? asset($seller->image) : asset('upload/no_image.jpg') }}"
-                                        class="img-fluid" alt="{{ $seller->name }}">
+                                        alt="{{ $seller->name }}">
                                 </div>
-                                <div class="contain-name">
-                                    <div>
-                                        <h3>{{ $seller->name }}</h3>
-                                    </div>
-                                    <label class="product-label">{{ count($seller->products) }} Products</label>
+                                <div class="seller-info">
+                                    <h3 class="seller-name">{{ $seller->name }}</h3>
+                                    <span class="product-count-badge">
+                                        <i class="fa-solid fa-box-open"></i> {{ count($seller->products) }} Products
+                                    </span>
                                 </div>
                             </div>
 
-                            <div class="grid-contain">
-                                <div class="seller-contact-details">
-                                    <div class="seller-contact">
-                                        <div class="seller-icon">
-                                            <i class="fa-solid fa-map-pin"></i>
-                                        </div>
-                                        <div class="contact-detail">
-                                            <h5>{{ $seller->verification->institutionData->name }}</h5>
-                                        </div>
-                                    </div>
-                                </div>
+                            <hr class="card-divider">
 
-                                <div class="seller-category">
-                                    <button onclick="window.location.href = '{{ route('shop.details', $seller->id) }}';"
-                                        class="btn btn-sm theme-bg-color text-white fw-bold">Visit Store <i
-                                            class="fa-solid fa-arrow-right-long ms-2"></i></button>
+                            <div class="seller-footer">
+                                <div class="location-info">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                    <span>{{ $seller->verification->institutionData->name ?? 'Campus Mart' }}</span>
+                                </div>
+                                <div class="visit-action">
+                                    <span class="visit-text">Visit Store</span>
+                                    <i class="fa-solid fa-chevron-right"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             @empty
-                <p>No Seller Registered</p>
+                <div class="col-12 text-center py-5">
+                    <img src="{{ asset('upload/no_data.png') }}" alt="No Seller" style="width: 150px; opacity: 0.5;">
+                    <p class="mt-3 text-secondary">No professional sellers found at the moment.</p>
+                </div>
             @endforelse
-
-            <nav class="custome-pagination">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                            <i class="fa-solid fa-angles-left"></i>
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:void(0)">1</a>
-                    </li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="javascript:void(0)">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0)">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0)">
-                            <i class="fa-solid fa-angles-right"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Grid Section End -->
 @endsection

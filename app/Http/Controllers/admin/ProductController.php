@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function index()
     {
         $agent = Auth::user();
-        $products = Product::where('status', 'active')->get();
+        $products = Product::where('status', 'active')->where('agent_id',$agent->id)->get();
         return view("agent.product.all_product", compact('products','agent'));
     }
 
@@ -211,7 +211,6 @@ class ProductController extends Controller
             'weight' => 'nullable|numeric',
             'short_content' => 'nullable|string',
             'description' => 'nullable|string',
-
         ]);
 
         DB::beginTransaction();
@@ -407,7 +406,8 @@ class ProductController extends Controller
 
     public function inactive_product()
     {
-        $inactive_product = Product::where('status', 'inactive')->get();
+        $agent = Auth::user();
+        $inactive_product = Product::where('status', 'inactive')->where('agent_id',$agent->id)->get();
         return view('agent.product.all_inactive_product', compact('inactive_product'));
     }
 

@@ -242,7 +242,7 @@
 
         if (categoryId) {
             $.ajax({
-                url: "{{ url('selected-subcategories') }}/" + categoryId,
+                url: "{{ url('agent/selected-subcategories') }}/" + categoryId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -275,13 +275,13 @@
         }
 
         function categoryChanged() {
-            console.log('hello subcategory');
+            // console.log('hello subcategory');
             var categoryId = $('#category_id').val();
             // Get selected category ID
 
             if (categoryId) {
                 $.ajax({
-                    url: '/get-subcategories/' + categoryId, // URL to fetch subcategories
+                    url: 'agent/get-subcategories/' + categoryId, // URL to fetch subcategories
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {

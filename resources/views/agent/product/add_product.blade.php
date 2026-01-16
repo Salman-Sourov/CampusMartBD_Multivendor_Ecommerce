@@ -171,10 +171,10 @@
         function categoryChanged() {
             var categoryId = $('#category_id').val();
             // Get selected category ID
-            console.log('Selected Category ID:', categoryId);
+            // console.log('Selected Category ID:', categoryId);
             if (categoryId) {
                 $.ajax({
-                    url: "{{ url('get-subcategories') }}/" + categoryId, // URL to fetch subcategories
+                    url: "{{ url('agent/get-subcategories') }}/" + categoryId, // URL to fetch subcategories
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
