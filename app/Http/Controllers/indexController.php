@@ -91,9 +91,10 @@ class indexController extends Controller
     {
         $seller = User::where('id', $id)->firstOrFail();
         $products = Product::with('translations', 'inventory_stocks', 'categories')->where('status', 'active')->where('agent_id', $id)->inRandomOrder()->get();
+        $categories = $products->pluck('categories.category_detail')->unique('id')->filter();
 
         // dd($products);
-        return view('frontend.shop_detail', compact('seller', 'products'));
+        return view('frontend.shop_detail', compact('seller', 'products', 'categories'));
     }
 
     public function productDetails($shop, $slug)

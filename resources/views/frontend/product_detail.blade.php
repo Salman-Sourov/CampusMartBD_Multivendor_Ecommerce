@@ -93,8 +93,9 @@
                                             100;
                                     }
                                 @endphp
-
-                                <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
+                                @if (round($Per_Price) > 0)
+                                    <h6 class="offer-top">{{ round($Per_Price) }}% Discount </h6>
+                                @endif
                                 <h2 class="name">{{ Str::limit($selected_product->name) }}</h2>
 
                                 <div class="price-rating">
@@ -212,7 +213,7 @@
                                     <h4>Store Information</h4>
                                     <p>
                                         <strong>Shop Name:</strong>
-                                        <a href="{{ route('shop.details',$agent->id) }}">{{ $agent->name }}</a>
+                                        <a href="{{ route('shop.details', $agent->id) }}">{{ $agent->name }}</a>
                                     </p>
                                     <p>
                                         <strong>Institution:</strong>

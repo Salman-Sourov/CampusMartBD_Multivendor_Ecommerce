@@ -17,6 +17,7 @@ use App\Models\Product_with_videos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 
 
@@ -28,8 +29,8 @@ class ProductController extends Controller
     public function index()
     {
         $agent = Auth::user();
-        $products = Product::where('status', 'active')->where('agent_id',$agent->id)->get();
-        return view("agent.product.all_product", compact('products','agent'));
+        $products = Product::where('status', 'active')->where('agent_id', $agent->id)->get();
+        return view("agent.product.all_product", compact('products', 'agent'));
     }
 
     /**
@@ -49,7 +50,15 @@ class ProductController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'product_name' => 'unique|required|string|max:255',
+
+            'product_name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('products', 'name')->where(function ($query) {
+                    return $query->where('agent_id', Auth::id());
+                }),
+            ],
             'category_id' => 'required',
             'sub_category_id' => 'nullable',
             'quantity' => 'nullable|integer',
@@ -63,7 +72,7 @@ class ProductController extends Controller
             'weight' => 'nullable|numeric',
             'short_content' => 'required|string',
             'description' => 'nullable|string',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,webp,gif',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,webp,gif,heic',
         ]);
 
         DB::beginTransaction();
@@ -185,9 +194,9 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $agent = Auth::user();
-        $product = Product::with( 'categories', 'multi_images')->find($id);
+        $product = Product::with('categories', 'multi_images')->find($id);
         $categories = Product_category::where('status', 'active')->whereNull('parent_id')->orderBy('name', 'asc')->get();
-        return view('agent.product.edit_product', compact('product', 'categories','agent'));
+        return view('agent.product.edit_product', compact('product', 'categories', 'agent'));
     }
 
 
@@ -199,7 +208,17 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         // Validate the incoming request
         $request->validate([
-            'product_name' => 'required|string|max:255',
+            // 'product_name' => 'required|string|max:255',
+            'product_name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('products', 'name')
+                    ->ignore($product->id) // ignore own id on update
+                    ->where(function ($query) {
+                        return $query->where('agent_id', Auth::id());
+                    }),
+            ],
             'quantity' => 'required|integer',
             // 'price' => 'required|numeric',
             'sale_price' => 'required|numeric',
@@ -407,7 +426,7 @@ class ProductController extends Controller
     public function inactive_product()
     {
         $agent = Auth::user();
-        $inactive_product = Product::where('status', 'inactive')->where('agent_id',$agent->id)->get();
+        $inactive_product = Product::where('status', 'inactive')->where('agent_id', $agent->id)->get();
         return view('agent.product.all_inactive_product', compact('inactive_product'));
     }
 

@@ -44,6 +44,9 @@
                                             class="img-fluid" alt="{{ $seller->name }}">
                                         <div>
                                             <h3>{{ $seller->name }}</h3>
+                                            <span class="product-count-badge">
+                                                <i class="fa-solid fa-box-open"></i> {{ count($seller->products) }} Products
+                                            </span>
                                         </div>
                                     </div>
                                     {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do aldskadskm
@@ -78,23 +81,27 @@
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            <span>Categories</span>
+                                            <span>All Categories</span>
                                         </button>
                                     </h2>
                                     <div id="collapseOne" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne">
                                         <div class="accordion-body">
-
                                             <ul class="category-list custom-padding custom-height">
-                                                <li>
-                                                    <div class="form-check ps-0 m-0 category-list-box">
-                                                        <input class="checkbox_animated" type="checkbox" id="fruit">
-                                                        <label class="form-check-label" for="fruit">
-                                                            <span class="name">Fruits & Vegetables</span>
-                                                            <span class="number">(15)</span>
-                                                        </label>
-                                                    </div>
-                                                </li>
+                                                @forelse ($categories as $category)
+                                                    <li>
+                                                        <div class="form-check ps-0 m-0 category-list-box">
+                                                            <input class="checkbox_animated" type="checkbox" id="fruit">
+                                                            <label class="form-check-label" for="fruit">
+                                                                <span class="name">{{ $category->name }}</span>
+                                                                <span class="number">
+                                                                    ({{ $products->where('categories.category_detail.id', $category->id)->count() }})
+                                                                </span> </label>
+                                                        </div>
+                                                    </li>
+                                                @empty
+                                                    <p>No Category Found</p>
+                                                @endforelse
                                             </ul>
                                         </div>
                                     </div>
@@ -133,21 +140,9 @@
                                                 <li>
                                                     <div class="form-check ps-0 m-0 category-list-box">
                                                         <input class="checkbox_animated" type="checkbox"
-                                                            id="flexCheckDefault">
-                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                            <span class="name">upto 5%</span>
-                                                            <span class="number">(06)</span>
-                                                        </label>
-                                                    </div>
-                                                </li>
-
-                                                <li>
-                                                    <div class="form-check ps-0 m-0 category-list-box">
-                                                        <input class="checkbox_animated" type="checkbox"
                                                             id="flexCheckDefault1">
                                                         <label class="form-check-label" for="flexCheckDefault1">
-                                                            <span class="name">5% - 10%</span>
-                                                            <span class="number">(08)</span>
+                                                            <span class="name">1% - 20%</span>
                                                         </label>
                                                     </div>
                                                 </li>
@@ -157,8 +152,7 @@
                                                         <input class="checkbox_animated" type="checkbox"
                                                             id="flexCheckDefault2">
                                                         <label class="form-check-label" for="flexCheckDefault2">
-                                                            <span class="name">10% - 15%</span>
-                                                            <span class="number">(10)</span>
+                                                            <span class="name">21% - 40%</span>
                                                         </label>
                                                     </div>
                                                 </li>
@@ -168,8 +162,7 @@
                                                         <input class="checkbox_animated" type="checkbox"
                                                             id="flexCheckDefault3">
                                                         <label class="form-check-label" for="flexCheckDefault3">
-                                                            <span class="name">15% - 25%</span>
-                                                            <span class="number">(14)</span>
+                                                            <span class="name">41% - 60%</span>
                                                         </label>
                                                     </div>
                                                 </li>
@@ -177,10 +170,19 @@
                                                 <li>
                                                     <div class="form-check ps-0 m-0 category-list-box">
                                                         <input class="checkbox_animated" type="checkbox"
-                                                            id="flexCheckDefault4">
-                                                        <label class="form-check-label" for="flexCheckDefault4">
-                                                            <span class="name">More than 25%</span>
-                                                            <span class="number">(13)</span>
+                                                            id="flexCheckDefault3">
+                                                        <label class="form-check-label" for="flexCheckDefault3">
+                                                            <span class="name">61% - 80%</span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="form-check ps-0 m-0 category-list-box">
+                                                        <input class="checkbox_animated" type="checkbox"
+                                                            id="flexCheckDefault3">
+                                                        <label class="form-check-label" for="flexCheckDefault3">
+                                                            <span class="name">81% - 90%</span>
                                                         </label>
                                                     </div>
                                                 </li>
@@ -300,17 +302,13 @@
                                                         @endif
                                                     </h5>
                                                 </a>
-
-                                                <p class="text-content mt-1 mb-2 product-content">
-                                                    {{ $product->description }}
-                                                </p>
                                                 @php
                                                     $get_shop = App\Models\User::where(
                                                         'id',
                                                         $product->agent_id,
                                                     )->first();
                                                 @endphp
-                                                <h6 class="unit">{{ $get_shop->name ?? 'Campuss Mart' }}</h6>
+                                                {{-- <h6 class="unit">{{ $get_shop->name ?? 'Campuss Mart' }}</h6> --}}
                                                 <h5 class="price mb-2">
                                                     <span class="theme-color">৳ {{ $product->sale_price }}</span>
                                                     @if ($product->price)
